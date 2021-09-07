@@ -1,0 +1,131 @@
+{% extends 'merchant_dashboard/dash_base.html' %} 
+{% block title %} Dashboard {% endblock %}
+{% load staticfiles %}
+{% block content %}
+
+
+        <main>
+            <!-- Start topbar -->
+            <div class="topbar">
+                <!-- Start toggle and search -->
+                <div class="topbarLeft">
+                    <div class="toggle" onclick="toggleMenu()"><ion-icon name="list-circle"></ion-icon></div>
+                    <div class="search">
+                        <form action="#" method="POST">
+                            <input type="search" placeholder="Search ...">
+                            <button type="submit"><ion-icon name="search-outline"></ion-icon></button>
+                        </form>
+                    </div>
+                </div>
+                <!-- End toggle and search -->
+
+                <div class="topbarright">
+                    <div class="message">
+                        <a href="#"><ion-icon name="chatbox-ellipses-sharp"></ion-icon></a>
+                        <div class="messageDropdown">
+                            <a href="#">Message goes from here</a>
+                            <a href="#">Message goes from here</a>
+                            <a href="#">Message goes from here</a>
+                            <a href="#">Message goes from here</a>
+                        </div>
+                    </div>
+                    <div class="notification">
+                        <a href="#"><ion-icon name="notifications-sharp"></ion-icon></a>
+                        <div class="notiDropdown">
+                            <a href="#">Notification goes from here</a>
+                            <a href="#">Notification goes from here</a>
+                            <a href="#">Notification goes from here</a>
+                            <a href="#">Notification goes from here</a>
+                        </div>
+                    </div>
+                    <div class="userInfo">
+                        <a href="#"><img src="/img/user/user1.jpg" alt=""></a>
+                        <div class="userDropdown">
+                            <a href="#">Profile</a>
+                            <a href="#">Settings</a>
+                            <span class="divider"></span>
+                            <a href="/merchant-logout/">logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End topbar -->
+
+            <!-- Page title -->
+            <div class="pageTitle">
+                <h3>ড্যাশবোর্ড</h3>
+                <div class="customBreadcumb">
+                    <a class="active">ড্যাশবোর্ড</a>
+                </div>
+            </div>
+            <div class="pageMainWrapper">
+            <!-- ----------------------------------------------------- -->
+            <!-- ----------- Main content start from here ------------ -->
+            <!-- ----------------------------------------------------- -->
+            <div class="container-fluid mt-4">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 col-lg-3  mb-5">
+                        <div class="dasCard">
+                            <div>
+                                <div class="icon"><ion-icon name="logo-twitter"></ion-icon></div>
+                                <div class="text">
+                                    <p>Folowers</p>
+                                    <h4>+245</h4>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="link">
+                                <a href="#">See more</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-3  mb-5">
+                        <div class="dasCard">
+                            <div>
+                                <div class="icon"><ion-icon name="logo-twitter"></ion-icon></div>
+                                <div class="text">
+                                    <p>Folowers</p>
+                                    <h4>+245</h4>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="link">
+                                <a href="#">See more</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-3  mb-5">
+                        <div class="dasCard">
+                            <div>
+                                <div class="icon"><ion-icon name="logo-twitter"></ion-icon></div>
+                                <div class="text">
+                                    <p>Folowers</p>
+                                    <h4>+245</h4>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="link">
+                                <a href="#">See more</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <div class="dasCard">
+                            <div>
+                                <div class="icon"><ion-icon name="logo-twitter"></ion-icon></div>
+                                <div class="text">
+                                    <p>Folowers</p>
+                                    <h4>+245</h4>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="link">
+                                <a href="#">See more</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+{% endblock %}

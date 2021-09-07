@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ড্যাশবোর্ড </title>
+    {% load static %}
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'merchant_dashboard/css/style.css'%}">
+    <link rel="stylesheet" href="{% static 'merchant_dashboard/css/responsive.css'%}">
+    
+</head>
+<body>
+    
+    <div class="mainWrapper">
+        <!-- Start sidebar -->
+        <nav>
+            <ul>
+                <!-- Start brand name -->
+                <li class="brandName">
+                    <a href="index.html">
+                        <span class="navIcon"><ion-icon name="person-sharp"></ion-icon></span>
+                        <span class="navTitle">সাদিক</span>
+                    </a>
+                </li>
+                <!-- End brand name -->
+
+                <li class="active">
+                    <a href="index.html">
+                        <span class="navIcon"><ion-icon name="grid-sharp"></ion-icon></span>
+                        <span class="navTitle"> ড্যাশবোর্ড </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="newOrder.html">
+                        <span class="navIcon"><ion-icon name="add-outline"></ion-icon></span>
+                        <span class="navTitle"> নতুন অর্ডার </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="orderList.html">
+                        <span class="navIcon"><ion-icon name="list-outline"></ion-icon></span>
+                        <span class="navTitle"> অর্ডার লিস্ট </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="bulkOrder.html">
+                        <span class="navIcon"><ion-icon name="document-text-outline"></ion-icon></span>
+                        <span class="navTitle"> বাল্ক অর্ডার  </span>
+                    </a>
+                </li>
+                <!-- <li class="parent">
+                    <a href="#">
+                        <span class="navIcon"><ion-icon name="square-sharp"></ion-icon></span>
+                        <span class="navTitle">Tables</span>
+                    </a>
+                    <ion-icon name="caret-down-outline"></ion-icon>
+                </li> -->
+                <li>
+                    <a href="serviceCharge.html">
+                        <span class="navIcon"><ion-icon name="cash-outline"></ion-icon></span>
+                        <span class="navTitle"> সার্ভিসের চার্জ </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="codCollection.html">
+                        <span class="navIcon"><ion-icon name="wallet-outline"></ion-icon></span>
+                        <span class="navTitle"> COD কালেকশন </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="billPay.html">
+                        <span class="navIcon"><ion-icon name="bookmark-outline"></ion-icon></span>
+                        <span class="navTitle"> বিল পে </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="paymentStatement.html">
+                        <span class="navIcon"><ion-icon name="receipt-outline"></ion-icon></span>
+                        <span class="navTitle"> পেমেন্ট স্টেটমেন্ট </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="orderTracking.html">
+                        <span class="navIcon"><ion-icon name="analytics-outline"></ion-icon></span>
+                        <span class="navTitle"> অর্ডার ট্র্যাকিং </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="shipmentCharge.html">
+                        <span class="navIcon"><ion-icon name="pricetag-outline"></ion-icon></span>
+                        <span class="navTitle"> শিপমেন্ট চার্জ </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="complain.html">
+                        <span class="navIcon"><ion-icon name="alert-circle-outline"></ion-icon></span>
+                        <span class="navTitle"> কমপ্লেইন </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="marchantFeedback.html">
+                        <span class="navIcon"><ion-icon name="megaphone-outline"></ion-icon></span>
+                        <span class="navTitle"> মার্চেন্ট ফিডব্যাক </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="reffer.html">
+                        <span class="navIcon"><ion-icon name="code-download-outline"></ion-icon></span>
+                        <span class="navTitle"> রেফার করুন </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- End sidebar -->
+
+
+        {% block content %}
+
+
+        {% endblock %}
+     
+
+        
+
+            <!-- ----------------------------------------------------- -->
+            <!-- ---------------- End Main Content ------------------- -->
+            <!-- ----------------------------------------------------- -->
+        </div>
+    </main>
+</div>
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="{% static 'merchant_dashboard/js/script.js'%}"></script>
+</body>
+</html>

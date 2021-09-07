@@ -8,6 +8,7 @@ urlpatterns = [
 
 
     path('merchant-dashboard/', views.merchant_dashboard),
+    path('merchant-logout/', views.merchant_logout),
 
 
 

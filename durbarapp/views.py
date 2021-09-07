@@ -26,8 +26,6 @@ from django.contrib.auth.decorators import login_required
 import hashlib, socket
 import random
 
-# Create your views here.
-
 def homepage(request):
     
     return render (request, 'durbarapp/index.html')
@@ -48,4 +46,16 @@ def merchant_dashboard(request):
         return redirect('/')
      
 
-    return render (request, 'marchant_dashboard/index.html')
+    return render (request, 'merchant_dashboard/index.html')
+
+ 
+def merchant_logout(request):
+    request.session['userid'] = False
+    return redirect('/')
+
+
+
+
+
+
+
