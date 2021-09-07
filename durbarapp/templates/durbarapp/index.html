@@ -1,0 +1,347 @@
+{% extends 'durbarapp/base.html' %} 
+{% block title %} Durbar Courier: Largest Online Courier Marketplace in Bangladesh {% endblock %}
+{% load staticfiles %}
+{% block content %}
+
+ 
+    <!-- Hero Section -->
+    <section class="heroSection" style="background-image: url(/static/durbarapp/images/heroBg.jpg);">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="heroLeft">
+                        <h1>Parcel Delivered <br> On Time with no Hassle</h1>
+                        <p>Easily track your courier, Get courier within hours. Efficient & safe delivery.</p>
+                        <a href="#" class="btnMerchant">BECOME A MERCHANT</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="heroRight">
+                        <img src="/static/durbarapp/images/heroRight.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-sm-12">
+                    <form class="trackingCode" action="#" method="post">
+                        <p>TRACK YOUR CONSIGNMENT <small>Now you can easily track your consignment</small></p>
+                        <div class="input-group flex-nowrap">
+                            <input type="search" name="" class="form-control" placeholder="Enter your tracking code">
+                            <div class="input-group-append">
+                                <a href="#" class="input-group-text" id="addon-wrapping">
+                                    <i class="fa fa-search"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Hero Section -->
+
+
+
+
+    <!-- Service Section -->
+    <section class="ourServices">
+        <div class="container">
+            <h3 class="sectionTitle">Our Services</h3>
+        </div>
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="#" class="singleItem">
+                        <i class="fas fa-laptop-house icon"></i>
+                        <h4 class="text">eCommerce Delivery</h4>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="#" class="singleItem">
+                        <i class="fas fa-truck icon"></i>
+                        <h4 class="text">Pick and Drop</h4>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="#" class="singleItem">
+                        <i class="fas fa-store-alt icon"></i>
+                        <h4 class="text">Warehousing</h4>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="#" class="singleItem">
+                        <i class="fas fa-shopping-bag icon"></i>
+                        <h4 class="text">Packaging</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Service Section -->
+
+
+
+
+    <!-- We Are Best Section -->
+    <section class="weAreBest">
+        <div class="container">
+            <h3 class="sectionTitle">why we are the best</h3>
+        </div>
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-md-6">
+                    <a href="#" class="singleItem">
+                        <i class="fas fa-truck-loading icon"></i>
+                        <h4 class="text">Daily Pick up, No limitations</h4>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="singleItem">
+                        <i class="fas fa-money-check-alt icon"></i>
+                        <h4 class="text">Faster Payment Service</h4>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="singleItem">
+                        <i class="far fa-clock icon"></i>
+                        <h4 class="text">Real-Time Tracking</h4>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="singleItem">
+                        <i class="fas fa-file-invoice-dollar icon"></i>
+                        <h4 class="text">Cash on Delivery</h4>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="singleItem">
+                        <i class="fas fa-laptop icon"></i>
+                        <h4 class="text">Online Management</h4>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="singleItem">
+                        <i class="fas fa-headset icon"></i>
+                        <h4 class="text">Advanced Customer Service</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End We Are Best Section -->
+
+
+
+
+
+    <!-- Delivery Section -->
+    <section class="deliveryCharge">
+        <div class="container">
+            <h3 class="sectionTitle">See your delivery charge</h3>
+            <p>Take a look at how much it will cost to send a parcel.</p>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <ul class="nav nav-pills text-center" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="insideCity-tab" data-toggle="tab" href="#insideCity" role="tab" aria-controls="insideCity" aria-selected="true">Inside City</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="citySub-tab" data-toggle="tab" href="#citySub" role="tab" aria-controls="citySub" aria-selected="false">City Suburb</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="outSideCity-tab" data-toggle="tab" href="#outSideCity" role="tab" aria-controls="outSideCity" aria-selected="false">Outside City</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="insideCity" role="tabpanel" aria-labelledby="insideCity-tab">
+                            <div class="row no-gutters">
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="item">
+                                        <p>Upto 1 kg</p>
+                                        <h4>৳100 + 1% COD</h4>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="item">
+                                        <p>Upto 1 kg</p>
+                                        <h4>৳100 + 1% COD</h4>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="item">
+                                        <p>2 kg to 3 kg</p>
+                                        <h4>৳130 + 1% COD</h4>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="item">
+                                        <p>3 kg to 4 kg</p>
+                                        <h4>৳145 + 1% COD</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="citySub" role="tabpane2" aria-labelledby="citySub-tab">
+                            <div class="row no-gutters">
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="item">
+                                        <p>Upto 1 kg</p>
+                                        <h4>৳100 + 1% COD</h4>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="item">
+                                        <p>Upto 1 kg</p>
+                                        <h4>৳100 + 1% COD</h4>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="item">
+                                        <p>2 kg to 3 kg</p>
+                                        <h4>৳130 + 1% COD</h4>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="item">
+                                        <p>3 kg to 4 kg</p>
+                                        <h4>৳145 + 1% COD</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="outSideCity" role="tabpane2" aria-labelledby="outSideCity-tab">
+                            <div class="row no-gutters">
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="item">
+                                        <p>Upto 1 kg</p>
+                                        <h4>৳100 + 1% COD</h4>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="item">
+                                        <p>Upto 1 kg</p>
+                                        <h4>৳100 + 1% COD</h4>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="item">
+                                        <p>2 kg to 3 kg</p>
+                                        <h4>৳130 + 1% COD</h4>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="item">
+                                        <p>3 kg to 4 kg</p>
+                                        <h4>৳145 + 1% COD</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <p class="mt-3 mb-0">For Enterprise pricing, contact our agents for instant price estimate</p>
+                    <a href="#" class="btn btn-danger btn-lg mt-2">Get price estimate</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Delivery Section -->
+
+
+
+
+
+    <!-- Testimonial Section -->
+    <section class="testimonailSection">
+        <div class="container">
+            <h3 class="sectionTitle">Clients Love</h3>
+        </div>
+        <div class="container">
+            <div class="owl-carousel owl-theme">
+                <div class="item">
+                    <div class="singleItem">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                            <p>We are very satisfied with the speed of the delivery inside Dhaka. The tracking system is great and helps us promptly answer queries from customers.</p>
+                        </div>
+                        <div class="authorText">
+                            <img src="/static/durbarapp/images/user.jpg" alt="">
+                            <div class="imgText">
+                                <h4>Sadik Hasan</h4>
+                                <p>Web Developer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="singleItem">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                            <p>We are very satisfied with the speed of the delivery inside Dhaka. The tracking system is great and helps us promptly answer queries from customers.</p>
+                        </div>
+                        <div class="authorText">
+                            <img src="/static/durbarapp/images/user.jpg" alt="">
+                            <div class="imgText">
+                                <h4>Sadik Hasan</h4>
+                                <p>Web Developer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="singleItem">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                            <p>We are very satisfied with the speed of the delivery inside Dhaka. The tracking system is great and helps us promptly answer queries from customers.</p>
+                        </div>
+                        <div class="authorText">
+                            <img src="/static/durbarapp/images/user.jpg" alt="">
+                            <div class="imgText">
+                                <h4>Sadik Hasan</h4>
+                                <p>Web Developer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="singleItem">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                            <p>We are very satisfied with the speed of the delivery inside Dhaka. The tracking system is great and helps us promptly answer queries from customers.</p>
+                        </div>
+                        <div class="authorText">
+                            <img src="/static/durbarapp/images/user.jpg" alt="">
+                            <div class="imgText">
+                                <h4>Sadik Hasan</h4>
+                                <p>Web Developer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="singleItem">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                            <p>We are very satisfied with the speed of the delivery inside Dhaka. The tracking system is great and helps us promptly answer queries from customers.</p>
+                        </div>
+                        <div class="authorText">
+                            <img src="/static/durbarapp/images/user.jpg" alt="">
+                            <div class="imgText">
+                                <h4>Sadik Hasan</h4>
+                                <p>Web Developer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Testimonial Section -->
+
+
+{% endblock %}

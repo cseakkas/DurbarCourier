@@ -1,0 +1,63 @@
+@media only screen and (max-width: 991px) {
+    .heroSection .heroLeft h1 {
+        font-size: 26px !important;
+    }
+    .heroSection a.btnMerchant {
+        font-size: 14px !important;
+        padding: 10px 15px !important;
+        margin-top: 10px !important;
+        letter-spacing: 0px !important;
+    }
+    .heroSection .heroRight img {
+        margin-top: -38px !important;
+    }
+    .heroSection form.trackingCode {
+        margin-top: 80px !important;
+    }
+    .heroSection {
+        padding-top: 110px !important;
+        padding-bottom: 0 !important;
+        background-position: 28% 100% !important;
+    }
+    .ourServices .singleItem {
+        margin: 7px !important;
+    }
+    .mt-30{
+        margin-top: 30px !important;
+    }
+    header a.register {
+        margin-bottom: 15px !important;
+    }
+}
+
+
+
+
+
+
+/* Tablet Device Responsiveness */
+@media only screen and (max-width: 767px) {
+    .heroSection {
+        background-position: 28% 0% !important;
+    }
+    .heroSection .heroRight img {
+        margin-top: 60px !important;
+        width: 70% !important;
+    }
+    .heroSection form.trackingCode {
+        margin-top: 50px !important;
+    }
+    section.pageTitleWrapper {
+        padding: 60px 0 !important;
+    }
+    .pageTitleText h1 {
+        font-size: 30px !important;
+        margin-bottom: 6px;
+    }
+    .pageTitleText p {
+        font-size: 16px !important;
+    }
+    .contactForm {
+        margin-top: 30px !important;
+    }
+}

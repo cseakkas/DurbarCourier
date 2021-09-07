@@ -1,0 +1,45 @@
+/* Responsive */
+@media (max-width: 992px){
+    nav{
+        left: -300px;
+    }
+
+    nav.active{
+        left: 0;
+        width: 300px;
+    }
+
+    main{
+        width: 100%;
+        left: 0;
+    }
+
+    main.active{
+        width: calc(100% - 300px);
+        left: 300px;
+    }
+
+    .search input {
+        min-width: 100px !important;
+        max-width: 150px;
+    }
+}
+
+
+
+
+@media (max-width: 768px){
+
+
+.productCollection button, .orderDin {
+    width: 100%;
+    margin-bottom: 10px;
+}
+button.searchBtn {
+    margin-top: 0;
+}
+button.searchBtn.orderTrackBtn {
+    margin-top: 15px;
+}
+
+}

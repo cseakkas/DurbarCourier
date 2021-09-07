@@ -1,0 +1,623 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap'); */
+@import url('https://fonts.maateen.me/adorsho-lipi/font.css');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-family: 'Poppins', sans-serif; */
+    font-family: 'AdorshoLipi', sans-serif;
+}
+ion-icon{
+    pointer-events: none;
+}
+body{
+    overflow-x: hidden;
+    background-color: #f5f5f5;
+}
+select:focus,
+textarea:focus,
+input:focus{
+    box-shadow: none !important;
+    border: 1px solid #0c3866 !important;
+}
+
+
+
+
+
+
+
+
+
+header{
+    width: 100%;
+    position: relative;
+}
+
+nav{
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    background-color: #0c3866;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+nav.active{
+    width: 50px;
+}
+
+nav ul{
+    padding-left: 0;
+}
+
+nav ul li{
+    position: relative;
+    list-style: none;
+}
+
+nav ul li:hover{
+    background-color: #fff;
+}
+
+nav ul li.active{
+    background-color: #fff;
+}
+
+nav ul li:nth-child(1):hover{
+    background-color: transparent;
+}
+
+nav ul li.brandName {
+    border-bottom: 1px solid #ffffff40;
+}
+
+nav ul li.brandName a .navTitle{
+    font-size: 20px;
+}
+
+nav ul li:nth-child(1):hover a .navIcon ion-icon,
+nav ul li:nth-child(1):hover a{
+    color: #fff;
+}
+
+nav ul li a{
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+}
+
+nav ul li:hover a{
+    color: #0c3866;
+}
+
+nav ul li.active a{
+    color: #0c3866;
+}
+
+nav ul li a .navIcon {
+    position: relative;
+    display: block;
+    min-width: 50px;
+    height: 50px;
+    line-height: 60px;
+    text-align: center;
+}
+
+nav ul li a .navIcon ion-icon{
+    color: #fff;
+    font-size: 18px;
+}
+
+nav ul li:hover a .navIcon ion-icon{
+    color: #0c3866;
+}
+
+nav ul li.active a .navIcon ion-icon{
+    color: #0c3866;
+}
+
+nav ul li a .navTitle {
+    display: block;
+    padding: 0 10px;
+    height: 50px;
+    line-height: 50px;
+    white-space: nowrap;
+    font-size: 15px;
+}
+li.parent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+li.parent ion-icon{
+    color: #fff;
+    margin-right: 15px;
+}
+nav ul li:hover ion-icon {
+    color: #0c3866;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Top Bar Styling */
+main{
+    width: calc(100% - 300px);
+    left: 300px;
+    position: absolute;
+    transition: 0.5s;
+}
+
+main.active{
+    width: calc(100% - 50px);
+    left: 50px;
+}
+
+main .topbar {
+    width: 100%;
+    height: 52px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #dee2e6;
+}
+
+main .topbar .topbarLeft{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+main .topbar .topbarLeft .toggle{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0c3866;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.search form {
+    position: relative;
+}
+
+.search input {
+    border: 1px solid #e8e8e8;
+    background: #f3f3f3;
+    min-width: 300px;
+    padding: 5px 15px;
+    outline: none;
+    color: #000;
+    border-radius: 3px;
+}
+
+.search button ion-icon {
+    font-size: 18px;
+}
+
+.search button {
+    font-weight: bold;
+    width: 35px;
+    height: 35px;
+    line-height: 43px;
+    display: inline-block;
+    border: navajowhite;
+    background: #0c3866;
+    outline: navajowhite;
+    position: absolute;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    right: 0;
+}
+
+.topbarright {
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.topbarright ion-icon{
+    font-size: 20px;
+    color: #0c3866;
+}
+
+.userInfo img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.notification {
+    margin: 0 30px;
+}
+
+.pageTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+}
+
+.pageTitle h3 {
+    font-size: 26px;
+    font-weight: 500;
+}
+
+.customBreadcumb a {
+    font-size: 15px;
+    text-decoration: none;
+    color: #0c3866;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.customBreadcumb a:hover {
+    text-decoration: underline;
+}
+
+.customBreadcumb a:last-child:hover {
+    text-decoration: none;
+}
+
+.customBreadcumb a.active {
+    font-weight: 300;
+}
+
+
+
+
+
+
+
+.userInfo{
+    position: relative;
+    transition: .5s;
+}
+.userDropdown {
+    position: absolute;
+    background: #fff;
+    right: 0;
+    transform: scale(0);
+    left: auto;
+    padding: 5px;
+    border-radius: 2px;
+    visibility: hidden;
+    transition: all .15s linear;
+    transform-origin: 100% 0;
+    z-index: 99999;
+}
+.userDropdown.active {
+    transform: scale(1);
+    visibility: visible;
+}
+.userDropdown a {
+    text-decoration: none;
+    font-size: 15px;
+    padding: 10px 20px;
+    display: inline-block;
+    font-weight: 400;
+    text-transform: capitalize;
+    min-width: 150px;
+    transition: 0.1s;
+    color: #333;
+}
+.userDropdown a:hover {
+    background-color: #0c3866;
+    color: #fff;
+}
+
+.userDropdown .divider {
+    border-top: 1px solid #e9ecef;
+    display: block;
+    margin: 5px 0;
+}
+
+
+
+
+
+
+.notification{
+    position: relative;
+    transition: .5s;
+}
+.notiDropdown {
+    position: absolute;
+    background: #fff;
+    right: 0;
+    transform: scale(0);
+    left: auto;
+    padding: 5px;
+    border-radius: 2px;
+    visibility: hidden;
+    transition: all .15s linear;
+    transform-origin: 100% 0;
+    z-index: 99999;
+}
+.notiDropdown.active {
+    transform: scale(1);
+    visibility: visible;
+}
+.notiDropdown a {
+    text-decoration: none;
+    font-size: 15px;
+    padding: 10px 20px;
+    display: inline-block;
+    font-weight: 400;
+    text-transform: capitalize;
+    min-width: 250px;
+    transition: 0.1s;
+    color: #333;
+}
+.notiDropdown a:hover {
+    background-color: #0c3866;
+    color: #fff;
+}
+
+
+
+
+
+/* Message Section */
+.message{
+    position: relative;
+    transition: .5s;
+}
+.messageDropdown {
+    position: absolute;
+    background: #fff;
+    right: 0;
+    transform: scale(0);
+    left: auto;
+    padding: 5px;
+    border-radius: 2px;
+    visibility: hidden;
+    transition: all .15s linear;
+    transform-origin: 100% 0;
+    z-index: 99999;
+}
+.messageDropdown.active {
+    transform: scale(1);
+    visibility: visible;
+}
+.messageDropdown a {
+    text-decoration: none;
+    font-size: 15px;
+    padding: 10px 20px;
+    display: inline-block;
+    font-weight: 400;
+    text-transform: capitalize;
+    min-width: 250px;
+    transition: 0.1s;
+    color: #333;
+}
+.messageDropdown a:hover {
+    background-color: #0c3866;
+    color: #fff;
+}
+
+
+
+
+
+
+.pageMainWrapper {
+    padding: 0 10px;
+}
+.dasCard {
+    background: #fff;
+    padding: 10px;
+}
+.dasCard>div {
+    display: flex;
+    justify-content: space-between;
+}
+.dasCard .text p {
+    font-size: 15px;
+    margin-bottom: 8px;
+    font-weight: 300;
+}
+.dasCard .icon {
+    background: #0c3866;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    line-height: 88px;
+    margin-top: -30px;
+    border-radius: 3px;
+    box-shadow: 0 0 10px #0c38666b;
+}
+.dasCard .icon ion-icon {
+    color: #fff;
+    font-size: 30px;
+}
+.dasCard .divider {
+    border-top: 1px solid #d7d7d7;
+}
+.dasCard .link a {
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+    color: #333;
+    transition: .3s;
+}
+.dasCard .link a:hover {
+    color: #0c3866;
+    text-decoration: underline;
+}
+
+
+
+
+
+
+/* Add Order Styling */
+.productCollection {
+    background-color: #0c38660d;
+    padding: 20px 30px;
+    border-radius: 10px;
+}
+.productCollection button, .orderDin {
+    background: #0c3866;
+    color: #fff;
+    font-size: 15px;
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    display: inline-block;
+    transition: 0.3s ease;
+    border: 1px solid #0c3866;
+}
+.productCollection span {
+    margin-bottom: 10px;
+}
+.productCollection button:hover,
+.orderDin:hover {
+    background: transparent;
+    color: #0c3866;
+}
+h4.orderTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+
+
+
+
+/* Order List Styling */
+
+.serviceCharge table thead th,
+.serviceCharge table tbody td,
+.serviceCharge table tbody th,
+.orderList table thead th,
+.orderList table tbody td,
+.orderList table tbody th {
+    font-size: 14px;
+}
+a.deleteBtn, a.editBtn, a.viewBtn {
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #cbe5ff;
+    margin-left: 5px;
+    padding: 2px 4px;
+    background: #cbe5ff;
+    color: #0c3866;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+a.deleteBtn:hover {
+    background: red;
+    color: #fff;
+}
+a.deleteBtn {
+    background: #ffe2e2;
+    border: 1px solid #ffe2e2;
+    color: red;
+}
+a.editBtn:hover {
+    background: #0c3866;
+    color: #fff;
+}
+button.searchBtn {
+    background: #0c3866;
+    color: #fff;
+    border-radius: 4px;
+    padding: 5px 15px;
+    display: inline-block;
+    outline: none;
+    margin-top: 31px;
+    transition: 0.3s ease;
+}
+button.searchBtn:hover {
+    background: transparent;
+    color: #0c3866;
+}
+a.viewBtn:hover {
+    background: #198754;
+    color: #fff;
+}
+a.viewBtn {
+    background: #d9ffed;
+    border-color: #d9ffed;
+    color: #198754;
+}
+
+
+
+
+
+
+/* Pgination Styling */
+.customPagination ul li a {
+    color: #444;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+.customPagination ul li a:hover {
+    background: #0c3866;
+    color: #fff;
+}
+.customPagination ul li a.active {
+    background: #0c3866;
+    color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Home page styling */
+

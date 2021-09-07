@@ -1,0 +1,35 @@
+{% extends 'durbarapp/base.html' %} 
+{% block title %} Login  {% endblock %}
+{% load staticfiles %}
+{% block content %} 
+    <div class="loginWrapper">
+        <div>
+            <div class="loginText">
+                <h4>Login</h4>
+                <div class="brandLogin">
+                    <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+                    <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
+                    <a href="#"><ion-icon name="logo-google"></ion-icon></a>
+                </div>
+            </div>
+            <div class="orLogin">
+                <p>Or Be Classical</p>
+            </div>
+            <div class="loginForm">
+                <form method="POST"> {% csrf_token %}
+                    <div class="mb-3">
+                      <input type="text" name="email" class="form-control" id="loginEmail" placeholder="Email Address">
+                    </div>
+                    <div class="mb-3">
+                      <input type="password" name="password" class="form-control" id="loginPass" placeholder="Password">
+                    </div>
+                    <div class="mb-3 form-check">
+                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                      <label class="form-check-label" for="exampleCheck1">Remember password</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                  </form>
+            </div>
+        </div>
+    </div>
+ {% endblock %}

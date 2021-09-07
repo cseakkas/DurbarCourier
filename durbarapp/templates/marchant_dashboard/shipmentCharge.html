@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> শিপমেন্ট চার্জ </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+</head>
+<body>
+    
+    <div class="mainWrapper">
+        <!-- Start sidebar -->
+        <nav>
+            <ul>
+                <!-- Start brand name -->
+                <li class="brandName">
+                    <a href="index.html">
+                        <span class="navIcon"><ion-icon name="person-sharp"></ion-icon></span>
+                        <span class="navTitle">সাদিক</span>
+                    </a>
+                </li>
+                <!-- End brand name -->
+
+                <li>
+                    <a href="index.html">
+                        <span class="navIcon"><ion-icon name="grid-sharp"></ion-icon></span>
+                        <span class="navTitle"> ড্যাশবোর্ড </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="newOrder.html">
+                        <span class="navIcon"><ion-icon name="add-outline"></ion-icon></span>
+                        <span class="navTitle"> নতুন অর্ডার </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="orderList.html">
+                        <span class="navIcon"><ion-icon name="list-outline"></ion-icon></span>
+                        <span class="navTitle"> অর্ডার লিস্ট </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="bulkOrder.html">
+                        <span class="navIcon"><ion-icon name="document-text-outline"></ion-icon></span>
+                        <span class="navTitle"> বাল্ক অর্ডার  </span>
+                    </a>
+                </li>
+                <!-- <li class="parent">
+                    <a href="#">
+                        <span class="navIcon"><ion-icon name="square-sharp"></ion-icon></span>
+                        <span class="navTitle">Tables</span>
+                    </a>
+                    <ion-icon name="caret-down-outline"></ion-icon>
+                </li> -->
+                <li>
+                    <a href="serviceCharge.html">
+                        <span class="navIcon"><ion-icon name="cash-outline"></ion-icon></span>
+                        <span class="navTitle"> সার্ভিসের চার্জ </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="codCollection.html">
+                        <span class="navIcon"><ion-icon name="wallet-outline"></ion-icon></span>
+                        <span class="navTitle"> COD কালেকশন </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="billPay.html">
+                        <span class="navIcon"><ion-icon name="bookmark-outline"></ion-icon></span>
+                        <span class="navTitle"> বিল পে </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="paymentStatement.html">
+                        <span class="navIcon"><ion-icon name="receipt-outline"></ion-icon></span>
+                        <span class="navTitle"> পেমেন্ট স্টেটমেন্ট </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="orderTracking.html">
+                        <span class="navIcon"><ion-icon name="analytics-outline"></ion-icon></span>
+                        <span class="navTitle"> অর্ডার ট্র্যাকিং </span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="shipmentCharge.html">
+                        <span class="navIcon"><ion-icon name="pricetag-outline"></ion-icon></span>
+                        <span class="navTitle"> শিপমেন্ট চার্জ </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="complain.html">
+                        <span class="navIcon"><ion-icon name="alert-circle-outline"></ion-icon></span>
+                        <span class="navTitle"> কমপ্লেইন </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="marchantFeedback.html">
+                        <span class="navIcon"><ion-icon name="megaphone-outline"></ion-icon></span>
+                        <span class="navTitle"> মার্চেন্ট ফিডব্যাক </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="reffer.html">
+                        <span class="navIcon"><ion-icon name="code-download-outline"></ion-icon></span>
+                        <span class="navTitle"> রেফার করুন </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- End sidebar -->
+
+
+
+        <main>
+            <!-- Start topbar -->
+            <div class="topbar">
+                <!-- Start toggle and search -->
+                <div class="topbarLeft">
+                    <div class="toggle" onclick="toggleMenu()"><ion-icon name="list-circle"></ion-icon></div>
+                    <div class="search">
+                        <form action="#" method="POST">
+                            <input type="search" placeholder="Search ...">
+                            <button type="submit"><ion-icon name="search-outline"></ion-icon></button>
+                        </form>
+                    </div>
+                </div>
+                <!-- End toggle and search -->
+
+                <div class="topbarright">
+                    <div class="message">
+                        <a href="#"><ion-icon name="chatbox-ellipses-sharp"></ion-icon></a>
+                        <div class="messageDropdown">
+                            <a href="#">Message goes from here</a>
+                            <a href="#">Message goes from here</a>
+                            <a href="#">Message goes from here</a>
+                            <a href="#">Message goes from here</a>
+                        </div>
+                    </div>
+                    <div class="notification">
+                        <a href="#"><ion-icon name="notifications-sharp"></ion-icon></a>
+                        <div class="notiDropdown">
+                            <a href="#">Notification goes from here</a>
+                            <a href="#">Notification goes from here</a>
+                            <a href="#">Notification goes from here</a>
+                            <a href="#">Notification goes from here</a>
+                        </div>
+                    </div>
+                    <div class="userInfo">
+                        <a href="#"><img src="/img/user/user1.jpg" alt=""></a>
+                        <div class="userDropdown">
+                            <a href="#">Profile</a>
+                            <a href="#">Settings</a>
+                            <span class="divider"></span>
+                            <a href="#">logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End topbar -->
+
+            <!-- Page title -->
+            <div class="pageTitle">
+                <h3> শিপমেন্ট চার্জ </h3>
+                <div class="customBreadcumb">
+                    <a href="index.html"> ড্যাশবোর্ড </a> /
+                    <a class="active"> শিপমেন্ট চার্জ </a>
+                </div>
+            </div>
+            <div class="pageMainWrapper">
+            <!-- ----------------------------------------------------- -->
+            <!-- ----------- Main content start from here ------------ -->
+            <!-- ----------------------------------------------------- -->
+            <div class="container-fluid mb-4">
+                <div class="card orderList">
+                    <div class="card-header"> <h4 class="orderTitle"> কোথায় ডেলিভারি করবেন? </h4> </div>
+                    <div class="card-body">
+                        <form class="row" action="#" method="POST">
+                            <div class="col-sm-12 col-md-4 mb-3">
+                                <label for="insDistrict" class="form-label">জেলা নির্বাচন করুন</label>
+                                <select id="insDistrict" class="form-select">
+                                    <option>ময়মনসিংহ</option>
+                                    <option> জামালপুর </option>
+                                    <option> শেরপুর </option>
+                                    <option> নেত্রকোনা </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-4 mb-3">
+                                <label for="insDistrict" class="form-label"> থানা নির্বাচন করুন </label>
+                                <select id="insDistrict" class="form-select">
+                                    <option> ত্রিশাল </option>
+                                    <option> ময়ননসিংহ সদর </option>
+                                    <option> ভালুকা </option>
+                                    <option> হালুয়াঘাট </option>
+                                    <option> ফুলবাড়িয়া </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="insDistrict" class="form-label"> ইউনিয়ন নির্বাচন করুন </label>
+                                <select id="insDistrict" class="form-select">
+                                    <option> মঠবাড়ী </option>
+                                    <option> বইলর </option>
+                                    <option> ধানিখোলা </option>
+                                    <option> সাখুয়া </option>
+                                    <option> আমিরাবাদ </option>
+                                    <option> মুক্ষ্যপুর </option>
+                                </select>
+                            </div>
+                        </form>
+                        <h4 class="orderTitle mt-3"> শিপমেন্ট চার্জের তালিকা </h4>
+                        <div class="table-responsive">
+                            <table class="table" style="min-width: 1000px;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"> ক্রমিক নং </th>
+                                        <th scope="col"> টাইটেল </th>
+                                        <th scope="col"> টাইটেল </th>
+                                        <th scope="col"> টাইটেল </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"> ১ </th>
+                                        <td> xxxxx </td>
+                                        <td> xxxxx </td>
+                                        <td> xxxxx </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"> ২ </th>
+                                        <td> xxxxx </td>
+                                        <td> xxxxx </td>
+                                        <td> xxxxx </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"> ৩ </th>
+                                        <td> xxxxx </td>
+                                        <td> xxxxx </td>
+                                        <td> xxxxx </td>
+                                    </tr>
+                                </tbody>
+                              </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- ----------------------------------------------------- -->
+            <!-- ---------------- End Main Content ------------------- -->
+            <!-- ----------------------------------------------------- -->
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
