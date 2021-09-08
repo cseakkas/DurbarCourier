@@ -24,7 +24,7 @@ import random, string, os
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.auth.decorators import login_required
 import hashlib, socket
-import random
+
 
 def homepage(request):
     
