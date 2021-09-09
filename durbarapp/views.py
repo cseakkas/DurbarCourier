@@ -31,26 +31,74 @@ def homepage(request):
     return render (request, 'durbarapp/index.html')
 
 def merchant_login(request):
-    if request.method=="POST":  
-        login_data = models.MerchantInfo.objects.filter(email = request.POST['email'], password = request.POST['password'] )  
-        if login_data:
-            request.session['userid'] = login_data[0].id 
-            return redirect('/merchant-dashboard/')
-        else:
-            return redirect('/')
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
 
+        user = models.MerchantInfo.objects.filter(email = email,password = password).first()
+        
+        if user is None:
+            messages.warning(request, "Wrong Information")
+            return render(request,'durbarapp/merchant_login.html')
+        request.session['id'] = user.id
+        return redirect('/merchant-dashboard/')  
     return render (request, 'durbarapp/merchant_login.html')
 
 def merchant_dashboard(request): 
-    if request.session['userid'] == False:
-        return redirect('/')
+    if request.session['id'] == False:
+        return redirect('merchant-login')
+     
+
+    return render (request, 'merchant_dashboard/index.html')
+
+def merchant_register(request):
+    if request.method == 'POST':
+        marchant_name = request.POST.get('marchant_name')
+        address = request.POST.get('address')
+        contact_no1 = request.POST.get('contact_no1')
+        contact_no2 = request.POST.get('contact_no2')
+        logo = ""
+        if bool(request.FILES.get('logo', False)) == True:
+            file = request.FILES['logo']
+            logo = "merchant_register/"+file.name
+            if not os.path.exists(settings.MEDIA_ROOT+"merchant_register/"):
+                os.mkdir(settings.MEDIA_ROOT+"merchant_register/")
+            default_storage.save(settings.MEDIA_ROOT+"merchant_register/"+file.name, ContentFile(file.read()))
+
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        new_md5_obj     = hashlib.md5(password.encode())
+        new_enc_pass    = new_md5_obj.hexdigest() 
+
+        check_user = models.MerchantInfo.objects.filter(email = email).first()
+        
+        if check_user:
+            messages.warning(request, "User already exist")
+            return render(request,'durbarapp/merchant_login.html' )
+            
+        models.MerchantInfo.objects.create(
+            email = email ,
+            marchant_name = marchant_name, 
+            address = address, 
+            contact_no1 = contact_no1, 
+            contact_no2 = contact_no2, 
+            logo = logo, 
+           
+            password = new_enc_pass
+            )
+        messages.success(request, "Registration Successfull") 
+    return render (request, 'durbarapp/register.html')
+
+def merchant_dashboard(request): 
+    if request.session['id'] == False:
+        return redirect('merchant-login')
      
 
     return render (request, 'merchant_dashboard/index.html')
 
  
 def merchant_logout(request):
-    request.session['userid'] = False
+    request.session['id'] = False
     return redirect('/')
 
 
