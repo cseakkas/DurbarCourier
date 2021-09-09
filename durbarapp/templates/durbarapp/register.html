@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard || Register</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="css/responsive.css">
-</head>
-<body>
-    
+{% extends 'durbarapp/base.html' %} 
+{% block title %} Login  {% endblock %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %} 
     <div class="loginWrapper">
         <div>
             <div class="loginText">
@@ -26,15 +17,43 @@
                 <p>Or Be Classical</p>
             </div>
             <div class="loginForm">
-                <form>
+                <form method="POST" enctype="multipart/form-data">{% csrf_token %}
                     <div class="mb-3">
-                      <input type="text" name="name" class="form-control" id="loginFullName" placeholder="Full Name">
+                      <input type="text" name="marchant_name" class="form-control" id="loginFullName" placeholder="Full Name">
                     </div>
                     <div class="mb-3">
                       <input type="email" name="email" class="form-control" id="loginEmail" placeholder="Email Address">
                     </div>
                     <div class="mb-3">
-                      <input type="number" name="phone" class="form-control" id="loginphone" placeholder="Phone Number">
+                      <input type="number" name="contact_no1" class="form-control" id="loginphone" placeholder="Primary Phone Number">
+                    </div>
+                    <div class="mb-3">
+                      <input type="number" name="contact_no2" class="form-control" id="loginphone" placeholder="Secondary Phone Number">
+                    </div>
+                    <div class="mb-3">
+                      <input type="password" name="password" class="form-control" id="loginPass" placeholder="Password">
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" name="address" class="form-control" id="address" placeholder="Address">
+                    </div>
+                    <div class="mb-3">
+                      <label for="name">District Name<span class="form-control">*</span></label>
+                      <select name="district_name">
+                                    {% for cat in District|districtreg %}
+                                        <option value="{{ cat.id }}" >{{cat.district_name_bangla}}</option>
+                                    {% endfor %}
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="name">Upazilla Name<span class="form-control">*</span></label>
+                      <select name="upazilla_name">
+                                    {% for scat in Upazilla|upazillareg %}
+                                        <option value="{{ scat.id }}" >{{scat.upazilla_name_bangla}}</option>
+                                    {% endfor %}
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <input type="file" name="logo" class="form-control" id="logo" placeholder="Logo">
                     </div>
                     <div class="mb-3">
                       <input type="password" name="password" class="form-control" id="loginPass" placeholder="Password">
@@ -48,10 +67,4 @@
             </div>
         </div>
     </div>
-
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="/js/script.js"></script>
-</body>
-</html>
+{% endblock %}
