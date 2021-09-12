@@ -52,42 +52,13 @@ def merchant_dashboard(request):
     return render (request, 'merchant_dashboard/index.html')
 
 def merchant_register(request):
-    if request.method == 'POST':
-        marchant_name = request.POST.get('marchant_name')
-        address = request.POST.get('address')
-        contact_no1 = request.POST.get('contact_no1')
-        contact_no2 = request.POST.get('contact_no2')
-        logo = ""
-        if bool(request.FILES.get('logo', False)) == True:
-            file = request.FILES['logo']
-            logo = "merchant_register/"+file.name
-            if not os.path.exists(settings.MEDIA_ROOT+"merchant_register/"):
-                os.mkdir(settings.MEDIA_ROOT+"merchant_register/")
-            default_storage.save(settings.MEDIA_ROOT+"merchant_register/"+file.name, ContentFile(file.read()))
-
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        new_md5_obj     = hashlib.md5(password.encode())
-        new_enc_pass    = new_md5_obj.hexdigest() 
-
-        check_user = models.MerchantInfo.objects.filter(email = email).first()
-        
-        if check_user:
-            messages.warning(request, "User already exist")
-            return render(request,'durbarapp/merchant_login.html' )
-            
-        models.MerchantInfo.objects.create(
-            email = email ,
-            marchant_name = marchant_name, 
-            address = address, 
-            contact_no1 = contact_no1, 
-            contact_no2 = contact_no2, 
-            logo = logo, 
-           
-            password = new_enc_pass
-            )
-        messages.success(request, "Registration Successfull") 
-    return render (request, 'durbarapp/register.html')
+    district_list = models.DistrictEntry.objects.filter(status = True) 
+    for data in district_list:
+        print(data.id)
+    context ={
+        'district_list':district_list,
+    }
+    return render (request, 'durbarapp/register.html', context)
 
 def merchant_dashboard(request): 
     if request.session['id'] == False:
@@ -102,8 +73,26 @@ def merchant_logout(request):
     return redirect('/')
 
 
+ 
 
+def bind_upozilla(request):
+    print("Test 111")
+    district_id   = request.GET.get('district_id')
+      
+    district_wise_upozilla = models.UpozillaEntry.objects.filter(district_name_id = district_id)
+    context = {
+        'district_wise_upozilla': district_wise_upozilla,
+    }
+    return render(request, 'durbarapp/bind_district_wise_upo.html', context)
 
+# def bind_upozilla_wise_postoffice(request):
+#     upozilla_name   = int(request.GET.get('upozilla_name', None))
+#     upozilla_wise_post = models.PostOfficeInfo.objects.filter(upozilla_name_id = upozilla_name)
+    
+#     context = {
+#         'upozilla_wise_post': upozilla_wise_post,
+#     }
+#     return render(request, 'durbarapp/bind_post_office.html', context)
 
 
 

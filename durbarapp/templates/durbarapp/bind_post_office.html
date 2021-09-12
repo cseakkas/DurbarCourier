@@ -1,0 +1,5 @@
+<option value="">Post Office/Area</option> 
+{% for post in upozilla_wise_post %}
+    <option value="{{post.pk}}">{{ post.post_office_bangla }} - {{ post.post_office_english }} </option>
+{% endfor %}
+<option value="1">অন্যান্য - Others</option>

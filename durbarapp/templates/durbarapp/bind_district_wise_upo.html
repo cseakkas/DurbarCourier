@@ -1,0 +1,4 @@
+<option value="">Upazila</option>
+{% for upozilla in district_wise_upozilla %} 
+    <option value="{{ upozilla.pk }}"> {{ upozilla.upozilla_name_bangla }} - {{ upozilla.upozilla_name_english}} </option>
+{% endfor %}

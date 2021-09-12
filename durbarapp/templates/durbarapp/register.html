@@ -1,86 +1,95 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard || Register</title> 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="css/responsive.css">
-</head>
-<body>
-    
-=======
 {% extends 'durbarapp/base.html' %} 
-{% block title %} Login  {% endblock %}
+{% block title %} Register {% endblock %}
 {% load staticfiles %}
 {% load data_load %}
 {% block content %} 
->>>>>>> 79a5d25cc10216e3b67b9b3ec1428deb90688d9b
-    <div class="loginWrapper">
-        <div>
-            <div class="loginText">
-                <h4>Register</h4>
-                <div class="brandLogin">
-                    <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
-                    <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
-                    <a href="#"><ion-icon name="logo-google"></ion-icon></a>
-                </div>
-            </div>
-            <div class="orLogin">
-                <p>Or Be Classical</p>
-            </div>
-            <div class="loginForm">
-                <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-                    <div class="mb-3">
-                      <input type="text" name="marchant_name" class="form-control" id="loginFullName" placeholder="Full Name">
-                    </div>
-                    <div class="mb-3">
-                      <input type="email" name="email" class="form-control" id="loginEmail" placeholder="Email Address">
-                    </div>
-                    <div class="mb-3">
-                      <input type="number" name="contact_no1" class="form-control" id="loginphone" placeholder="Primary Phone Number">
-                    </div>
-                    <div class="mb-3">
-                      <input type="number" name="contact_no2" class="form-control" id="loginphone" placeholder="Secondary Phone Number">
-                    </div>
-                    <div class="mb-3">
-                      <input type="password" name="password" class="form-control" id="loginPass" placeholder="Password">
-                    </div>
-                    <div class="mb-3">
-                      <input type="text" name="address" class="form-control" id="address" placeholder="Address">
-                    </div>
-                    <div class="mb-3">
-                      <label for="name">District Name<span class="form-control">*</span></label>
-                      <select name="district_name">
-                                    {% for cat in District|districtreg %}
-                                        <option value="{{ cat.id }}" >{{cat.district_name_bangla}}</option>
-                                    {% endfor %}
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="name">Upazilla Name<span class="form-control">*</span></label>
-                      <select name="upazilla_name">
-                                    {% for scat in Upazilla|upazillareg %}
-                                        <option value="{{ scat.id }}" >{{scat.upazilla_name_bangla}}</option>
-                                    {% endfor %}
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <input type="file" name="logo" class="form-control" id="logo" placeholder="Logo">
-                    </div>
-                    <div class="mb-3">
-                      <input type="password" name="password" class="form-control" id="loginPass" placeholder="Password">
-                    </div>
-                    <div class="mb-3 form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                      <label class="form-check-label" for="exampleCheck1">Remember password</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Register</button>
-                  </form>
-            </div>
-        </div>
+
+ <style>
+   .loginForm{
+     margin-top: 50px;
+     background:#f2f2f2;
+     margin-bottom: 30px;
+     padding: 30px;
+   }
+   .customer_registration_field{width:48%;float:left;margin-right:2%;}
+ </style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="loginForm">
+        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+          <!-- <div class="mb-3 customer_registration_field">
+            <input type="text" name="marchant_name" class="form-control" id="loginFullName" placeholder="Full Name">
+          </div>
+          <div class="mb-3 customer_registration_field">
+            <input type="email" name="email" class="form-control" id="loginEmail" placeholder="Email Address">
+          </div>
+          <div class="mb-3 customer_registration_field">
+            <input type="number" name="contact_no1" class="form-control" id="loginphone" placeholder="Primary Phone Number">
+          </div>
+          <div class="mb-3 customer_registration_field">
+            <input type="number" name="contact_no2" class="form-control" id="loginphone" placeholder="Secondary Phone Number">
+          </div>
+          <div class="mb-3 customer_registration_field">
+            <input type="password" name="password" class="form-control" id="loginPass" placeholder="Password">
+          </div>
+          <div class="mb-3 customer_registration_field">
+            <input type="text" name="address" class="form-control" id="address" placeholder="Address">
+          </div> -->
+          <div class="mb-3 customer_registration_field">
+            <label>District Name</label>
+            <select name="district_name" id="district_name" class="form-control">
+              {% for dist in district_list %}
+                  <option value="{{dist.pk}}">{{dist.district_name_bangla}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3 customer_registration_field">
+            <label for="name">Upazilla Name </label>
+            <select name="upazilla_name" class="form-control">
+              {% for scat in Upazilla|upazillareg %}
+                <option value="{{scat.pk}}">{{scat.upazilla_name_bangla}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <!-- <div class="mb-3 customer_registration_field">
+            <input type="file" name="logo" class="form-control" id="logo" placeholder="Logo">
+          </div>
+          <div class="mb-3 customer_registration_field">
+            <input type="password" name="password" class="form-control" id="loginPass" placeholder="Password">
+          </div>
+          <div class="mb-3 customer_registration_field form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Remember password</label>
+          </div> -->
+          <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+      </div>
     </div>
+  </div>
+</div>
+ 
+
+
+<script src="{% static 'durbarapp/js/jquery.js' %}"></script>
+
+<script>
+    $('#district_name').change(function(){ 
+      var district_id = $('#district_name').val(); 
+      var url = "/bindupozilla/"; 
+      $.ajax({
+        url: url,
+        type: 'get',
+        date :{
+          'district_id':district_id,
+        },
+        success : function (data) {
+          alert(data);
+        }
+      });
+  });
+</script>
+
+
 {% endblock %}
