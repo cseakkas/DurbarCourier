@@ -19,7 +19,7 @@
     <div class="col-sm-12">
       <div class="loginForm">
         <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-          <!-- <div class="mb-3 customer_registration_field">
+          <div class="mb-3 customer_registration_field">
             <input type="text" name="marchant_name" class="form-control" id="loginFullName" placeholder="Full Name">
           </div>
           <div class="mb-3 customer_registration_field">
@@ -36,8 +36,8 @@
           </div>
           <div class="mb-3 customer_registration_field">
             <input type="text" name="address" class="form-control" id="address" placeholder="Address">
-          </div> -->
-          <div class="mb-3 customer_registration_field">
+          </div> 
+          {% comment %} <div class="mb-3 customer_registration_field">
             <label>District Name</label>
             <select name="district_name" id="district_name" class="form-control">
               {% for dist in district_list %}
@@ -52,8 +52,8 @@
                 <option value="{{scat.pk}}">{{scat.upazilla_name_bangla}}</option>
               {% endfor %}
             </select>
-          </div>
-          <!-- <div class="mb-3 customer_registration_field">
+          </div> {% endcomment %}
+          <div class="mb-3 customer_registration_field">
             <input type="file" name="logo" class="form-control" id="logo" placeholder="Logo">
           </div>
           <div class="mb-3 customer_registration_field">
@@ -62,7 +62,7 @@
           <div class="mb-3 customer_registration_field form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Remember password</label>
-          </div> -->
+          </div> 
           <button type="submit" class="btn btn-primary">Register</button>
         </form>
       </div>

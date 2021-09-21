@@ -1,0 +1,4 @@
+<option value="">---select Upazilla---</option>
+{% for course in courses %}
+    <option value="{{ course.pk }}">{{ course.upazilla_name_english }}</option>
+{% endfor %}

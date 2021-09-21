@@ -127,7 +127,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT=os.path.join(BASE_DIR, 'dubarapp/static/')
-MEDIA_ROOT=os.path.join(BASE_DIR, 'dubarapp/static/blogapp/media/')
+MEDIA_ROOT=os.path.join(BASE_DIR, 'durbarapp/static/durbarapp/media/')
 MEDIA_URL = '/media/'
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'

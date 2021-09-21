@@ -50,30 +50,16 @@
         </div>
         <div class="container">
             <div class="row no-gutters">
+            {% for service in services %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <a href="#" class="singleItem">
-                        <i class="fas fa-laptop-house icon"></i>
-                        <h4 class="text">eCommerce Delivery</h4>
+                        <i class="{{service.service_icon}}"></i>
+                        <h4 class="text">{{service.service_title}}</h4>
                     </a>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <a href="#" class="singleItem">
-                        <i class="fas fa-truck icon"></i>
-                        <h4 class="text">Pick and Drop</h4>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <a href="#" class="singleItem">
-                        <i class="fas fa-store-alt icon"></i>
-                        <h4 class="text">Warehousing</h4>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <a href="#" class="singleItem">
-                        <i class="fas fa-shopping-bag icon"></i>
-                        <h4 class="text">Packaging</h4>
-                    </a>
-                </div>
+            {% endfor %}
+                
+             
             </div>
         </div>
     </section>
@@ -89,42 +75,16 @@
         </div>
         <div class="container">
             <div class="row no-gutters">
+            {% for whybest in best %}
                 <div class="col-md-6">
                     <a href="#" class="singleItem">
-                        <i class="fas fa-truck-loading icon"></i>
-                        <h4 class="text">Daily Pick up, No limitations</h4>
+                        <i class="{{whybest.icon}}"></i>
+                        <h4 class="text">{{whybest.cause}}</h4>
                     </a>
                 </div>
-                <div class="col-md-6">
-                    <a href="#" class="singleItem">
-                        <i class="fas fa-money-check-alt icon"></i>
-                        <h4 class="text">Faster Payment Service</h4>
-                    </a>
-                </div>
-                <div class="col-md-6">
-                    <a href="#" class="singleItem">
-                        <i class="far fa-clock icon"></i>
-                        <h4 class="text">Real-Time Tracking</h4>
-                    </a>
-                </div>
-                <div class="col-md-6">
-                    <a href="#" class="singleItem">
-                        <i class="fas fa-file-invoice-dollar icon"></i>
-                        <h4 class="text">Cash on Delivery</h4>
-                    </a>
-                </div>
-                <div class="col-md-6">
-                    <a href="#" class="singleItem">
-                        <i class="fas fa-laptop icon"></i>
-                        <h4 class="text">Online Management</h4>
-                    </a>
-                </div>
-                <div class="col-md-6">
-                    <a href="#" class="singleItem">
-                        <i class="fas fa-headset icon"></i>
-                        <h4 class="text">Advanced Customer Service</h4>
-                    </a>
-                </div>
+            {% endfor %}
+                
+                
             </div>
         </div>
     </section>
@@ -144,101 +104,134 @@
             <div class="row">
                 <div class="col">
                     <ul class="nav nav-pills text-center" id="myTab" role="tablist">
+                    {% comment %} {% regroup deliverycharge by delivery_charge_location as delivery_charge_location_list %}
+                    {% for location in delivery_charge_location_list %}
                         <li class="nav-item">
-                            <a class="nav-link active" id="insideCity-tab" data-toggle="tab" href="#insideCity" role="tab" aria-controls="insideCity" aria-selected="true">Inside City</a>
+                            <a class="nav-link active" id="1-tab" data-toggle="tab" href="#1" role="tab" aria-controls="1" aria-selected="true">{{location.grouper}}</a>
                         </li>
+                    {% endfor %} {% endcomment %}
+                    {% regroup deliverycharge by delivery_charge_location as delivery_charge_location_list %}
+                    {% for location in delivery_charge_location_list %}
+                    {% if forloop.first %}
                         <li class="nav-item">
-                            <a class="nav-link" id="citySub-tab" data-toggle="tab" href="#citySub" role="tab" aria-controls="citySub" aria-selected="false">City Suburb</a>
-                        </li>
+                                <a class="nav-link active" id="insideCity-tab1" data-toggle="tab" href="#location_wise_charge_{{location.0.id}}" role="tab" aria-controls="insideCity" aria-selected="true">{{location.grouper}}</a>
+                            </li>
+                    {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" id="outSideCity-tab" data-toggle="tab" href="#outSideCity" role="tab" aria-controls="outSideCity" aria-selected="false">Outside City</a>
-                        </li>
+                                <a class="nav-link " id="insideCity-tab1" data-toggle="tab" href="#location_wise_charge_{{location.0.id}}" role="tab" aria-controls="insideCity" aria-selected="true">{{location.grouper}}</a>
+                            </li>
+                    {% endif %}
+                        
+                        
+                        {% comment %} {% if  forloop.counter == 1 %}
+                            <li class="nav-item">
+                                <a class="nav-link active" id="insideCity-tab1" data-toggle="tab" href="#insideCity" role="tab" aria-controls="insideCity" aria-selected="true">{{location.grouper}}</a>
+                            </li>
+                        {% endif %}
+                        {% if  forloop.counter == 2 %}
+                            <li class="nav-item">
+                                <a class="nav-link" id="citySub-tab" data-toggle="tab" href="#citySub" role="tab" aria-controls="citySub" aria-selected="false">{{location.grouper}}</a>
+                            </li>
+                        {% endif %}
+                        {% if  forloop.counter == 3 %}
+                            <li class="nav-item">
+                                <a class="nav-link" id="outSideCity-tab" data-toggle="tab" href="#outSideCity" role="tab" aria-controls="outSideCity" aria-selected="false">{{location.grouper}}</a>
+                            </li>
+                        {% endif %} {% endcomment %}
+                    {% endfor %}
                     </ul>
                     <div class="tab-content" id="myTabContent">
+                    
+                    {% for location in delivery_charge_location_list  %}
+                    {% if forloop.first %}
+                        <div class="tab-pane fade show active" id="location_wise_charge_{{location.0.id}}" role="tabpanel" aria-labelledby="insideCity-tab">
+                            <div class="row no-gutters">
+
+                                {% for charge in location.list|slice:"4" %}
+                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                        <div class="item">
+                                            <p>{{charge.delivery_charge_weight}}</p>
+                                            <h4>৳{{charge.cost}}+ {{charge.COD_persent}}% COD</h4>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                
+                                
+
+                            </div>
+                        </div>
+                    {% else %}
+                          <div class="tab-pane fade show " id="location_wise_charge_{{location.0.id}}" role="tabpanel" aria-labelledby="insideCity-tab">
+                            <div class="row no-gutters">
+
+                                {% for charge in location.list|slice:"4" %}
+                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                        <div class="item">
+                                            <p>{{charge.delivery_charge_weight}}</p>
+                                            <h4>৳{{charge.cost}}+ {{charge.COD_persent}}% COD</h4>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                
+                                
+
+                            </div>
+                        </div>
+                    {% endif %}
+                  
+                    {% comment %} {% if  forloop.counter == 1 %}
                         <div class="tab-pane fade show active" id="insideCity" role="tabpanel" aria-labelledby="insideCity-tab">
                             <div class="row no-gutters">
-                                <div class="col-lg-3 col-md-6 col-sm-6">
-                                    <div class="item">
-                                        <p>Upto 1 kg</p>
-                                        <h4>৳100 + 1% COD</h4>
+
+                                {% for charge in location.list %}
+                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                        <div class="item">
+                                            <p>{{charge.delivery_charge_weight}}</p>
+                                            <h4>৳{{charge.cost}}+ {{charge.COD_persent}}% COD</h4>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6 col-sm-6">
-                                    <div class="item">
-                                        <p>Upto 1 kg</p>
-                                        <h4>৳100 + 1% COD</h4>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6 col-sm-6">
-                                    <div class="item">
-                                        <p>2 kg to 3 kg</p>
-                                        <h4>৳130 + 1% COD</h4>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6 col-sm-6">
-                                    <div class="item">
-                                        <p>3 kg to 4 kg</p>
-                                        <h4>৳145 + 1% COD</h4>
-                                    </div>
-                                </div>
+                                {% endfor %}
+                                
+                                
+
                             </div>
                         </div>
+                        {% endif %}
+                        {% if  forloop.counter == 2 %}
                         <div class="tab-pane fade" id="citySub" role="tabpane2" aria-labelledby="citySub-tab">
                             <div class="row no-gutters">
-                                <div class="col-lg-3 col-md-6 col-sm-6">
-                                    <div class="item">
-                                        <p>Upto 1 kg</p>
-                                        <h4>৳100 + 1% COD</h4>
+
+                                {% for charge in location.list %}
+                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                        <div class="item">
+                                            <p>{{charge.delivery_charge_weight}}</p>
+                                            <h4>৳{{charge.cost}}+ {{charge.COD_persent}}% COD</h4>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6 col-sm-6">
-                                    <div class="item">
-                                        <p>Upto 1 kg</p>
-                                        <h4>৳100 + 1% COD</h4>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6 col-sm-6">
-                                    <div class="item">
-                                        <p>2 kg to 3 kg</p>
-                                        <h4>৳130 + 1% COD</h4>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6 col-sm-6">
-                                    <div class="item">
-                                        <p>3 kg to 4 kg</p>
-                                        <h4>৳145 + 1% COD</h4>
-                                    </div>
-                                </div>
+                                {% endfor %}
+                                
+                                
+
                             </div>
                         </div>
+                        {% endif %}
+                        {% if  forloop.counter == 3 %}
                         <div class="tab-pane fade" id="outSideCity" role="tabpane2" aria-labelledby="outSideCity-tab">
                             <div class="row no-gutters">
-                                <div class="col-lg-3 col-md-6 col-sm-6">
-                                    <div class="item">
-                                        <p>Upto 1 kg</p>
-                                        <h4>৳100 + 1% COD</h4>
+
+                               {% for charge in location.list %}
+                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                        <div class="item">
+                                            <p>{{charge.delivery_charge_weight}}</p>
+                                            <h4>৳{{charge.cost}}+ {{charge.COD_persent}}% COD</h4>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6 col-sm-6">
-                                    <div class="item">
-                                        <p>Upto 1 kg</p>
-                                        <h4>৳100 + 1% COD</h4>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6 col-sm-6">
-                                    <div class="item">
-                                        <p>2 kg to 3 kg</p>
-                                        <h4>৳130 + 1% COD</h4>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6 col-sm-6">
-                                    <div class="item">
-                                        <p>3 kg to 4 kg</p>
-                                        <h4>৳145 + 1% COD</h4>
-                                    </div>
-                                </div>
+                                {% endfor %}
+                                
                             </div>
                         </div>
+                        {% endif %} {% endcomment %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>

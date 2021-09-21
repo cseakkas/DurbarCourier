@@ -1,168 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> নতুন অর্ডার </title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    
-</head>
-<body>
-    
-    <div class="mainWrapper">
-        <!-- Start sidebar -->
-        <nav>
-            <ul>
-                <!-- Start brand name -->
-                <li class="brandName">
-                    <a href="index.html">
-                        <span class="navIcon"><ion-icon name="person-sharp"></ion-icon></span>
-                        <span class="navTitle">সাদিক</span>
-                    </a>
-                </li>
-                <!-- End brand name -->
-
-                <li>
-                    <a href="index.html">
-                        <span class="navIcon"><ion-icon name="grid-sharp"></ion-icon></span>
-                        <span class="navTitle"> ড্যাশবোর্ড </span>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="newOrder.html">
-                        <span class="navIcon"><ion-icon name="add-outline"></ion-icon></span>
-                        <span class="navTitle"> নতুন অর্ডার </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="orderList.html">
-                        <span class="navIcon"><ion-icon name="list-outline"></ion-icon></span>
-                        <span class="navTitle"> অর্ডার লিস্ট </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="bulkOrder.html">
-                        <span class="navIcon"><ion-icon name="document-text-outline"></ion-icon></span>
-                        <span class="navTitle"> বাল্ক অর্ডার  </span>
-                    </a>
-                </li>
-                <!-- <li class="parent">
-                    <a href="#">
-                        <span class="navIcon"><ion-icon name="square-sharp"></ion-icon></span>
-                        <span class="navTitle">Tables</span>
-                    </a>
-                    <ion-icon name="caret-down-outline"></ion-icon>
-                </li> -->
-                <li>
-                    <a href="serviceCharge.html">
-                        <span class="navIcon"><ion-icon name="cash-outline"></ion-icon></span>
-                        <span class="navTitle"> সার্ভিসের চার্জ </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="codCollection.html">
-                        <span class="navIcon"><ion-icon name="wallet-outline"></ion-icon></span>
-                        <span class="navTitle"> COD কালেকশন </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="billPay.html">
-                        <span class="navIcon"><ion-icon name="bookmark-outline"></ion-icon></span>
-                        <span class="navTitle"> বিল পে </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="paymentStatement.html">
-                        <span class="navIcon"><ion-icon name="receipt-outline"></ion-icon></span>
-                        <span class="navTitle"> পেমেন্ট স্টেটমেন্ট </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="orderTracking.html">
-                        <span class="navIcon"><ion-icon name="analytics-outline"></ion-icon></span>
-                        <span class="navTitle"> অর্ডার ট্র্যাকিং </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="shipmentCharge.html">
-                        <span class="navIcon"><ion-icon name="pricetag-outline"></ion-icon></span>
-                        <span class="navTitle"> শিপমেন্ট চার্জ </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="complain.html">
-                        <span class="navIcon"><ion-icon name="alert-circle-outline"></ion-icon></span>
-                        <span class="navTitle"> কমপ্লেইন </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="marchantFeedback.html">
-                        <span class="navIcon"><ion-icon name="megaphone-outline"></ion-icon></span>
-                        <span class="navTitle"> মার্চেন্ট ফিডব্যাক </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="reffer.html">
-                        <span class="navIcon"><ion-icon name="code-download-outline"></ion-icon></span>
-                        <span class="navTitle"> রেফার করুন </span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <!-- End sidebar -->
-
-
-
-        <main>
-            <!-- Start topbar -->
-            <div class="topbar">
-                <!-- Start toggle and search -->
-                <div class="topbarLeft">
-                    <div class="toggle" onclick="toggleMenu()"><ion-icon name="list-circle"></ion-icon></div>
-                    <div class="search">
-                        <form action="#" method="POST">
-                            <input type="search" placeholder="Search ...">
-                            <button type="submit"><ion-icon name="search-outline"></ion-icon></button>
-                        </form>
-                    </div>
-                </div>
-                <!-- End toggle and search -->
-
-                <div class="topbarright">
-                    <div class="message">
-                        <a href="#"><ion-icon name="chatbox-ellipses-sharp"></ion-icon></a>
-                        <div class="messageDropdown">
-                            <a href="#">Message goes from here</a>
-                            <a href="#">Message goes from here</a>
-                            <a href="#">Message goes from here</a>
-                            <a href="#">Message goes from here</a>
-                        </div>
-                    </div>
-                    <div class="notification">
-                        <a href="#"><ion-icon name="notifications-sharp"></ion-icon></a>
-                        <div class="notiDropdown">
-                            <a href="#">Notification goes from here</a>
-                            <a href="#">Notification goes from here</a>
-                            <a href="#">Notification goes from here</a>
-                            <a href="#">Notification goes from here</a>
-                        </div>
-                    </div>
-                    <div class="userInfo">
-                        <a href="#"><img src="/img/user/user1.jpg" alt=""></a>
-                        <div class="userDropdown">
-                            <a href="#">Profile</a>
-                            <a href="#">Settings</a>
-                            <span class="divider"></span>
-                            <a href="#">logout</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End topbar -->
+{% extends 'merchant_dashboard/dash_base.html' %} 
+{% block title %} Dashboard {% endblock %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
 
             <!-- Page title -->
             <div class="pageTitle">
@@ -177,60 +17,52 @@
             <!-- ----------- Main content start from here ------------ -->
             <!-- ----------------------------------------------------- -->
             <div class="container-fluid mb-4">
-                <form action="#" method="POST" class="addOrder">
+                <form action="#" method="POST"  id="indexForm" data-courses-url="{% url 'ajax_load_upazilla' %}" data-coursesx-url="{% url 'ajax_load_post' %}" class="addOrder">{% csrf_token %}
                     <div class="card">
                         <div class="card-header"> <h4 class="orderTitle">কাস্টমারের তথ্য</h4> </div>
                         <div class="card-body">
                             <div class="row mb-3">
                                 <div class="col-sm-12 col-md-4 mb-3">
                                     <label for="cName" class="form-label">কাস্টমারের নাম</label>
-                                    <input type="text" class="form-control" id="cName">
+                                    <input type="text" class="form-control" id="cName" name="customer_name">
                                 </div>
                                 <div class="col-sm-12 col-md-4 mb-3">
                                     <label for="cMobile" class="form-label">মোবাইল নম্বর</label>
-                                    <input type="number" class="form-control" id="cMobile">
+                                    <input type="number" class="form-control" id="cMobile" name="contact_no1">
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label for="altCustomerNumber" class="form-label">বিকল্প মোবাইল নম্বর</label>
-                                    <input type="number" class="form-control" id="altCustomerNumber">
+                                    <input type="number" class="form-control" id="altCustomerNumber" name="contact_no2">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-sm-12 col-md-4 mb-3">
                                     <label for="insDistrict" class="form-label">জেলা নির্বাচন করুন</label>
-                                    <select id="insDistrict" class="form-select">
-                                        <option>ময়মনসিংহ</option>
-                                        <option> জামালপুর </option>
-                                        <option> শেরপুর </option>
-                                        <option> নেত্রকোনা </option>
+                                    <select id="programming" class="form-select" name="district_name">
+                                    <option value="">---Select District---</option>
+                                        {% for i in District|districtreg %}
+                                            <option value="{{i.id}}">{{i.district_name_english}}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                                 <div class="col-sm-12 col-md-4 mb-3">
                                     <label for="insDistrict" class="form-label"> থানা নির্বাচন করুন </label>
-                                    <select id="insDistrict" class="form-select">
-                                        <option> ত্রিশাল </option>
-                                        <option> ময়ননসিংহ সদর </option>
-                                        <option> ভালুকা </option>
-                                        <option> হালুয়াঘাট </option>
-                                        <option> ফুলবাড়িয়া </option>
+                                    <select id="courses" class="form-select" name="upazilla_name">
+                                        
                                     </select>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
-                                    <label for="insDistrict" class="form-label"> ইউনিয়ন নির্বাচন করুন </label>
-                                    <select id="insDistrict" class="form-select">
-                                        <option> মঠবাড়ী </option>
-                                        <option> বইলর </option>
-                                        <option> ধানিখোলা </option>
-                                        <option> সাখুয়া </option>
-                                        <option> আমিরাবাদ </option>
-                                        <option> মুক্ষ্যপুর </option>
+                                    <label for="insDistrict" class="form-label"> পোস্ট-অফিস নির্বাচন করুন </label>
+                                    <select id="courses2" class="form-select" name="post_office_name">
+                                        
+                                        
                                     </select>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <label for="address" class="form-label">বিস্তারিত ঠিকানা (বাড়ি/রোড/গ্রাম/হোল্ডিং)</label>
-                                    <textarea class="form-control" id="address" rows="1"></textarea>
+                                    <textarea class="form-control" id="address" rows="1" name="address"></textarea>
                                 </div>
                             </div>
 
@@ -242,30 +74,30 @@
                             <div class="row my-3">
                                 <div class="col-sm-12 col-md-6 mb-3">
                                     <label for="refNumber" class="form-label">নিজস্ব রেফারেন্স নম্বর / ইনভয়েস</label>
-                                    <input type="text" class="form-control" id="refNumber">
+                                    <input type="text" class="form-control" id="refNumber" name="reference_no">
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <label for="accuratePrice" class="form-label">অ্যাকচুয়াল প্যাকেজ প্রাইস</label>
-                                    <input type="text" class="form-control" id="accuratePrice">
+                                    <input type="text" class="form-control" id="accuratePrice" name="actual_package_price">
                                 </div>
                             </div>
-                            <div class="productCollection mb-3" style="padding-bottom: 3px;">
+                            <div class="productCollection mb-3" style="padding-bottom: 3px;" name="">
                                 <div class="row mb-3">
                                     <div class="col-md-4 col-sm-12">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="onlyDelivery">
+                                            <input class="form-check-input" type="checkbox" id="onlyDelivery" name="only_delivery" value="True">
                                             <label class="form-check-label" for="onlyDelivery"> শুধু ডেলিভারি </label>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-12">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="deliveryMoney">
+                                            <input class="form-check-input" type="checkbox"  id="deliveryMoney" name="delivery_and_amount_collection" value="True">
                                             <label class="form-check-label" for="deliveryMoney"> ডেলিভারি + টাকা কালেকশন </label>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-12">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="brokenProduct">
+                                            <input class="form-check-input" type="checkbox"  id="brokenProduct" name="lequed_or_Fragile" value="True">
                                             <label class="form-check-label" for="brokenProduct"> ভঙ্গুর/তরল প্রোডাক্ট </label>
                                         </div>
                                     </div>
@@ -278,9 +110,11 @@
                                     <div class="row mb-3">
                                         <div class="col-sm-12">
                                             <label for="locationCollection" class="form-label">কালেকশন লোকেশন</label>
-                                            <select id="locationCollection" class="form-select">
-                                                <option>সদরঘাট</option>
-                                              <option>কোতয়ালী</option>
+                                            <select id="locationCollection" class="form-select" name="collection_point">
+                                            {% for point in collection_point|point %}
+                                                <option value="{{ point.id }}">{{point.collection_point_name_english}}</option>
+                                            {% endfor %}
+                                            
                                             </select>
                                           </div>
                                     </div>
@@ -289,9 +123,11 @@
                                     <div class="row mb-3">
                                         <div class="col-sm-12">
                                             <label for="weightKG" class="form-label">ওজন (কেজি)</label>
-                                            <select id="weightKG" class="form-select">
-                                              <option>১ কেজি</option>
-                                              <option>২ কেজি</option>
+                                            <select id="weightKG" class="form-select" name="weight">
+                                            {% for weight in delivery_charge|charge %}
+                                                <option value="{{ weight.id }}">{{weight.delivery_charge_weight.weight}}</option>
+                                            {% endfor %}
+                                              
                                             </select>
                                           </div>
                                     </div>
@@ -299,45 +135,40 @@
                             </div>
                             <div class="productCollection">
                                 <div class="row">
-                                    <span> প্রোডাক্ট কবে কালেকশন হবে </span>
-                                    <div class="col-sm-12 col-md-4">
+                                    
+                                    {% comment %} <div class="col-sm-12 col-md-4">
                                         <button> আজ </button>
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <button> কাল </button>
+                                    </div> {% endcomment %}
+                                    <div class="col-sm-4 ">
+                                        <span> প্রোডাক্ট কবে কালেকশন হবে </span>
+                                        <input class="form-control" type="date" id="formFile" placeholder="তারিখ নির্বাচন করুন" name="collection_date">
                                     </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <input class="form-control" type="date" id="formFile" placeholder="তারিখ নির্বাচন করুন">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="productCollection mt-3">
-                                <div class="row">
+                                     
+                                    <div class="col-sm-4 col-md-4">
                                     <span> কখন কালেকশন হবে </span>
-                                    <div class="col-sm-12 col-md-6">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="morning" id="morning1">
-                                            <label class="form-check-label" for="morning1"> সকাল (10:00 - 04:00 ) </label>
+                                        <div class="form-redio">
+                                            
+                                            <input class="form-control" type="time" name="collection_time" id="morning1">
+                                            
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-6">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="morning" id="morning2">
-                                            <label class="form-check-label" for="morning2"> বিকাল (04:00 - 09:00 ) </label>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
+                            
                             <div class="row mt-3">
                                 <div class="col">
-                                    <label for="additionalNote" class="form-label">এডিশনাল নোট (অপশনাল)</label>
-                                    <textarea class="form-control" id="additionalNote" rows="3"></textarea>
+                                    <label for="addtional_note" class="form-label">এডিশনাল নোট (অপশনাল)</label>
+                                    <textarea class="form-control" id="additionalNote" rows="3" name="addtional_note"></textarea>
                                 </div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" name="" required>
                                         <label class="form-check-label" for="invalidCheck"> আমি শর্তাবলী মেনে নিলাম </label>
                                     </div>
                                 </div>
@@ -355,26 +186,42 @@
 
 
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#programming").change(function () {
+      var url = $("#indexForm").attr("data-courses-url");  // get the url of the `load_courses` view
+      var programmingId = $(this).val();  // get the selected programming ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+        data: {
+          'programming': programmingId       // add the programming id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_courses` view function
+          $("#courses").html(data);  // replace the contents of the course input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#courses").change(function () {
+      var url = $("#indexForm").attr("data-coursesx-url");  // get the url of the `load_courses` view
+      var coursesId = $(this).val();  // get the selected programming ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+        data: {
+          'courses': coursesId       // add the programming id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_courses` view function
+          $("#courses2").html(data);  // replace the contents of the course input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
 
 
-
-
-
-
-
-
-
-
-            <!-- ----------------------------------------------------- -->
-            <!-- ---------------- End Main Content ------------------- -->
-            <!-- ----------------------------------------------------- -->
-            </div>
-        </main>
-    </div>
-
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="js/script.js"></script>
-</body>
-</html>
+{% endblock %}

@@ -27,8 +27,16 @@ import hashlib, socket
 
 
 def homepage(request):
-    
-    return render (request, 'durbarapp/index.html')
+    services = models.Service.objects.filter(status=True).order_by('id')
+    best = models.WhyBest.objects.filter(status=True).order_by('id')
+    deliverycharge = models.DeliveryCharge.objects.filter(status=True).order_by('delivery_charge_location_id')
+
+    context={
+        'services':services,
+        'best':best,
+        'deliverycharge':deliverycharge,
+    }
+    return render (request, 'durbarapp/index.html',context)
 
 def merchant_login(request):
     if request.method == 'POST':
@@ -51,14 +59,46 @@ def merchant_dashboard(request):
 
     return render (request, 'merchant_dashboard/index.html')
 
+
 def merchant_register(request):
-    district_list = models.DistrictEntry.objects.filter(status = True) 
-    for data in district_list:
-        print(data.id)
-    context ={
-        'district_list':district_list,
-    }
-    return render (request, 'durbarapp/register.html', context)
+    if request.method == 'POST':
+        marchant_name = request.POST.get('marchant_name')
+        address = request.POST.get('address')
+        contact_no1 = request.POST.get('contact_no1')
+        contact_no2 = request.POST.get('contact_no2')
+        logo = ""
+        if bool(request.FILES.get('logo', False)) == True:
+            file = request.FILES['logo']
+            logo = "merchant_logo/"+file.name
+            if not os.path.exists(settings.MEDIA_ROOT+"merchant_logo/"):
+                os.mkdir(settings.MEDIA_ROOT+"merchant_logo/")
+            default_storage.save(settings.MEDIA_ROOT+"merchant_logo/"+file.name, ContentFile(file.read()))
+
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        new_md5_obj     = hashlib.md5(password.encode())
+        new_enc_pass    = new_md5_obj.hexdigest() 
+
+        check_user = models.MerchantInfo.objects.filter(email = email).first()
+        
+        if check_user:
+            messages.warning(request, "User already exist")
+            return render(request,'durbarapp/merchant_login.html' )
+            
+        models.MerchantInfo.objects.create(
+            email = email ,
+            marchant_name = marchant_name, 
+            address = address, 
+            contact_no1 = contact_no1, 
+            contact_no2 = contact_no2, 
+            logo = logo, 
+           
+            password = new_enc_pass
+            )
+        
+        messages.success(request, "Registration Successfull")
+        return redirect('/merchant-login/')
+    return render (request, 'durbarapp/register.html')
 
 def merchant_dashboard(request): 
     if request.session['id'] == False:
@@ -75,24 +115,90 @@ def merchant_logout(request):
 
  
 
-def bind_upozilla(request):
-    print("Test 111")
-    district_id   = request.GET.get('district_id')
-      
-    district_wise_upozilla = models.UpozillaEntry.objects.filter(district_name_id = district_id)
-    context = {
-        'district_wise_upozilla': district_wise_upozilla,
+def load_courses(request):
+    district_name_id = request.GET.get('programming')
+    courses = models.UpazillaEntry.objects.filter(district_name_id = district_name_id).order_by('district_name')
+    return render(request, 'merchant_dashboard/courses_dropdown_list_options.html', {'courses': courses})
+
+
+ 
+
+def load_post(request):
+    upazilla_name_id = request.GET.get('courses')
+    post = models.PostOfficeInfo.objects.filter(upazilla_name_id = upazilla_name_id).order_by('id')
+    return render(request, 'merchant_dashboard/post_dropdown_list_options.html', {'post': post})
+
+
+
+
+def new_order(request):
+    try:
+        data = models.MerchantOrder.objects.latest("order_id")
+        data = int(data.order_id)
+        order_no = data+1
+        converted_num = int(order_no)
+    except:
+        sampleDate = datetime.date.today()
+        dateFormatted = sampleDate.strftime("%y""%m")
+        order_no = '{0:04d}'.format(1)
+        no=str(dateFormatted)+str(order_no)
+        converted_num = int(no)   
+
+    # alldata = models.MerchantOrder.objects.all().exists()
+
+
+
+    if request.method == 'POST':
+        customer_name = request.POST.get('customer_name')
+        address = request.POST.get('address')
+        contact_no1 = request.POST.get('contact_no1')
+        contact_no2 = request.POST.get('contact_no2')
+        reference_no = request.POST.get('reference_no')
+        actual_package_price = request.POST.get('actual_package_price')
+        collection_date = request.POST.get('collection_date')
+        collection_time = request.POST.get('collection_time')
+        only_delivery = True if request.POST.get('only_delivery') else False
+        delivery_and_amount_collection = True if request.POST.get('delivery_and_amount_collection') else False
+        lequed_or_Fragile = True if request.POST.get('lequed_or_Fragile') else False
+        weight = str(request.POST[('weight')])
+        addtional_note = request.POST.get('addtional_note')
+
+        district_name = int(request.POST[('district_name')])
+        upazilla_name = int(request.POST[('upazilla_name')])
+        post_office_name = int(request.POST[('post_office_name')])
+        collection_point = int(request.POST[('collection_point')])
+
+        models.MerchantOrder.objects.create(
+            merchant_info_id = int(request.session['id']),
+            customer_name = customer_name ,
+            address = address,  
+            contact_no1 = contact_no1, 
+            contact_no2 = contact_no2, 
+            reference_no = reference_no, 
+            actual_package_price = actual_package_price, 
+            collection_date = collection_date, 
+            collection_time = collection_time,
+            only_delivery =  only_delivery,
+            delivery_and_amount_collection = delivery_and_amount_collection,
+            lequed_or_Fragile = lequed_or_Fragile,
+            weight_id = weight, 
+            addtional_note = addtional_note, 
+            district_name_id = district_name, 
+            upazilla_name_id = upazilla_name, 
+            post_office_name_id = post_office_name, 
+            collection_point_id = collection_point, 
+            order_id = converted_num,
+
+            )
+        return redirect('/merchant-dashboard/')
+    return render (request, 'merchant_dashboard/newOrder.html')
+
+
+
+def order_list(request):
+    order = models.MerchantOrder.objects.filter(merchant_info_id = request.session['id']).order_by('id')
+    context={
+        "order":order,
     }
-    return render(request, 'durbarapp/bind_district_wise_upo.html', context)
-
-# def bind_upozilla_wise_postoffice(request):
-#     upozilla_name   = int(request.GET.get('upozilla_name', None))
-#     upozilla_wise_post = models.PostOfficeInfo.objects.filter(upozilla_name_id = upozilla_name)
-    
-#     context = {
-#         'upozilla_wise_post': upozilla_wise_post,
-#     }
-#     return render(request, 'durbarapp/bind_post_office.html', context)
-
-
+    return render(request, 'merchant_dashboard/orderList.html',context)
 

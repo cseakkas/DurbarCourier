@@ -15,6 +15,18 @@ def Upazilla(request):
     return name
 
 
+@register.filter(name='charge')
+def delivery_charge(request):
+    delivery  = models.DeliveryCharge.objects.filter(status = True).order_by("delivery_charge_location")
+    return delivery
+
+
+@register.filter(name='point')
+def collection_point(request):
+    point  = models.CollectionPointEntry.objects.filter(status = True).order_by("-id")
+    return point
+
+
 
 @register.filter(name='str2url')
 def string_to_url_convert(data):
