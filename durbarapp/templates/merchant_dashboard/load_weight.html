@@ -1,0 +1,5 @@
+<option value="" >---select weight---</option>
+
+{% for data in post %}
+    <option value="{{ data.delivery_charge_weight.id }}">{{ data.delivery_charge_weight }}</option>
+{% endfor %}

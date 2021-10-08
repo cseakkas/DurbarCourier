@@ -51,18 +51,28 @@ class DeliveryChargeWeight(models.Model):
         verbose_name_plural = 'Delivery Charge Weight Category'
  
  
-class DeliveryCharge(models.Model):
-    delivery_charge_location  = models.ForeignKey(DeliveryChargeLocation, on_delete=models.CASCADE)
-    delivery_charge_weight  = models.ForeignKey(DeliveryChargeWeight, on_delete=models.CASCADE)
-    cost     = models.IntegerField(default=0)
-    COD_persent     = models.CharField(max_length=20)
+class ReturnCharge(models.Model):
+    charge     = models.CharField(max_length=20)
     status       = models.BooleanField(default=True)
 
     def __str__(self):
-        return str(self.delivery_charge_location)
+        return self.charge
     class Meta:
-        verbose_name = 'Delivery Charge'
-        verbose_name_plural = 'Delivery Charge'
+        verbose_name = 'Return Charge'
+        verbose_name_plural = 'Return Charge'
+ 
+ 
+class CollectionCharge(models.Model):
+    charge     = models.CharField(max_length=20)
+    status       = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.charge
+    class Meta:
+        verbose_name = 'Collection Charge'
+        verbose_name_plural = 'Collection Charge'
+ 
+
  
 class CourierProfile(models.Model):
     courier_name     = models.CharField(max_length=100, blank=True)
@@ -129,6 +139,23 @@ class CollectionPointEntry(models.Model):
     
     def __str__(self):
         return str(self.collection_point_name_bangla)
+
+
+ 
+class DeliveryCharge(models.Model):
+    delivery_charge_location  = models.ForeignKey(DeliveryChargeLocation, on_delete=models.CASCADE,blank=True,null=True)
+    collection_point  = models.ForeignKey(CollectionPointEntry, on_delete=models.CASCADE,blank=True,null=True)
+    delivery_charge_weight  = models.ForeignKey(DeliveryChargeWeight, on_delete=models.CASCADE,blank=True,null=True)
+    cost     = models.IntegerField(default=0)
+    COD_persent     = models.CharField(max_length=20,blank=True,null=True)
+    status       = models.BooleanField(default=True)
+
+    def __str__(self):
+        return str(self.delivery_charge_location)
+    class Meta:
+        verbose_name = 'Delivery Charge'
+        verbose_name_plural = 'Delivery Charge'
+
 
 class DistrictEntry(models.Model):
     district_name_bangla  = models.CharField(max_length=230)
@@ -212,7 +239,7 @@ class MerchantInfo(models.Model):
         return str(self.marchant_name)
 
 class MerchantOrder(models.Model):
-    merchant_info                     = models.ForeignKey(MerchantInfo, on_delete=models.CASCADE,null=True)
+    merchant_info                   = models.ForeignKey(MerchantInfo, on_delete=models.CASCADE,null=True)
     district_name                   = models.ForeignKey(DistrictEntry, on_delete=models.CASCADE,null=True,blank=True)
     upazilla_name                   = models.ForeignKey(UpazillaEntry, on_delete=models.CASCADE,null=True,blank=True)
     post_office_name                = models.ForeignKey(PostOfficeInfo, on_delete=models.CASCADE,null=True,blank=True)
@@ -229,9 +256,13 @@ class MerchantOrder(models.Model):
     only_delivery                   = models.BooleanField(default=False)
     delivery_and_amount_collection  = models.BooleanField(default=False)
     lequed_or_Fragile               = models.BooleanField(default=False)
-    weight                          = models.ForeignKey(DeliveryCharge, on_delete=models.CASCADE,null=True,blank=True)
+    weight                          = models.ForeignKey(DeliveryChargeWeight, on_delete=models.CASCADE,null=True,blank=True)
     addtional_note                  = models.TextField()
-    service_charge                  = models.CharField(max_length=50,blank=True)
+    shipment_charge                 = models.CharField(max_length=50,blank=True)
+    cod_charge                      = models.CharField(max_length=50,blank=True)
+    lequed_or_Fragile_charge        = models.CharField(max_length=50,blank=True)
+    total_service_charge            = models.CharField(max_length=50,blank=True)
+    collection_amount               = models.CharField(max_length=50,blank=True)
 
     ordering                        = models.IntegerField(default=0)
     modifed_by                      = models.IntegerField(default=0)
@@ -240,6 +271,16 @@ class MerchantOrder(models.Model):
     modify                          = models.DateTimeField(auto_now_add = True)
     deleted                         = models.BooleanField(default=False)
     status                          = models.BooleanField(default=True)
+    
+    order_status_choose = (
+        ('1', 'order_placed'),
+        ('2', 'customer_absent'),
+        ('3', 'in_sorting'),
+        ('4', 'payment_done'),
+
+    )
+    order_status  = models.CharField(max_length=1, choices=order_status_choose,blank=True)
+    
     
     def __str__(self):
         return str(self.order_id)

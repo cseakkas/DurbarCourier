@@ -1,0 +1,4 @@
+<option value="">---select Upazilla---</option>
+{% for course in location %}
+    <option value="{{ course.pk }}">{{ course.collection_point_name_bangla }}</option>
+{% endfor %}

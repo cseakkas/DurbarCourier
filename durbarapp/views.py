@@ -130,13 +130,47 @@ def load_post(request):
 
 
 
+ 
+
+def load_weight(request):
+    area_id = request.GET.get('locationCollection')
+    post = models.DeliveryCharge.objects.filter(collection_point_id = area_id).order_by('id')
+    return render(request, 'merchant_dashboard/load_weight.html', {'post': post})
+
+ 
+
+def load_cost(request):
+    weightid = request.GET.get('weight')
+    areaId = request.GET.get('areaId')
+
+    post = models.DeliveryCharge.objects.filter(collection_point_id=areaId, delivery_charge_weight_id = weightid)
+    
+    place_json = {}
+    results = [] 
+    place_json['shipment_charge'] = post[0].cost    
+    results.append(place_json) 
+
+    return JsonResponse(results, safe=False)
+
+
+
+
 
 def new_order(request):
     try:
         data = models.MerchantOrder.objects.latest("order_id")
+        sampleDate = datetime.date.today()
+        dateFormatted = sampleDate.strftime("%y""%m")
         data = int(data.order_id)
-        order_no = data+1
-        converted_num = int(order_no)
+        str1 = str(data)
+        month = str1[0:4]
+        if dateFormatted == month:
+            order_no = data+1
+            converted_num = int(order_no)
+        else:
+            order_no = '{0:04d}'.format(1)
+            no=str(dateFormatted)+str(order_no)
+            converted_num = int(no)
     except:
         sampleDate = datetime.date.today()
         dateFormatted = sampleDate.strftime("%y""%m")
@@ -160,8 +194,13 @@ def new_order(request):
         only_delivery = True if request.POST.get('only_delivery') else False
         delivery_and_amount_collection = True if request.POST.get('delivery_and_amount_collection') else False
         lequed_or_Fragile = True if request.POST.get('lequed_or_Fragile') else False
-        weight = str(request.POST[('weight')])
+        weight = int(request.POST[('weight')])
         addtional_note = request.POST.get('addtional_note')
+        collection_amount = request.POST.get('collection_amount')
+        total_service_charge = request.POST.get('total_service_charge')
+        lequed_or_Fragile_charge = request.POST.get('lequed_or_Fragile_charge')
+        cod_charge = request.POST.get('cod_charge')
+        shipment_charge = request.POST.get('shipment_charge')
 
         district_name = int(request.POST[('district_name')])
         upazilla_name = int(request.POST[('upazilla_name')])
@@ -182,6 +221,11 @@ def new_order(request):
             delivery_and_amount_collection = delivery_and_amount_collection,
             lequed_or_Fragile = lequed_or_Fragile,
             weight_id = weight, 
+            collection_amount = collection_amount, 
+            total_service_charge = total_service_charge, 
+            lequed_or_Fragile_charge = lequed_or_Fragile_charge, 
+            cod_charge = cod_charge, 
+            shipment_charge = shipment_charge, 
             addtional_note = addtional_note, 
             district_name_id = district_name, 
             upazilla_name_id = upazilla_name, 
@@ -190,7 +234,7 @@ def new_order(request):
             order_id = converted_num,
 
             )
-        return redirect('/merchant-dashboard/')
+        return redirect('/order-list/')
     return render (request, 'merchant_dashboard/newOrder.html')
 
 
@@ -201,4 +245,13 @@ def order_list(request):
         "order":order,
     }
     return render(request, 'merchant_dashboard/orderList.html',context)
+
+
+
+def service_charge_list(request):
+    order = models.MerchantOrder.objects.filter(merchant_info_id = request.session['id']).order_by('id')
+    context={
+        "order":order,
+    }
+    return render(request, 'merchant_dashboard/serviceCharge.html',context)
 
