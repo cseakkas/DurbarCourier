@@ -17,7 +17,7 @@
             <!-- ----------- Main content start from here ------------ -->
             <!-- ----------------------------------------------------- -->
             <div class="container-fluid mb-4">
-                <form action="#" method="POST"  id="indexForm" data-courses-url="{% url 'ajax_load_upazilla' %}" data-coursesx-url="{% url 'ajax_load_post' %}" class="addOrder">{% csrf_token %}
+                <form action="#" method="POST"  id="indexForm" data-courses-url="{% url 'ajax_load_upazilla' %}" data-coursesx-url="{% url 'ajax_load_post' %}" data-coursesa-url="{% url 'ajax_load_weight' %}" data-coursesb-url="{% url 'ajax_load_cost' %}" class="addOrder">{% csrf_token %}
                     <div class="card">
                         <div class="card-header"> <h4 class="orderTitle">কাস্টমারের তথ্য</h4> </div>
                         <div class="card-body">
@@ -72,32 +72,37 @@
 
                             <h4 class="orderTitle mt-5"> প্যাকেজ ও কালেকশনের তথ্য </h4>
                             <div class="row my-3">
-                                <div class="col-sm-12 col-md-6 mb-3">
+                                <div class="col-sm-12 col-md-4">
                                     <label for="refNumber" class="form-label">নিজস্ব রেফারেন্স নম্বর / ইনভয়েস</label>
                                     <input type="text" class="form-control" id="refNumber" name="reference_no">
                                 </div>
-                                <div class="col-sm-12 col-md-6">
+                                <div class="col-sm-12 col-md-4">
+                                    <label for="accuratePrice" class="form-label">কালেকশন অ্যামাউন্ট</label>
+                                    <input type="text" class="form-control" id="collection_amount" name="collection_amount">
+                                </div>
+                                <div class="col-sm-12 col-md-4">
                                     <label for="accuratePrice" class="form-label">অ্যাকচুয়াল প্যাকেজ প্রাইস</label>
                                     <input type="text" class="form-control" id="accuratePrice" name="actual_package_price">
                                 </div>
                             </div>
                             <div class="productCollection mb-3" style="padding-bottom: 3px;" name="">
                                 <div class="row mb-3">
+                                    
                                     <div class="col-md-4 col-sm-12">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="onlyDelivery" name="only_delivery" value="True">
-                                            <label class="form-check-label" for="onlyDelivery"> শুধু ডেলিভারি </label>
+                                            <input class="form-check-input" type="radio" onclick="delivery(this.checked)" name="only_delivery" id="morning1">
+                                            <label class="form-check-label" for="morning1"> শুধু ডেলিভারি </label>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-12">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox"  id="deliveryMoney" name="delivery_and_amount_collection" value="True">
-                                            <label class="form-check-label" for="deliveryMoney"> ডেলিভারি + টাকা কালেকশন </label>
+                                            <input class="form-check-input" type="radio" onclick="delivery_and_amount_collection(this.checked)" name="" id="morning2">
+                                            <label class="form-check-label" for="morning2"> ডেলিভারি + টাকা কালেকশন  </label>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-12">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox"  id="brokenProduct" name="lequed_or_Fragile" value="True">
+                                            <input class="form-check-input" type="checkbox"  id="brokenProduct" onclick="check_uncheck_class(this.checked)">
                                             <label class="form-check-label" for="brokenProduct"> ভঙ্গুর/তরল প্রোডাক্ট </label>
                                         </div>
                                     </div>
@@ -106,7 +111,7 @@
 
 
                             <div class="row">
-                                <div class="col-sm-12 col-md-6">
+                                <div class="col-sm-12 col-md-4">
                                     <div class="row mb-3">
                                         <div class="col-sm-12">
                                             <label for="locationCollection" class="form-label">কালেকশন লোকেশন</label>
@@ -119,17 +124,42 @@
                                           </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-6">
+                                <div class="col-sm-12 col-md-4">
                                     <div class="row mb-3">
                                         <div class="col-sm-12">
-                                            <label for="weightKG" class="form-label">ওজন (কেজি)</label>
-                                            <select id="weightKG" class="form-select" name="weight">
-                                            {% for weight in delivery_charge|charge %}
-                                                <option value="{{ weight.id }}">{{weight.delivery_charge_weight.weight}}</option>
-                                            {% endfor %}
+                                            <label for="weight" class="form-label">ওজন (কেজি)</label>
+                                            <select id="weight" class="form-select" name="weight">
+                                           
                                               
                                             </select>
                                           </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-12">
+                                            <label  for="weightKG" class="form-label">সার্ভিসের চার্জ</label>
+                                            <table>
+                                                <tr>
+                                                    <th style="width:180px">শিপমেন্ট চার্জ---</th>
+                                                    <td><input style="width:127px;text-align:right" class="form-control" id="shipment_charge" name="shipment_charge" type="text"  readonly=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:180px">COD চার্জ(1%)---</th>
+                                                    <td><input style="width:127px;text-align:right" class="form-control" id="cod_charge" name="cod_charge" type="text"  readonly=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:180px">ভঙ্গুর আইটেমের চার্জ---</th>
+                                                    <td><input style="width:127px;text-align:right" class="form-control" id="lequed_or_Fragile_charge" name="lequed_or_Fragile_charge" type="text"  readonly=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:180px">মোট সার্ভিস চার্জ---</th>
+                                                    <td><input style="width:127px;text-align:right" class="form-control" id="total_service_charge" name="total_service_charge" type="text"  readonly=""></td>
+                                                </tr>
+                                            </table>
+                                            
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +174,7 @@
                                     </div> {% endcomment %}
                                     <div class="col-sm-4 ">
                                         <span> প্রোডাক্ট কবে কালেকশন হবে </span>
-                                        <input class="form-control" type="date" id="formFile" placeholder="তারিখ নির্বাচন করুন" name="collection_date">
+                                        <input class="form-control" value="{%now 'Y-m-d'%}" type="date" id="formFile" placeholder="তারিখ নির্বাচন করুন" name="collection_date">
                                     </div>
                                      
                                     <div class="col-sm-4 col-md-4">
@@ -188,6 +218,75 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
+   function check_uncheck_class(isChecked){
+      if(isChecked) {
+            this.checked = true; 
+            var brokenProduct = 100;
+            $("#lequed_or_Fragile_charge").val(brokenProduct);                      
+        }
+        else {
+                this.checked = false;
+                var brokenProduct = 0;
+                $("#lequed_or_Fragile_charge").val(' ');                           
+        }
+   }
+
+   function delivery_and_amount_collection(isChecked){
+      if(isChecked) {
+            this.checked = true; 
+            var amount = 10;
+            var collection_amount = $("#collection_amount").val();
+            if(collection_amount >= 1000 ){
+                var amount = Math.round((collection_amount*1)/100)
+            }
+            $("#cod_charge").val(amount)
+
+        }
+     
+   }
+
+   function delivery(isChecked){
+      if(isChecked) {
+            this.checked = true; 
+            $("#cod_charge").val(' '); 
+            
+
+        } 
+   }
+
+  </script>
+<script>
+    $(document).ready(function(){
+        $("#weight").change(function(){
+    
+        var shipment_charge = $("#shipment_charge").val();
+        var total_service_charge =  parseInt(shipment_charge);
+        alert(shipment_charge);
+        $("#total_service_charge").val(total_service_charge);
+    });
+    });
+    
+    $("#shipment_charge","#cod_charge","#lequed_or_Fragile_charge").keypress(function(){
+        
+        var shipment_charge = $("#shipment_charge").val();
+        var cod_charge = $("#cod_charge").val();
+        var lequed_or_Fragile_charge = $("#lequed_or_Fragile_charge").val();
+        var total_service_charge =  parseInt(shipment_charge)+parseInt(cod_charge)+parseInt(lequed_or_Fragile_charge);
+        alert(shipment_charge)
+        $("#total_service_charge").val(total_service_charge);
+    });
+    $("#shipment_charge","#cod_charge","#lequed_or_Fragile_charge").keypress(function(){
+        
+        var shipment_charge = $("#shipment_charge").val();
+        var cod_charge = $("#cod_charge").val();
+        var lequed_or_Fragile_charge = $("#lequed_or_Fragile_charge").val();
+        var total_service_charge =  parseInt(shipment_charge)+parseInt(cod_charge)+parseInt(lequed_or_Fragile_charge);
+        alert(shipment_charge)
+        $("#total_service_charge").val(total_service_charge);
+    });
+</script>
+
+  <script>
     $("#programming").change(function () {
       var url = $("#indexForm").attr("data-courses-url");  // get the url of the `load_courses` view
       var programmingId = $(this).val();  // get the selected programming ID from the HTML input
@@ -204,7 +303,6 @@
 
     });
   </script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
     $("#courses").change(function () {
       var url = $("#indexForm").attr("data-coursesx-url");  // get the url of the `load_courses` view
@@ -223,5 +321,65 @@
     });
   </script>
 
+
+  <script>
+    $("#locationCollection").change(function () {
+      var url = $("#indexForm").attr("data-coursesa-url");  // get the url of the `load_courses` view
+      var locationCollectionId = $(this).val();  // get the selected programming ID from the HTML input
+    
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+        data: {
+          'locationCollection': locationCollectionId       // add the programming id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_courses` view function
+          $("#weight").html(data);  // replace the contents of the course input with the data that came from the server
+            
+        }
+
+      });
+
+    });
+  </script>
+
+
+  <script>
+    $("#weight").change(function () {
+      var url = $("#indexForm").attr("data-coursesb-url");  // get the url of the `load_courses` view
+      var weightId = $(this).val();  // get the selected programming ID from the HTML input
+      var areaId = $('#locationCollection').val();
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+        data: {
+          'areaId': areaId,      // add the programming id to the GET parameters
+          'weight': weightId,      // add the programming id to the GET parameters
+
+        },
+        success: function (data) {   // `data` is the return of the `load_courses` view function
+          $("#shipment_charge").val(data[0]['shipment_charge']); 
+          alart(data) // replace the contents of the course input with the data that came from the server
+            
+        }
+
+      });
+
+    });
+  </script>
+
+
+<script type="text/javascript">
+            $(document).ready(function() {
+            $("input[type=radio]").prop("checked", false);
+            $("input[type=radio]:first").prop("checked", false);
+
+            $("input[type=radio]").click(function(event) {
+                $("input[type=radio]").prop("checked", false);
+                $(this).prop("checked", true);
+
+                //event.preventDefault();
+            });
+            });
+	</script>
 
 {% endblock %}

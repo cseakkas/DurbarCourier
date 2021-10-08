@@ -46,7 +46,7 @@
                             <table class="table" style="min-width: 1000px;">
                                 <thead>
                                     <tr>
-                                        <th scope="col"> ক্রমিক নং </th>
+                                        <th scope="col"> ক্র.নং </th>
                                         <th scope="col"> অর্ডারের তারিখ </th>
                                         <th scope="col"> অর্ডার আইডি </th>
                                         <th scope="col"> কাস্টমারের আইডি </th>
@@ -63,15 +63,20 @@
                                         <th scope="row">{{forloop.counter}}</th>
                                         <td> {{list.created}} </td>
                                         <td> {{list.order_id}}</td>
-                                        <td> {{list.merchant_info}} </td>
-                                        <td> {{list.status}} </td>
+                                        <td> 
+                                            <p style="margin:0px">{{list.customer_name}}</p>
+                                            <p style="margin:0px">{{list.contact_no1}}</p>
+                                            <p style="margin:0px">{{list.address}}</p>
+
+                                         </td>
+                                        <td> {{list.reference_no}} </td>
                                         <td> {{list.weight}} </td>
-                                        <td> {{list.service_charge}} </td>
+                                        <td> {{list.total_service_charges}} </td>
                                         <td> {{list.status}} </td>
                                         <td class="text-end">
-                                            <a title="View" class="viewBtn" href="#"><ion-icon name="eye"></ion-icon></a>
+                                            
                                             <a title="Edit" class="editBtn" href="#"><ion-icon name="create-outline"></ion-icon></a>
-                                            <a title="Delete" class="deleteBtn" href="#"><ion-icon name="trash-outline"></ion-icon></a>
+                                            <a title="Cancel" class="deleteBtn" href="#">Cancel</a>
                                         </td>
                                     </tr>
                                 {% endfor %}

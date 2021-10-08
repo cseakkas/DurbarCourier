@@ -1,0 +1,12 @@
+
+{% for course in post %}
+    <option value="{{ course.pk }}" readonly="">{{ course.cost }}</option>
+{% endfor %}
+
+
+
+
+{% comment %} 
+{% for course in post %}
+   <input class="form-control" id="" name="shipment_charge" type="text" placeholder="শিপমেন্ট চার্জ-- {{course.cost}} " readonly="">
+{% endfor %} {% endcomment %}

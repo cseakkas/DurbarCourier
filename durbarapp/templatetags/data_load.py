@@ -15,9 +15,9 @@ def Upazilla(request):
     return name
 
 
-@register.filter(name='charge')
-def delivery_charge(request):
-    delivery  = models.DeliveryCharge.objects.filter(status = True).order_by("delivery_charge_location")
+@register.filter(name='weight')
+def delivery_weight(request):
+    delivery  = models.DeliveryChargeWeight.objects.filter(status = True).order_by("id")
     return delivery
 
 

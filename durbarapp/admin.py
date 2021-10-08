@@ -31,7 +31,15 @@ class DeliveryChargeWeightAdmin(admin.ModelAdmin):
  
 
 class DeliveryChargeAdmin(admin.ModelAdmin):
-    list_display  = ['__str__','cost', 'status']
+    list_display  = ['__str__','collection_point','delivery_charge_weight','cost', 'status']
+ 
+
+class CollectionChargeAdmin(admin.ModelAdmin):
+    list_display  = ['__str__','charge', 'status']
+ 
+
+class ReturnChargeAdmin(admin.ModelAdmin):
+    list_display  = ['__str__','charge', 'status']
  
  
 
@@ -60,11 +68,13 @@ class PostOfficeInfoAdmin(admin.ModelAdmin):
  
  
 class MerchantOrderAdmin(admin.ModelAdmin):
-    list_display  = ['order_id','customer_name','contact_no1','reference_no','collection_point','collection_date','weight','service_charge', 'status']
+    list_display  = ['order_id','customer_name','contact_no1','reference_no','collection_point','collection_date','weight','total_service_charge', 'status']
  
  
      
 admin.site.register(models.Service, ServiceAdmin) 
+admin.site.register(models.CollectionCharge, CollectionChargeAdmin) 
+admin.site.register(models.ReturnCharge, ReturnChargeAdmin) 
 admin.site.register(models.WhyBest, WhyBestAdmin) 
 admin.site.register(models.CollectionPointEntry, CollectionPointEntryAdmin) 
 admin.site.register(models.DeliveryChargeLocation, DeliveryChargeLocationAdmin) 
