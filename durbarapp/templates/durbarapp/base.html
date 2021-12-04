@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %} Durbar Courier: Largest Online Courier Marketplace in Bangladesh{% endblock %} </title>
     {% load staticfiles %}
+    {% load data_load %}
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -39,15 +40,98 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
                     </li>
+                    {% if request.session.id %}
+                      <li class="nav-item">
+                        <a class="login" href="/merchant-dashboard/" >MY panel</a>
+                      </li>
+                    {% else %}
                     <li class="nav-item">
-                        <a class="register" href="/merchant-register/">Register</a>
+                        <a class="register" data-toggle="modal" data-target="#squarespaceModal2">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="login" href="/merchant-login/">Login</a>
+                        <a class="login" data-toggle="modal" data-target="#squarespaceModal">Login</a>
                     </li>
+                  {% endif %}
                 </ul>
             </div>
             </div>
+
+ 
+            <div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                          <h3 class="modal-title" id="lineModalLabel">Login</h3>
+                      </div>
+                      <div class="modal-body">
+                          
+                          <!-- content goes here --> 
+                          <h4 id="LoginFailedMsg">Login Failed!</h4>
+                            <div class="form-group">
+                              <label for="exampleInputEmail1">Phone No</label>
+                              <input type="text" class="form-control" id="phone2" placeholder="Enter phone">
+                            </div>
+                            <div class="form-group">
+                              <label for="exampleInputPassword1">Password</label>
+                              <input type="password" class="form-control" id="password2" placeholder="Password">
+                            </div> 
+                            <button id="login" class="btn btn-primary">Login</button>
+                           
+              
+                      </div>
+                      
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal fade" id="squarespaceModal2" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                          <h3 class="modal-title" id="lineModalLabel">Register</h3>
+                      </div>
+                      <div class="modal-body">
+                          
+                          <!-- content goes here -->
+                          <form id="indexForm" data-courses-url="{% url 'ajax_load_upazilla' %}" >{% csrf_token %}
+                            <div class="form-group">
+                              <label for="exampleInputEmail1">Full Name</label>
+                              <input type="text" class="form-control" id="name" placeholder="Enter email">
+                            </div>
+                            <div class="form-group">
+                              <label for="exampleInputEmail1">Phone No</label>
+                              <input type="text" class="form-control" id="phone" placeholder="Enter email">
+                            </div>
+                            <div class="form-group">
+                              <label for="exampleInputEmail1">District Name</label>
+                              <select name="district_name" id="programming" class="form-control">
+                                {% for dist in District|districtreg %}
+                                    <option value="{{dist.pk}}">{{dist.district_name_bangla}}</option>
+                                {% endfor %}
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="exampleInputEmail1">Upazilla Name</label>
+                              <select id="courses" name="upazilla_name" class="form-control">
+                                
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="exampleInputPassword1">Password</label>
+                              <input type="password" class="form-control" id="password" placeholder="Password">
+                            </div>
+                            
+                            
+                            <button type="submit" id="register" class="btn btn-primary">Register</button>
+                          </form>
+              
+                      </div>
+                      
+                  </div>
+                </div>
+              </div>
         </nav>
     </header>
     <!-- End Header Section -->
@@ -138,5 +222,134 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'durbarapp/js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'durbarapp/js/script.js' %}"></script>
+    
+
+<script src="{% static 'durbarapp/js/jquery.js' %}"></script>
+
+<script>
+  $("#programming").change(function () {
+    var url = $("#indexForm").attr("data-courses-url");  // get the url of the `load_courses` view
+    var programmingId = $(this).val();  // get the selected programming ID from the HTML input
+
+    $.ajax({                       // initialize an AJAX request
+      url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+      data: {
+        'programming': programmingId       // add the programming id to the GET parameters
+      },
+      success: function (data) {   // `data` is the return of the `load_courses` view function
+        $("#courses").html(data);  // replace the contents of the course input with the data that came from the server
+      }
+    });
+
+  });
+</script>
+
+
+<script>
+  $("#register").click(function() {
+    $.ajaxSetup({
+            headers: {
+                "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value,
+            }
+        });
+      var confirm_msg = confirm("Are you sure to submit?");
+      if (confirm_msg == true)
+      {
+          
+          //$("#tbl_check_out tbody tr").each(function()
+          
+    $.ajax({
+      url: '/',
+      type:'POST',
+      async: false,
+      data : {
+        
+        'marchant_name': $('#name').val(),
+        'contact_no1': $('#phone').val(),
+        'password': $('#password').val(),
+        'programming_id': $('#programming').val(),
+        'courses_id': $('#courses').val(),
+        
+      },
+      success: function(data){
+        alert("Registered");
+      },
+      error: function(data){
+        alert("Submit failed");
+      }
+    });  
+  
+          
+      }
+  });
+</script>
+
+
+<script>
+  $("#LoginFailedMsg").hide();
+  $("#login").click(function() {    
+           
+    $.ajax({
+      url: '/merchant-login/',
+      type:'GET',
+      async: false,
+      
+      data:{
+        'contact_no1': $('#phone2').val(),
+        'password': $('#password2').val(),
+         
+      },
+      success: function(data){
+        if (data == "success"){
+          window.location.href = "/merchant-dashboard"; 
+        }else{
+          // window.location.href = "/";
+          // var errorMsg = "Login Failed"  
+          $("#LoginFailedMsg").show();
+          // $("#LoginFailedMsg").html(errorMsg);
+        } 
+      },
+      error: function(data){
+        alert("Wrong Information");
+      }
+    });  
+  
+          
+      
+          
+      
+  });
+</script>
+<script>
+  $("#submit").click(function() {
+      var confirm_msg = confirm("Are you sure to submit?");
+      if (confirm_msg == true)
+      {
+          
+          //$("#tbl_check_out tbody tr").each(function()
+          
+    $.ajax({
+      url: '/',
+      type:'GET',
+      async: false,
+      data : {
+        
+        'member_name': $('#name').val(),
+        'mobile': $('#phone').val(),
+        'email': $('#password').val(),
+        
+      },
+      success: function(data){
+        alert("Submited");
+      },
+      error: function(data){
+        alert("Submit failed");
+      }
+    });  
+  
+          
+      }
+  });
+</script>
   </body>
 </html>

@@ -71,6 +71,12 @@ class MerchantOrderAdmin(admin.ModelAdmin):
     list_display  = ['order_id','customer_name','contact_no1','reference_no','collection_point','collection_date','weight','total_service_charge', 'status']
  
  
+ 
+ 
+class PackegeTypeAdmin(admin.ModelAdmin):
+    list_display  = ['packege_name', 'status']
+ 
+ 
      
 admin.site.register(models.Service, ServiceAdmin) 
 admin.site.register(models.CollectionCharge, CollectionChargeAdmin) 
@@ -86,3 +92,7 @@ admin.site.register(models.UpazillaEntry, UpazillaEntryAdmin)
 admin.site.register(models.UnionEntry, UnionEntryAdmin) 
 admin.site.register(models.PostOfficeInfo, PostOfficeInfoAdmin) 
 admin.site.register(models.MerchantOrder, MerchantOrderAdmin) 
+admin.site.register(models.PackegeType, PackegeTypeAdmin) 
+admin.site.register(models.Collection_time_category)
+admin.site.register(models.HubInfo)
+admin.site.register(models.MobileBnakingCategory)

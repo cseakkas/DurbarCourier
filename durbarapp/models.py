@@ -141,6 +141,24 @@ class CollectionPointEntry(models.Model):
         return str(self.collection_point_name_bangla)
 
 
+class PackegeType(models.Model):
+    packege_name  = models.CharField(max_length=230)
+    ordering       = models.IntegerField(default=0)
+    status         = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return str(self.packege_name)
+
+
+class Collection_time_category(models.Model):
+    time  = models.CharField(max_length=230)
+    ordering       = models.IntegerField(default=0)
+    status         = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return str(self.time)
+
+
  
 class DeliveryCharge(models.Model):
     delivery_charge_location  = models.ForeignKey(DeliveryChargeLocation, on_delete=models.CASCADE,blank=True,null=True)
@@ -198,35 +216,87 @@ class PostOfficeInfo(models.Model):
     def __str__(self):
         return str(self.post_office_bangla)
 
+class MobileBnakingCategory(models.Model):
+    bank_name    = models.CharField(max_length=230)
+    status         = models.BooleanField(default=1)
+
+    def __str__(self):
+        return str(self.bank_name)
+
 
 class HubInfo(models.Model):
-    district_name  = models.ForeignKey(DistrictEntry, on_delete=models.CASCADE)
-    upazilla_name  = models.ForeignKey(UpazillaEntry, on_delete=models.CASCADE)
-    Hub_name_bangla  = models.CharField(max_length=230)
-    Hub_name_english  = models.CharField(max_length=230)
-    address         = models.TextField()
-    email        = models.EmailField(unique=True, max_length=50)
-    password        = models.CharField(max_length=50)
-    contact_no1  = models.CharField(max_length=50)
-    contact_no2  = models.CharField(max_length=50)
+    district_name           = models.ForeignKey(DistrictEntry, on_delete=models.CASCADE,null=True,blank=True)
+    upazilla_name           = models.ForeignKey(UpazillaEntry, on_delete=models.CASCADE,null=True,blank=True)
+    hub_id                        = models.CharField(max_length=50)
+    hub_owner_name        = models.CharField(max_length=50)
+    address             = models.TextField(null=True,blank=True)
+    email                    = models.EmailField( max_length=50,null=True,blank=True)
+    password            = models.CharField(max_length=50)
+    contact_no1         = models.CharField(unique=True, max_length=50)
+    contact_no2         = models.CharField(max_length=50,null=True,blank=True)
+    logo                = models.ImageField(upload_to='images/merchant_logo',null=True,blank=True)
+    bank_name           = models.CharField(max_length=250,null=True,blank=True)
+    bank_ac_no          = models.CharField(max_length=250,null=True,blank=True)
+    bank_branch_name    = models.CharField(max_length=250,null=True,blank=True)
+    mobile_banking_no   = models.CharField(max_length=250,null=True,blank=True)
+    mobile_banking_category = models.ForeignKey(MobileBnakingCategory, on_delete=models.CASCADE,null=True,blank=True)
+    trade_license_no    = models.CharField(max_length=250,null=True,blank=True)
+
     ordering       = models.IntegerField(default=0)
-    add_date    = models.DateTimeField(auto_now_add = True)
+    modifed_by       = models.IntegerField(default=0)
+    created_by      = models.IntegerField(default=0)
+    created    = models.DateTimeField(auto_now_add = True)
+    modify    = models.DateTimeField(auto_now_add = True)
+    deleted         = models.BooleanField(default=False)
     status         = models.BooleanField(default=True)
     
     def __str__(self):
-        return str(self.Hub_name_english)
+        return str(self.hub_id)
+
+
+class RiderInfo(models.Model):
+    district_name           = models.ForeignKey(DistrictEntry, on_delete=models.CASCADE,null=True,blank=True)
+    upazilla_name           = models.ForeignKey(UpazillaEntry, on_delete=models.CASCADE,null=True,blank=True)
+    rider_id                        = models.CharField(max_length=50)
+    hub_owner_name        = models.CharField(max_length=50)
+    present_address         = models.TextField(null=True,blank=True)
+    permanent_address         = models.TextField(null=True,blank=True)
+    email                    = models.EmailField(unique=True, max_length=50,null=True,blank=True)
+    password            = models.CharField(max_length=50)
+    contact_no1         = models.CharField(max_length=50)
+    contact_no2         = models.CharField(max_length=50,null=True,blank=True)
+    logo                = models.ImageField(upload_to='images/merchant_logo',null=True,blank=True)
+    bank_name           = models.CharField(max_length=250,null=True,blank=True)
+    bank_ac_no          = models.CharField(max_length=250,null=True,blank=True)
+    bank_branch_name    = models.CharField(max_length=250,null=True,blank=True)
+    mobile_banking_no   = models.CharField(max_length=250,null=True,blank=True)
+    referral_name    = models.CharField(max_length=250,null=True,blank=True)
+    referral_phone_no    = models.CharField(max_length=250,null=True,blank=True)
+    referral_NID    = models.CharField(max_length=250,null=True,blank=True)
+    referral_relation    = models.CharField(max_length=250,null=True,blank=True)
+
+    ordering       = models.IntegerField(default=0)
+    modifed_by       = models.IntegerField(default=0)
+    created_by      = models.IntegerField(default=0)
+    created    = models.DateTimeField(auto_now_add = True)
+    modify    = models.DateTimeField(auto_now_add = True)
+    deleted         = models.BooleanField(default=False)
+    status         = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return str(self.rider_id)
 
 
 class MerchantInfo(models.Model):
     district_name  = models.ForeignKey(DistrictEntry, on_delete=models.CASCADE,null=True,blank=True)
     upazilla_name  = models.ForeignKey(UpazillaEntry, on_delete=models.CASCADE,null=True,blank=True)
     marchant_name        = models.CharField(max_length=50)
-    address         = models.TextField()
-    email        = models.EmailField(unique=True, max_length=50)
+    address         = models.TextField(null=True,blank=True)
+    email        = models.EmailField(unique=True, max_length=50,null=True,blank=True)
     password        = models.CharField(max_length=50)
     contact_no1  = models.CharField(max_length=50)
-    contact_no2  = models.CharField(max_length=50)
-    logo         = models.ImageField(upload_to='images/merchant_logo')
+    contact_no2  = models.CharField(max_length=50,null=True,blank=True)
+    logo         = models.ImageField(upload_to='images/merchant_logo',null=True,blank=True)
     ordering       = models.IntegerField(default=0)
     modifed_by       = models.IntegerField(default=0)
     created_by      = models.IntegerField(default=0)
@@ -244,15 +314,16 @@ class MerchantOrder(models.Model):
     upazilla_name                   = models.ForeignKey(UpazillaEntry, on_delete=models.CASCADE,null=True,blank=True)
     post_office_name                = models.ForeignKey(PostOfficeInfo, on_delete=models.CASCADE,null=True,blank=True)
     order_id                        = models.CharField(max_length=50)
-    customer_name                   = models.CharField(max_length=50)
+    customer_name                   = models.CharField(max_length=50,null=True,blank=True)
     address                         = models.TextField()
-    contact_no1                     = models.CharField(max_length=50)
-    contact_no2                     = models.CharField(max_length=50)
-    reference_no                    = models.CharField(max_length=50)
+    contact_no1                     = models.CharField(max_length=50,null=True,blank=True)
+    contact_no2                     = models.CharField(max_length=50,null=True,blank=True)
+    reference_no                    = models.CharField(max_length=50,null=True,blank=True)
     actual_package_price            = models.IntegerField(default=0)
     collection_point                = models.ForeignKey(CollectionPointEntry, on_delete=models.CASCADE,null=True,blank=True)
-    collection_date                 = models.CharField(max_length=50)
-    collection_time                 = models.CharField(max_length=50)
+    packegeType                     = models.ForeignKey(PackegeType, on_delete=models.CASCADE,null=True,blank=True)
+    collection_time_category        = models.ForeignKey(Collection_time_category, on_delete=models.CASCADE,null=True,blank=True)
+    collection_date                 = models.CharField(max_length=50,null=True,blank=True)
     only_delivery                   = models.BooleanField(default=False)
     delivery_and_amount_collection  = models.BooleanField(default=False)
     lequed_or_Fragile               = models.BooleanField(default=False)
@@ -271,6 +342,15 @@ class MerchantOrder(models.Model):
     modify                          = models.DateTimeField(auto_now_add = True)
     deleted                         = models.BooleanField(default=False)
     status                          = models.BooleanField(default=True)
+
+    picked_time                     = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    in_transit_time                 = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    delivered_time                  = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    hold_time                       = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    return_pending_time             = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    return_to_hub_time              = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    return_to_merchent_time         = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    canceled_time                   = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     
     order_status_choose = (
         ('1', 'order_placed'),
@@ -280,6 +360,31 @@ class MerchantOrder(models.Model):
 
     )
     order_status  = models.CharField(max_length=1, choices=order_status_choose,blank=True)
+    
+    
+    order_track_choose = (
+        ('1', 'pending'),
+        ('2', 'assign_for_pick'),
+        ('3', 'picked'),
+        ('4', 'hub_collected_for_ware_house'),
+        ('5', 'in_transit'),
+        ('6', 'hub_collected_for_delevery'),
+        ('7', 'assign_for_delevery'),
+        ('8', 'shiping'),
+        ('9', 'delivered'),
+        ('10', 'hold'),
+        ('11', 'return_pending'),
+        ('12', 'return_to_hub_for_ware_house '),
+        ('13', 'hub_returned_to_ware_house'),
+        ('14', 'return_to_hub'),
+        ('15', 'assign_for_return'),
+        ('16', 'picked_for_return'),
+        ('17', 'return_to_merchent'),
+        ('18', 'canceled'),
+        
+
+    )
+    order_track  = models.CharField(max_length=1, choices=order_track_choose,blank=True,default = '1')
     
     
     def __str__(self):

@@ -7,10 +7,7 @@
             <!-- Page title -->
             <div class="pageTitle">
                 <h3>নতুন অর্ডার</h3>
-                <div class="customBreadcumb">
-                    <a href="index.html">ড্যাশবোর্ড</a> /
-                    <a class="active">নতুন অর্ডার</a>
-                </div>
+                
             </div>
             <div class="pageMainWrapper">
             <!-- ----------------------------------------------------- -->
@@ -21,6 +18,7 @@
                     <div class="card">
                         <div class="card-header"> <h4 class="orderTitle">কাস্টমারের তথ্য</h4> </div>
                         <div class="card-body">
+                            
                             <div class="row mb-3">
                                 <div class="col-sm-12 col-md-4 mb-3">
                                     <label for="cName" class="form-label">কাস্টমারের নাম</label>
@@ -72,17 +70,26 @@
 
                             <h4 class="orderTitle mt-5"> প্যাকেজ ও কালেকশনের তথ্য </h4>
                             <div class="row my-3">
-                                <div class="col-sm-12 col-md-4">
+                                <div class="col-sm-12 col-md-3">
                                     <label for="refNumber" class="form-label">নিজস্ব রেফারেন্স নম্বর / ইনভয়েস</label>
                                     <input type="text" class="form-control" id="refNumber" name="reference_no">
                                 </div>
-                                <div class="col-sm-12 col-md-4">
+                                <div class="col-sm-12 col-md-3">
                                     <label for="accuratePrice" class="form-label">কালেকশন অ্যামাউন্ট</label>
                                     <input type="text" class="form-control" id="collection_amount" name="collection_amount">
                                 </div>
-                                <div class="col-sm-12 col-md-4">
+                                <div class="col-sm-12 col-md-3">
                                     <label for="accuratePrice" class="form-label">অ্যাকচুয়াল প্যাকেজ প্রাইস</label>
                                     <input type="text" class="form-control" id="accuratePrice" name="actual_package_price">
+                                </div>
+                                <div class="col-sm-12 col-md-3">
+                                    <label for="accuratePrice" class="form-label">প্যাকজের ধরন</label>
+                                    <select  class="form-select" name="packegeType">
+                                        {% for point in packagetype|package %}
+                                            <option value="{{ point.id }}">{{point.packege_name}}</option>
+                                        {% endfor %}
+                                        
+                                    </select>
                                 </div>
                             </div>
                             <div class="productCollection mb-3" style="padding-bottom: 3px;" name="">
@@ -166,12 +173,7 @@
                             <div class="productCollection">
                                 <div class="row">
                                     
-                                    {% comment %} <div class="col-sm-12 col-md-4">
-                                        <button> আজ </button>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <button> কাল </button>
-                                    </div> {% endcomment %}
+
                                     <div class="col-sm-4 ">
                                         <span> প্রোডাক্ট কবে কালেকশন হবে </span>
                                         <input class="form-control" value="{%now 'Y-m-d'%}" type="date" id="formFile" placeholder="তারিখ নির্বাচন করুন" name="collection_date">
@@ -179,11 +181,12 @@
                                      
                                     <div class="col-sm-4 col-md-4">
                                     <span> কখন কালেকশন হবে </span>
-                                        <div class="form-redio">
-                                            
-                                            <input class="form-control" type="time" name="collection_time" id="morning1">
-                                            
-                                        </div>
+                                    <select  class="form-select" name="collection_time_category">
+                                        {% for point in collection_time|collection %}
+                                            <option value="{{ point.id }}">{{point.time}}</option>
+                                        {% endfor %}
+                                        
+                                        </select>
                                     </div>
                                     
                                 </div>
