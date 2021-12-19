@@ -21,47 +21,47 @@
                         <thead>
                           <tr>
                             <th scope="col"> তারিখ </th>
-                                        <th scope="col"> আইডি </th>
-                                        <th scope="col"> মার্চেন্ট রেফার </th>
-                                        <th scope="col"> প্যাকজের তথ্য </th>
-                                        <th scope="col"> কালেকশন এমাউন্ট </th>
-                                        <th scope="col"> সার্ভিস চার্জ </th>
-                                        <th scope="col"> স্ট্যাটাস </th>
-                                        <th scope="col" class="text-end">কাস্টমারের তথ্য </th>
+                            <th scope="col"> আইডি </th>
+                            <th scope="col"> মার্চেন্ট রেফার </th>
+                            <th scope="col"> প্যাকজের তথ্য </th>
+                            <th scope="col"> কালেকশন এমাউন্ট </th>
+                            <th scope="col"> সার্ভিস চার্জ </th>
+                            <th scope="col"> স্ট্যাটাস </th>
+                            <th scope="col" class="text-end">কাস্টমারের তথ্য </th>
                           </tr>
                         </thead>
                         <tbody>
-                                {% for list in order %}
-                                    <tr>
-                                        
-                                        <td> {{list.created|date:"d-M-Y"}}<br>{{list.created|date:"g:i A"}} </td>
-                                        <td> {{list.order_id}}</td>
-                                        <td> 
-                                            {{list.reference_no}}
+                          {% for list in order %}
+                              <tr>
+                                  
+                                  <td> {{list.created|date:"d-M-Y"}}<br>{{list.created|date:"g:i A"}} </td>
+                                  <td> {{list.order_id}}</td>
+                                  <td> 
+                                      {{list.reference_no}}
 
-                                         </td>
-                                        <td>{{list.packegeType}} </td>
-                                        <td> {{list.collection_amount}} </td>
-                                        <td> {{list.total_service_charge}} </td>
-                                        <td> {% if list.status == "True" %}
-                                          <div class="badge badge-success badge-shadow">Completed</div>
-                                          {% else %}
-                                          <div class="badge badge-warning badge-shadow">In Progress</div>
-                                          {% endif %}
-                                       </td>
-                                        
-                                            
-                                          <td><button data-id="{{list.order_id}}" onclick="CustomerDetailsModal('{{list.order_id}}')" data-toggle="modal" data-target="#CustomerDetailsModal" class="ion-edit"></button>
-                                            <button  class="ion-close" data-pack="default" data-tags="change, update, write, type, pencil"></button>
-                                            
-                                          </td>
-                                            
-                                        
-                                    </tr>
-                                    
-                                {% endfor %}
-                          
-                          
+                                    </td>
+                                  <td>{{list.packegeType}} </td>
+                                  <td> {{list.collection_amount}} </td>
+                                  <td> {{list.total_service_charge}} </td>
+                                  <td> {% if list.status == "True" %}
+                                    <div class="badge badge-success badge-shadow">Completed</div>
+                                    {% else %}
+                                    <div class="badge badge-warning badge-shadow">In Progress</div>
+                                    {% endif %}
+                                  </td>
+                                  
+                                      
+                                    <td><button data-id="{{list.order_id}}" onclick="CustomerDetailsModal('{{list.order_id}}')" data-toggle="modal" data-target="#CustomerDetailsModal" class="ion-edit"></button>
+                                      <button  class="ion-close" data-pack="default" data-tags="change, update, write, type, pencil"></button>
+                                      
+                                    </td>
+                                      
+                                  
+                              </tr>
+                              
+                          {% endfor %}
+                    
+                    
                           
                         </tbody>
                         

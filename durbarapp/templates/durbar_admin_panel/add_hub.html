@@ -7,7 +7,7 @@
       <div class="main-content">
         <section class="section">
           <div class="section-body">
-            <form action="#" method="POST"  id="indexForm" data-courses-url="{% url 'ajax_load_upazilla' %}"  class="addOrder">{% csrf_token %}
+            <form action="#" method="POST"  id="indexForm" data-courses-url="{% url 'ajax_load_upazilla' %}"  class="addOrder" enctype="multipart/form-data">{% csrf_token %}
             <div class="row">
               
               <div class="col-12 col-md-6 col-lg-6">
@@ -30,8 +30,12 @@
                           <input type="number" class="form-control"  id="altCustomerNumber" name="contact_no2">
                       
                       
+                          <label for="altCustomerNumber" class="form-label">Owner NID</label>
+                          <input type="text" class="form-control" name="owner_nid">
+                      
+                      
                           <label for="altCustomerNumber" class="form-label">Email</label>
-                          <input type="text" class="form-control"  id="altCustomerNumber" name="email">
+                          <input type="email" class="form-control" name="email">
                       
                       
                           <label for="altCustomerNumber" class="form-label">Password</label>
@@ -40,7 +44,7 @@
                  
                   
                       
-                          <label for="insDistrict" class="form-label">Mobile Bnaking Category</label>
+                          <label for="insDistrict" class="form-label">District</label>
                           <select id="programming" class="form-control" name="district_name" required>
                           <option value="">---Select District---</option>
                               {% for i in District|districtreg %}
@@ -51,7 +55,7 @@
                           </select>
                       
                       
-                          <label for="insDistrict" class="form-label"> থানা নির্বাচন করুন </label>
+                          <label for="insDistrict" class="form-label"> Upazilla </label>
                           <select id="courses" class="form-control" name="upazilla_name" required>
                               
                           </select>
@@ -63,6 +67,15 @@
                   
                           <label for="address" class="form-label">Hub Address</label>
                           <textarea class="form-control" id="address"  rows="1" name="address" required></textarea>
+                      
+                          
+                          <label for="address" class="form-label">Owner Image</label>
+                          <input type="file" class="form-control"   name="owner_image" >
+                      
+                          <label for="address" class="form-label">Owner NID Image</label>
+                          <input type="file" class="form-control"   name="owner_nid_image" >
+                      
+
                       
                           
                     
@@ -78,7 +91,7 @@
               <div class="col-12 col-md-6 col-lg-6">
                 <div class="card">
                   <div class="card-header">
-                    <h4> Security INFO.</h4>
+                    <h4> Account Info.</h4>
                   </div>
                   <div class="card-body">
                     
@@ -100,7 +113,7 @@
                                     <input type="text" class="form-control"  id="collection_amount" name="mobile_banking_no">
                                     
 
-                                    <label for="insDistrict" class="form-label">জেলা নির্বাচন করুন</label>
+                                    <label for="insDistrict" class="form-label">Mobile Bnaking Category</label>
                                     <select id="programming" class="form-control" name="mobile_banking_category" required>
                                     <option value="">---Select District---</option>
                                         {% for i in mobile_banking|category %}
@@ -115,7 +128,11 @@
                                     <input type="text" class="form-control"  id="collection_amount" name="trade_license_no">
                                 
                                 
+                                    <label for="address" class="form-label">Owner TIN Image</label>
+                                    <input type="file" class="form-control"  name="owner_tin" >
                                 
+                                    <label for="address" class="form-label">Trade License Image</label>
+                                    <input type="file" class="form-control" name="trade_license" >
                           
                             
               

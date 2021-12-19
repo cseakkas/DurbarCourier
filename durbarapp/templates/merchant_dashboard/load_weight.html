@@ -1,5 +1,11 @@
-<option value="" >---select weight---</option>
+<option value="" >---select weight---</option> 
 
-{% for data in post %}
-    <option value="{{ data.delivery_charge_weight.id }}">{{ data.delivery_charge_weight }}</option>
-{% endfor %}
+{% if merchant_wise %}
+    {% for data in merchant_wise %}
+        <option value="{{ data.id }}">{{ data.delivery_charge_weight.weight }} - {{data.cost}}</option>
+    {% endfor %}
+{% else %}
+    {% for data in weight_list %}
+        <option value="{{ data.id }}">{{ data.delivery_charge_weight.weight }} - {{data.cost}}</option>
+    {% endfor %}
+{% endif %}

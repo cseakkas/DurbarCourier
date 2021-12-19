@@ -40,7 +40,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
                     </li>
-                    {% if request.session.id %}
+                    {% if request.session.merchant_id %}
                       <li class="nav-item">
                         <a class="login" href="/merchant-dashboard/" >MY panel</a>
                       </li>
@@ -98,11 +98,11 @@
                           <form id="indexForm" data-courses-url="{% url 'ajax_load_upazilla' %}" >{% csrf_token %}
                             <div class="form-group">
                               <label for="exampleInputEmail1">Full Name</label>
-                              <input type="text" class="form-control" id="name" placeholder="Enter email">
+                              <input type="text" class="form-control" id="name" placeholder="Enter Name">
                             </div>
                             <div class="form-group">
                               <label for="exampleInputEmail1">Phone No</label>
-                              <input type="text" class="form-control" id="phone" placeholder="Enter email">
+                              <input type="text" class="form-control" id="phone" placeholder="Enter Mobile No">
                             </div>
                             <div class="form-group">
                               <label for="exampleInputEmail1">District Name</label>

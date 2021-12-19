@@ -3,284 +3,340 @@
 {% load staticfiles %}
 {% load data_load %}
 {% block content %}
-
-
+      <!-- Main Content -->
+      <!-- <div class="main-content"  oncontextmenu="return false;"> -->
       <div class="main-content">
         <section class="section">
           <div class="section-body">
-            
-            
-            <div class="row clearfix">
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <form action="#" method="POST"  id="indexForm" data-courses-url="{% url 'ajax_load_upazilla' %}" data-coursesx-url="{% url 'ajax_load_post' %}" data-coursesa-url="{% url 'ajax_load_weight' %}" data-coursesb-url="{% url 'ajax_load_cost' %}" class="addOrder">{% csrf_token %}
+            <div class="row">
+              
+              <div class="col-12 col-md-6 col-lg-6">
                 <div class="card">
                   <div class="card-header">
-                    <h4>New Order</h4>
+                    <h4>কাস্টমারের তথ্য</h4>
                   </div>
                   <div class="card-body">
-                    <!-- <form  method="POST" id="wizard_with_validation"   data-courses-url="{% url 'ajax_load_upazilla' %}" data-coursesx-url="{% url 'ajax_load_post' %}" data-coursesa-url="{% url 'ajax_load_weight' %}" data-coursesb-url="{% url 'ajax_load_cost' %}" class="addOrder">{% csrf_token %} -->
-                    <form  method="POST" id="wizard_with_validation">{% csrf_token %}
-                      <h3 >কাস্টমারের তথ্য</h3>
+                    
+                      
+                          <label for="cName" class="form-label">কাস্টমারের নাম</label>
+                          <input type="text" class="form-control" id="cName" name="customer_name" required>
                       
                       
-                      <fieldset>
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <label for="cName" class="form-label">কাস্টমারের নাম</label>
-                            <input type="text" class="form-control" id="cName" name="customer_name" required>
-                          </div>
-                        </div>
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <label for="cMobile" class="form-label">মোবাইল নম্বর</label>
-                            <input type="number" class="form-control" id="cMobile" name="contact_no1">
-                          </div>
-                        </div>
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <label for="altCustomerNumber" class="form-label">বিকল্প মোবাইল নম্বর</label>
-                            <input type="number" class="form-control" id="altCustomerNumber" name="contact_no2">
-                          </div>
-                        </div>
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <label>জেলা নির্বাচন করুন</label>
-                                    <select id="DistrictId" class="form-control" name="district_name">
-                                    <option value="">---Select District---</option>
-                                        {% for i in District|districtreg %}
-                                            <option value="{{i.id}}">{{i.district_name_english}}</option>
-                                        {% endfor %}
-                                    </select>
-                          </div>
-                        </div>
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <label for="insDistrict" class="form-label"> থানা নির্বাচন করুন </label>
-                              <select id="courses" class="form-control" name="upazilla_name">
-                                  
-                              </select>
-                          </div>
-                        </div>
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <label for="insDistrict" class="form-label"> পোস্ট-অফিস নির্বাচন করুন </label>
-                                    <select id="courses2" class="form-control" name="post_office_name">
-                                        
-                                        
-                                    </select>
-                          </div>
-                        </div>
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <label for="address" class="form-label">বিস্তারিত ঠিকানা (বাড়ি/রোড/গ্রাম/হোল্ডিং)</label>
-                            <textarea class="form-control" id="address" rows="1" name="address"></textarea>
-                          </div>
-                        </div>
-                      </fieldset>
-
-
-
-                      <h3>প্যাকেজ ও কালেকশনের তথ্য </h3>
-                      <fieldset>
-                        
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <label for="refNumber" class="form-label">নিজস্ব রেফারেন্স নম্বর / ইনভয়েস</label>
-                            <input type="text" class="form-control" id="refNumber" name="reference_no">
-                          </div>
-                        </div>
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <label for="accuratePrice" class="form-label">কালেকশন অ্যামাউন্ট</label>
-                            <input type="text" class="form-control" id="collection_amount" name="collection_amount">
-                          </div>
-                        </div>
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <label for="accuratePrice" class="form-label">অ্যাকচুয়াল প্যাকেজ প্রাইস</label>
-                            <input type="text" class="form-control" id="accuratePrice" name="actual_package_price">
-                          </div>
-                        </div>
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <label for="accuratePrice" class="form-label">প্যাকজের ধরন</label>
-                              <select id="locationCollection" class="form-control" name="packegeType">
-                                  {% for point in packagetype|package %}
-                                      <option value="{{ point.id }}">{{point.packege_name}}</option>
-                                  {% endfor %}
-                                  
-                              </select>
-                          </div>
-                        </div>
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <label for="locationCollection" class="form-label">কালেকশন লোকেশন</label>
-                              <select id="locationCollection" class="form-control" name="collection_point">
-                              {% for point in collection_point|point %}
-                                  <option value="{{ point.id }}">{{point.collection_point_name_english}}</option>
+                          <label for="cMobile" class="form-label">মোবাইল নম্বর</label>
+                          <input type="number" class="form-control" id="cMobile" name="contact_no1" required>
+                      
+                      
+                          <label for="altCustomerNumber" class="form-label">বিকল্প মোবাইল নম্বর</label>
+                          <input type="number" class="form-control" id="altCustomerNumber" name="contact_no2">
+                      
+                 
+                  
+                      
+                          <label for="insDistrict" class="form-label">জেলা নির্বাচন করুন</label>
+                          <select id="programming" class="form-control" name="district_name" required>
+                          <option value="">---Select District---</option>
+                              {% for i in District|districtreg %}
+                                  <option value="{{i.id}}">{{i.district_name_english}}</option>
                               {% endfor %}
-                              
-                              </select>
-                          </div>
-                          
-                        </div>
-                        <div class="row">
-                        <div class="col-12 col-md-6 col-lg-6">
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <label for="weight" class="form-label">ওজন (কেজি)</label>
-                                <select id="weight" class="form-control" name="weight">
-                                
-                                  
-                                </select>
-                          </div>
-                          
-                        </div>
-                        
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <span> প্রোডাক্ট কবে কালেকশন হবে </span>
-                            <input class="form-control" value="{%now 'Y-m-d'%}" type="date" id="formFile" placeholder="তারিখ নির্বাচন করুন" name="collection_date">
-                          </div>
-                          
-                        </div>
-                        <div class="form-group form-float">
-                          <div class="form-line">
-                            <span> কখন কালেকশন হবে </span>
-                              <select id="locationCollection" class="form-control" name="collection_time_category">
-                                  {% for point in collection_time|collection %}
-                                      <option value="{{ point.id }}">{{point.time}}</option>
-                                  {% endfor %}
-                                  
-                                  </select>
-                          </div>
-                          
-                        </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6">
-                          <label  for="weightKG" class="form-label">সার্ভিসের চার্জ</label>
-                            <table>
-                                <tr>
-                                    <th style="width:180px">শিপমেন্ট চার্জ---</th>
-                                    <td><input style="width:127px;text-align:right" class="form-control" id="shipment_charge" name="shipment_charge" type="text"  readonly=""></td>
-                                </tr>
-                                <tr>
-                                    <th style="width:180px">COD চার্জ(1%)---</th>
-                                    <td><input style="width:127px;text-align:right" class="form-control" id="cod_charge" name="cod_charge" type="text"  readonly=""></td>
-                                </tr>
-                                <tr>
-                                    <th style="width:180px">ভঙ্গুর আইটেমের চার্জ---</th>
-                                    <td><input style="width:127px;text-align:right" class="form-control" id="lequed_or_Fragile_charge" name="lequed_or_Fragile_charge" type="text"  readonly=""></td>
-                                </tr>
-                                <tr>
-                                    <th style="width:180px">মোট সার্ভিস চার্জ---</th>
-                                    <td><input style="width:127px;text-align:right" class="form-control" id="total_service_charge" name="total_service_charge" type="text"  readonly=""></td>
-                                </tr>
-                            </table>
-                          
-                        </div>
-                      </div>
-                      </fieldset>
-
-
-
-                      <h3>এডিশনাল তথ্য</h3>
-                      <fieldset>
-                        <label for="addtional_note" class="form-label">এডিশনাল নোট (অপশনাল)</label>
-                        <textarea class="form-control" id="additionalNote" rows="3" name="addtional_note"></textarea>
-                        
-                      </fieldset>
-
+                          </select>
                       
-                    </form>
+                      
+                          <label for="insDistrict" class="form-label"> থানা নির্বাচন করুন </label>
+                          <select id="courses" class="form-control" name="upazilla_name" required>
+                              
+                          </select>
+                      
+                      
+                          <label for="insDistrict" class="form-label"> পোস্ট-অফিস নির্বাচন করুন </label>
+                          <select id="courses2" class="form-control" name="post_office_name" >
+                              
+                              
+                          </select>
+                      
+                  
+                  
+                          <label for="address" class="form-label">বিস্তারিত ঠিকানা (বাড়ি/রোড/গ্রাম/হোল্ডিং)</label>
+                          <textarea class="form-control" id="address" rows="1" name="address" required></textarea>
+                      
+
+                          
+                                    
+                                    
+
+                                
+                  
+                 
+                </div>
+                
+              </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4> প্যাকেজ ও কালেকশনের তথ্য</h4>
+                  </div>
+                  <div class="card-body">
+                    
+                      
+                                
+                                    <label for="refNumber" class="form-label">নিজস্ব রেফারেন্স নম্বর / ইনভয়েস</label>
+                                    <input type="text" class="form-control" id="refNumber" name="reference_no">
+                                
+                                
+                                    <label for="accuratePrice" class="form-label">কালেকশন অ্যামাউন্ট</label>
+                                    <input type="text" class="form-control" id="collection_amount" name="collection_amount" placeholder="0">
+                                
+                                
+                               
+                                
+                                    <label for="accuratePrice" class="form-label">প্যাকজের ধরন</label>
+                                    <input type="text" class="form-control"  name="packegeType" >
+
+                                    
+                                    <label for="weight" class="form-label">ওজন (কেজি)</label>
+                                    
+                                    <select id="weight" class="form-control" name="weight">
+                                      
+                                    </select>
+                              
+                            <div class="productCollection mb-3" style="padding-bottom: 3px;" name="">
+                              <br>  
+                              <div class="row mb-3">
+
+                                    
+                                    <!-- <div class="col-md-4 col-sm-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" onclick="delivery(this.checked)" name="only_delivery" id="morning1">
+                                            <label class="form-check-label" for="morning1"> শুধু ডেলিভারি </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" onclick="delivery_and_amount_collection(this.checked)" name="" id="morning2">
+                                            <label class="form-check-label" for="morning2"> ডেলিভারি + টাকা কালেকশন  </label>
+                                        </div>
+                                    </div> -->
+                                    
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"  id="brokenProduct" onclick="check_uncheck_class(this.checked)">
+                                            <label class="form-check-label" for="brokenProduct"> ভঙ্গুর/তরল প্রোডাক্ট </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            
+                                            
+                                          
+                                
+                                        
+                               
+                            
+                            
+                                        <span> প্রোডাক্ট কবে কালেকশন হবে </span>
+                                        <input class="form-control" value="{%now 'Y-m-d'%}" type="date" id="formFile" placeholder="তারিখ নির্বাচন করুন" name="collection_date">
+                                    
+                                     
+                                    
+                                    <span> কখন কালেকশন হবে </span>
+                                      <select  class="form-control" name="collection_time_category" required>
+                                        {% for point in collection_time|collection %}
+                                            <option value="{{point.id}}">{{point.time}}</option>
+                                        {% endfor %} 
+                                        </select>
+                                    
+                                        <label for="locationCollection" class="form-label">কালেকশন লোকেশন</label>
+                                            <select id="locationCollection" class="form-control" name="pickup_location" required>
+                                            {% for point in pickup %}
+                                                <option value="{{ point.id }}">{{point.address}}</option>
+                                            {% endfor %}
+                                            
+                                            </select>
+                            
+                                    <label for="addtional_note" class="form-label">এডিশনাল নোট (অপশনাল)</label>
+                                    <textarea class="form-control" id="additionalNote" rows="3" name="addtional_note"></textarea>
+                                    
+
+
+                                    <label  for="weightKG" class="form-label">সার্ভিসের চার্জ</label>
+                                    <table>
+                                      <thead>
+                                        <tr>
+                                          <th scope="col"> শিপমেন্ট চার্জ </th>
+                                          <th scope="col"> COD চার্জ(1%) </th>
+                                          <th scope="col"> ভঙ্গুর আইটেমের চার্জ</th>
+                                          <th scope="col"> মোট সার্ভিস চার্জ </th>
+                                        
+                                        </tr>
+                                      </thead>
+                                      <tbody>           
+                                            <tr>
+                                              <td><input  class="form-control" id="shipment_charge22" name="shipment_charge" type="number" value="0"  readonly></td>
+                                              <td><input  class="form-control" id="cod_charge" name="cod_charge" type="number"  value="0" readonly></td>
+                                              <td><input  class="form-control" id="lequed_or_Fragile_charge" name="lequed_or_Fragile_charge" type="number" value="0"   readonly></td>
+                                              <td><input  class="form-control" id="total_service_charge" name="total_service_charge" type="number" value="0"  readonly></td>
+
+                                            </tr>
+
+                                      </tbody>
+                                        
+                                    </table>
+
+
+
+
+                                    <div class="card-footer text-right">
+                                      <button class="btn btn-primary mr-1" type="submit">Submit</button>
+                                      <button class="btn btn-secondary" type="reset">Reset</button>
+                                    </div>
+
+
+                                      
+
                   </div>
                 </div>
+                
+                
+                
+                
+                
+                
               </div>
             </div>
+          </form>
           </div>
         </section>
 
 
 
 
+
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script>
-          $("#DistrictId").change(function(){
-            alert("Ok");
-          })
-        </script>
-        <script>
          function check_uncheck_class(isChecked){
-            if(isChecked) {
-                  this.checked = true; 
-                  var brokenProduct = 100;
-                  $("#lequed_or_Fragile_charge").val(brokenProduct);                      
-              }
-              else {
-                      this.checked = false;
-                      var brokenProduct = 0;
-                      $("#lequed_or_Fragile_charge").val(' ');                           
-              }
-         }
-      
-         function delivery_and_amount_collection(isChecked){
-            if(isChecked) {
-                  this.checked = true; 
-                  var amount = 10;
-                  var collection_amount = $("#collection_amount").val();
-                  if(collection_amount >= 1000 ){
-                      var amount = Math.round((collection_amount*1)/100)
-                  }
-                  $("#cod_charge").val(amount)
-      
-              }
+          if(isChecked) {
+                this.checked = true; 
+                var brokenProduct = 100;
+                $("#lequed_or_Fragile_charge").val(brokenProduct);
+                var total_service_charge = $("#total_service_charge").val(); 
+                var total_service= parseInt(brokenProduct + parseInt(total_service_charge)); 
+                $("#total_service_charge").val(total_service);                                                
+            }
+            else {
+                this.checked = false;
+                var brokenProduct = 100; 
+                $("#lequed_or_Fragile_charge").val('0');   
+                var total_service_charge = $("#total_service_charge").val();
+                var total_service= parseInt(total_service_charge) - parseInt(brokenProduct); 
+                $("#total_service_charge").val(total_service);                         
+            }
+        }
+
+
+         $("#collection_amount").change(function(){
+            var collection_amount = $("#collection_amount").val();
+            var amount = 0; 
+            if(collection_amount >= 1000 ){
+                var amount = Math.round((collection_amount*1)/100)
+            }
+            else if(collection_amount > 0){
+              var amount = 10;
+            }
+            $("#cod_charge").val(amount);
+ 
+            var brokenProduct = $("#lequed_or_Fragile_charge").val(); 
+            var shipment_charge = $("#shipment_charge22").val(); 
            
-         }
+            var total_service =  parseInt(shipment_charge) + parseInt(brokenProduct) + parseInt(amount) ;
+            $("#total_service_charge").val(total_service);
+              
+
+         })
+        //  function delivery_and_amount_collection(isChecked){
+        //     if(isChecked) {
+        //           this.checked = true; 
+        //           var amount = 10;
+        //           var collection_amount = $("#collection_amount").val();
+        //           if(collection_amount >= 1000 ){
+        //               var amount = Math.round((collection_amount*1)/100)
+        //           }
+        //           $("#cod_charge").val(amount)
       
-         function delivery(isChecked){
-            if(isChecked) {
-                  this.checked = true; 
-                  $("#cod_charge").val(' '); 
+        //       }
+           
+        //  }
+      
+        //  function delivery(isChecked){
+        //     if(isChecked) {
+        //           this.checked = true; 
+        //           $("#cod_charge").val(' '); 
                   
       
-              } 
-         }
+        //       } 
+        //  }
       
         </script>
+  
       <script>
           $(document).ready(function(){
-              $("#weight").change(function(){
-          
-              var shipment_charge = $("#shipment_charge").val();
-              var total_service_charge =  parseInt(shipment_charge);
-              alert(shipment_charge);
-              $("#total_service_charge").val(total_service_charge);
+              $("#weight").change(function(){ 
+              var weight_cost_id = $("#weight").val();   
+              // alert("weight_cost_id :"+weight_cost_id);
+                $.ajax({                        
+                  url: "/new-order/",                    
+                  data: {
+                    'weight_cost_id': weight_cost_id    
+                  },
+                  success: function (results) { 
+                    var shipment_charge = results[0]['get_cost'] 
+                    $("#shipment_charge22").val(shipment_charge);
+                    var cod_charge = $("#cod_charge").val();
+                    var brokenProduct = $("#lequed_or_Fragile_charge").val(); 
+                    var total_service =  parseInt(shipment_charge) + parseInt(brokenProduct) + parseInt(cod_charge) ;
+                    $("#total_service_charge").val(total_service); 
+                  }
+                }); 
+            });
           });
-          });
-          
-          $("#shipment_charge","#cod_charge","#lequed_or_Fragile_charge").keypress(function(){
-              
-              var shipment_charge = $("#shipment_charge").val();
-              var cod_charge = $("#cod_charge").val();
-              var lequed_or_Fragile_charge = $("#lequed_or_Fragile_charge").val();
-              var total_service_charge =  parseInt(shipment_charge)+parseInt(cod_charge)+parseInt(lequed_or_Fragile_charge);
-              alert(shipment_charge)
-              $("#total_service_charge").val(total_service_charge);
-          });
-          $("#shipment_charge","#cod_charge","#lequed_or_Fragile_charge").keypress(function(){
-              
-              var shipment_charge = $("#shipment_charge").val();
-              var cod_charge = $("#cod_charge").val();
-              var lequed_or_Fragile_charge = $("#lequed_or_Fragile_charge").val();
-              var total_service_charge =  parseInt(shipment_charge)+parseInt(cod_charge)+parseInt(lequed_or_Fragile_charge);
-              alert(shipment_charge)
-              $("#total_service_charge").val(total_service_charge);
-          });
+            
+      </script>
+      <script>
+        $("#shipment_charge22").keydown(function(){  
+          var total_service_charge = 0;   
+          var shipment_charge = $("#shipment_charge22").val();
+            //  alert("shipment_charge "+shipment_charge);
+             total_service_charge = parseInt(shipment_charge)
+            //  var cod_charge = $("#cod_charge").val();
+            //  var lequed_or_Fragile_charge = $("#lequed_or_Fragile_charge").val();
+            //  var total_service_charge =  parseInt(shipment_charge)+parseInt(cod_charge)+parseInt(lequed_or_Fragile_charge);
+             
+            //  $("#total_service_charge").val(total_service_charge);
+         });
       </script>
       
-        
+        <script>
+          $("#programming").change(function () {
+            var url = $("#indexForm").attr("data-courses-url");  // get the url of the `load_courses` view
+            var programmingId = $(this).val();  // get the selected programming ID from the HTML input
+      
+            $.ajax({                       // initialize an AJAX request
+              url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+              data: {
+                'programming': programmingId       // add the programming id to the GET parameters
+              },
+              success: function (data) {   // `data` is the return of the `load_courses` view function
+                $("#courses").html(data);  // replace the contents of the course input with the data that came from the server
+              }
+            });
+      
+          });
+        </script>
         <script>
           $("#courses").change(function () {
-            var url = $("#formindex").attr("data-coursesx-url");  // get the url of the `load_courses` view
+            var url = $("#indexForm").attr("data-coursesx-url");  // get the url of the `load_courses` view
             var coursesId = $(this).val();  // get the selected programming ID from the HTML input
       
             $.ajax({                       // initialize an AJAX request
@@ -299,7 +355,7 @@
       
         <script>
           $("#locationCollection").change(function () {
-            var url = $(".formindex").attr("data-coursesa-url");  // get the url of the `load_courses` view
+            var url = $("#indexForm").attr("data-coursesa-url");  // get the url of the `load_courses` view
             var locationCollectionId = $(this).val();  // get the selected programming ID from the HTML input
           
             $.ajax({                       // initialize an AJAX request
@@ -316,31 +372,25 @@
       
           });
         </script>
-      
-      
-        <script>
-          $("#weight").change(function () {
-            var url = $("#wizard_with_validation").attr("data-coursesb-url");  // get the url of the `load_courses` view
-            var weightId = $(this).val();  // get the selected programming ID from the HTML input
-            var areaId = $('#locationCollection').val();
-      
-            $.ajax({                       // initialize an AJAX request
-              url: url,                    // set the url of the request (= localhost:8000/load-courses/)
-              data: {
-                'areaId': areaId,      // add the programming id to the GET parameters
-                'weight': weightId,      // add the programming id to the GET parameters
-      
-              },
-              success: function (data) {   // `data` is the return of the `load_courses` view function
-                $("#shipment_charge").val(data[0]['shipment_charge']); 
-                alart(data) // replace the contents of the course input with the data that came from the server
-                  
-              }
-      
-            });
-      
+      <script>
+        $("#programming").change(function () {
+          var url = $("#indexForm").attr("data-coursesa-url");   
+          var programmingId = $(this).val(); 
+    
+          $.ajax({                        
+            url: url,                    
+            data: {
+              'programming': programmingId    
+            },
+            success: function (data) {    
+              $("#weight").html(data);   
+            }
           });
-        </script>
+    
+        });
+      </script>
+      
+        
       
       
       <script type="text/javascript">
@@ -356,6 +406,14 @@
                   });
                   });
         </script>
+
+
+
+
+
+
+
+
 
 
 

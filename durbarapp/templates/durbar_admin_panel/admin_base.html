@@ -10,11 +10,14 @@
   <title>Durbar - Admin Dashboard Template</title>
   {% load static %}
   <!-- General CSS Files -->
+  <link rel="stylesheet" href="{% static 'durbar_admin_panel/assets/bundles/chocolat/dist/css/chocolat.css' %}">
   <link rel="stylesheet" href="{% static 'durbar_admin_panel/assets/bundles/ionicons/css/ionicons.min.css' %}">
   <link rel="stylesheet" href="{% static 'durbar_admin_panel/assets/css/app.min.css' %}">
   <!-- Template CSS -->
   <link rel="stylesheet" href="{% static 'durbar_admin_panel/assets/css/style.css' %}">
   <link rel="stylesheet" href="{% static 'durbar_admin_panel/assets/css/components.css' %}">
+  <link rel="stylesheet" href="{% static 'durbar_admin_panel/assets/bundles/jquery-selectric/selectric.css' %}">
+  <link rel="stylesheet" href="{% static 'durbar_admin_panel/assets/bundles/select2/dist/css/select2.min.css' %}">
   <!-- Custom style CSS -->
   <link rel="stylesheet" href="{% static 'durbar_admin_panel/assets/css/custom.css' %}">
   <link rel="stylesheet" href="{% static 'durbar_admin_panel/assets/bundles/datatables/datatables.min.css' %}">
@@ -182,13 +185,13 @@
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="/admin-dashboard"> <img alt="image" src="{% static 'durbar_admin_panel/assets/img/logo.png' %}" class="header-logo" /> <span
-                class="logo-name">Durbar Admin</span>
+            <a href="index.html"> <img alt="image" style="width: 200px; height: 96px; " src="{% static 'durbar_rider_panel/assets/img/durbar_logo.png' %}" class="header-logo" /> <span
+                
             </a>
           </div>
           <ul class="sidebar-menu">
-            <li class="menu-header">Main</li>
-            <li class="dropdown active">
+            
+            <li >
               <a href="/admin-dashboard" class="nav-link"><i data-feather="monitor"></i><span>Home</span></a>
             </li>
             <li class="menu-header">Order</li>
@@ -249,8 +252,9 @@
               <a href="#" class="menu-toggle nav-link has-dropdown"><i
                   data-feather="user-check"></i><span>Merchant</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="widget-chart.html"> Merchant Request </a></li>
-                <li><a class="nav-link" href="widget-data.html"> Merchant Management </a></li>
+                <li><a class="nav-link" href="/merchant-request"> Merchant Request </a></li>
+                <li><a class="nav-link" href="/merchant-request"> Pickup Location Request </a></li>
+                <li><a class="nav-link" href="/merchant-management"> Merchant Management </a></li>
 
               </ul>
             </li>
@@ -261,7 +265,7 @@
                   data-feather="map"></i><span>Hub</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="/add-hub"> Add Hub </a></li>
-                <li><a class="nav-link" href="widget-data.html"> Hub Management </a></li>
+                <li><a class="nav-link" href="/hub-list"> Hub Management </a></li>
 
               </ul>
             </li>
@@ -294,10 +298,10 @@
             <li><a class="nav-link" href="vector-map.html"><i data-feather="user"></i><span> Agent </span></a></li>
             <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                  data-feather="truck"></i><span>Deliveryman</span></a>
+                  data-feather="truck"></i><span>Rider</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="widget-chart.html"> Add Deliveryman </a></li>
-                <li><a class="nav-link" href="widget-data.html"> Deliveryman Management </a></li>
+                <li><a class="nav-link" href="/add-rider"> Add Rider </a></li>
+                <li><a class="nav-link" href="/rider-list"> Rider Management </a></li>
 
               </ul>
             </li>
@@ -486,7 +490,11 @@
 <script src="{% static 'durbar_admin_panel/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js' %}"></script>
 <script src="{% static 'durbar_admin_panel/assets/bundles/jquery-ui/jquery-ui.min.js' %}"></script>
 <!-- Page Specific JS File -->
+<script src="{% static 'durbar_admin_panel/assets/js/page/gallery1.js' %}"></script>
 <script src="{% static 'durbar_admin_panel/assets/js/page/datatables.js' %}"></script>
+<script src="{% static 'durbar_admin_panel/assets/bundles/chocolat/dist/js/jquery.chocolat.min.js' %}"></script>
+<script src="{% static 'durbar_admin_panel/assets/bundles/select2/dist/js/select2.full.min.js' %}"></script>
+<script src="{% static 'durbar_admin_panel/assets/bundles/jquery-selectric/jquery.selectric.min.js' %}"></script>
 </body>
 
 

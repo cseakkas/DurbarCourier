@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views 
+from . import merchant_views 
 
 urlpatterns = [ 
 ############################### website url ###################################
@@ -8,20 +9,24 @@ urlpatterns = [
  
 ############################### Merchant url ###################################
 
-    path('merchant-dashboard/', views.merchant_dashboard),
-    path('new-order/', views.new_order),
-    path('order-list/', views.order_list),
-    path('service-charge-list/', views.service_charge_list),
-    path('customer-info-edit/', views.customer_info_edit),
+    path('merchant-dashboard/', merchant_views.merchant_dashboard),
+    path('new-order/', merchant_views.new_order),
+    path('merchant-profile/', merchant_views.merchant_profile),
+    path('order-list/', merchant_views.order_list),
+    path('service-charge-list/', merchant_views.service_charge_list),
+    path('customer-info-edit/', merchant_views.customer_info_edit),
 
-    path('load-courses/', views.load_courses, name='ajax_load_upazilla'),
-    path('load-post/', views.load_post, name='ajax_load_post'),
+    path('marchant-order-tracking/', merchant_views.marchant_order_tracking),
 
-    path('load-weight/', views.load_weight, name='ajax_load_weight'),
-    path('load-cost/', views.load_cost, name='ajax_load_cost'),
+    path('load-courses/', merchant_views.load_courses, name='ajax_load_upazilla'),
+    path('load-post/', merchant_views.load_post, name='ajax_load_post'),
+    path('load-hub/', merchant_views.load_hub, name='ajax_load_hub'),
 
-    path('merchant-login/', views.merchant_login), 
-    path('merchant-logout/', views.merchant_logout), 
+    path('load-weight/', merchant_views.load_weight, name='ajax_load_weight'),
+    path('load-cost/', merchant_views.load_cost, name='ajax_load_cost'),
+
+    path('merchant-login/', merchant_views.merchant_login), 
+    path('merchant-logout/', merchant_views.merchant_logout), 
 
 ############################### Admin url ###################################
     path('admin-dashboard/', views.admin_dashboard),
@@ -49,6 +54,48 @@ urlpatterns = [
 
     path('order-upgrade/<int:id>/', views.order_upgrade),
     path('add-hub/', views.add_hub),
-    
+    path('add-rider/', views.add_rider),
+    path('hub-list/', views.hub_list),
+    path('rider-list/', views.rider_list),
+    path('rider/<str:rider_id>/update/', views.rider_update),
+    path('merchant-request/', views.merchent_request),
+    path('merchant-approval/<int:id>/', views.merchant_approval),
+    path('merchant-management/', views.merchant_management_list),
+    path('merchant-management/<str:id>/', views.merchant_management_edit),
+
+
+############################### Hub url ###################################
+
+    path('hub/', views.hub_login),
+    path('hub-logout/', views.hub_logout),
+    path('hub-dashboard/', views.hub_dashboard),
+    path('hub-pending/', views.hub_pending_list),
+    path('hub-picked/', views.hub_picking_from_rider_list),
+    path('hub-picking/<str:rider_id>/', views.hub_picking_from_rider),
+    path('hub-pick/', views.pick_ajax),
+    path('hub-pending-update/<str:id>/', views.hub_pending_update),
+
+
+
+############################### Rider url ###################################
+
+    path('rider/', views.rider_login),
+    path('rider-logout/', views.rider_logout),
+    path('rider-dashboard/', views.rider_dashboard),
+    path('rider-pickup-dashboard/', views.rider_pickup_dashboard),
+    path('rider-pending-list/', views.rider_pending_list),
+    path('rider-cancel-order/<int:pickup_location>/', views.rider_order_cancel),
+    path('rider-merchant-absent/<int:pickup_location>/', views.rider_merchant_absent),
+    path('rider-hold-list/', views.rider_hold_list),
+    path('rider-picking-list/<int:id>/', views.rider_picking_order),
+    path('rider-picking-hold-list/<int:id>/', views.rider_picking_hold_order),
+    path('rider-collect-order/<int:pickup_location>/<str:order_id>/', views.rider_order_collected),
+    path('rider-hold-order/<int:pickup_location>/<str:order_id>/', views.rider_order_hold),
+    path('rider-product-absent-order/<int:pickup_location>/<str:order_id>/', views.rider_order_absent),
+    path('rider-picked-list/', views.rider_picked_list),
+
+
+
+
 
 ]

@@ -18,9 +18,6 @@ class CollectionPointEntryAdmin(admin.ModelAdmin):
  
  
 
-class DeliveryChargeLocationAdmin(admin.ModelAdmin):
-    list_display  = ['location', 'status']
- 
  
 
 class DeliveryChargeWeightAdmin(admin.ModelAdmin):
@@ -31,7 +28,7 @@ class DeliveryChargeWeightAdmin(admin.ModelAdmin):
  
 
 class DeliveryChargeAdmin(admin.ModelAdmin):
-    list_display  = ['__str__','collection_point','delivery_charge_weight','cost', 'status']
+    list_display  = ['__str__','delivery_charge_weight','cost', 'status']
  
 
 class CollectionChargeAdmin(admin.ModelAdmin):
@@ -44,7 +41,7 @@ class ReturnChargeAdmin(admin.ModelAdmin):
  
 
 class MerchantInfoAdmin(admin.ModelAdmin):
-    list_display  = ['marchant_name', 'email']
+    list_display  = ['marchant_name', 'email', 'merchant_id']
  
  
 class DistrictEntryAdmin(admin.ModelAdmin):
@@ -68,7 +65,12 @@ class PostOfficeInfoAdmin(admin.ModelAdmin):
  
  
 class MerchantOrderAdmin(admin.ModelAdmin):
-    list_display  = ['order_id','customer_name','contact_no1','reference_no','collection_point','collection_date','weight','total_service_charge', 'status']
+    list_display  = ['order_id','pickup_location','customer_name','contact_no1','reference_no','collection_date','weight','total_service_charge', 'order_track']
+ 
+ 
+ 
+class RiderOrderAdmin(admin.ModelAdmin):
+    list_display  = ['pickup_location','order_info', 'pending', 'picked', 'submit_to_hub', 'hold', 'order_absent']
  
  
  
@@ -83,9 +85,8 @@ admin.site.register(models.CollectionCharge, CollectionChargeAdmin)
 admin.site.register(models.ReturnCharge, ReturnChargeAdmin) 
 admin.site.register(models.WhyBest, WhyBestAdmin) 
 admin.site.register(models.CollectionPointEntry, CollectionPointEntryAdmin) 
-admin.site.register(models.DeliveryChargeLocation, DeliveryChargeLocationAdmin) 
+
 admin.site.register(models.DeliveryChargeWeight, DeliveryChargeWeightAdmin) 
-admin.site.register(models.DeliveryCharge, DeliveryChargeAdmin) 
 admin.site.register(models.MerchantInfo, MerchantInfoAdmin) 
 admin.site.register(models.DistrictEntry, DistrictEntryAdmin) 
 admin.site.register(models.UpazillaEntry, UpazillaEntryAdmin) 
@@ -94,5 +95,11 @@ admin.site.register(models.PostOfficeInfo, PostOfficeInfoAdmin)
 admin.site.register(models.MerchantOrder, MerchantOrderAdmin) 
 admin.site.register(models.PackegeType, PackegeTypeAdmin) 
 admin.site.register(models.Collection_time_category)
+admin.site.register(models.DeliveryCharge, DeliveryChargeAdmin) 
 admin.site.register(models.HubInfo)
 admin.site.register(models.MobileBnakingCategory)
+admin.site.register(models.RiderInfo)
+admin.site.register(models.PickupLocation)
+admin.site.register(models.RiderOrder, RiderOrderAdmin) 
+admin.site.register(models.DeliveryCharge_by_Merchant) 
+admin.site.register(models.InsideOutsideLocation) 

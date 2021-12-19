@@ -162,8 +162,8 @@
               class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="{% static 'merchant_dashboard_v2/assets/img/user.png' %}"
                 class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
-              <div class="dropdown-title">Hello Sarah Smith</div>
-              <a href="profile.html" class="dropdown-item has-icon"> <i class="far
+              <div class="dropdown-title">Hello {{request.session.merchant_name}}</div>
+              <a href="/merchant-profile" class="dropdown-item has-icon"> <i class="far
 										fa-user"></i> Profile
               </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
                 Activities
@@ -171,7 +171,7 @@
                 Settings
               </a>
               <div class="dropdown-divider"></div>
-              <a href="auth-login.html" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
+              <a href="/merchant-logout" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
                 Logout
               </a>
             </div>
@@ -196,13 +196,11 @@
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="/new-order"> নতুন অর্ডার </a></li>
                 <li><a class="nav-link" href="/order-list"> অর্ডার লিস্ট </a></li>
-                <li><a class="nav-link" href="widget-data.html">  বাল্ক অর্ডার   </a></li>
+                <!-- <li><a class="nav-link" href="widget-data.html">  বাল্ক অর্ডার   </a></li> -->
               </ul>
             </li>
-            
-            <li class="menu-header">Tracking</li>
-            
-            <li><a class="nav-link" href="vector-map.html"><i data-feather="map-pin"></i><span> অর্ডার ট্র্যাকিং </span></a></li>
+ 
+            <li><a class="nav-link" href="/marchant-order-tracking/"><i data-feather="map-pin"></i><span> অর্ডার ট্র্যাকিং </span></a></li>
             
             
             <li class="menu-header">Collections</li>

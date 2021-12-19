@@ -1,0 +1,57 @@
+{% extends 'durbar_rider_panel/rider_base.html' %} 
+{% block title %} Dashboard {% endblock %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-body">
+            <div class="row">
+              
+              {% regroup pending_data by pickup_location as pickup_location_list %}
+              {% for list in pickup_location_list %}
+              <a href="/rider-picking-list/{{list.grouper.id}}">
+                <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                  
+                  <div class="card-body" >
+                    <table class="table">
+                      
+                        <tr>
+                          <th style="text-align: left;height:30px"> {{list.0.merchant.marchant_name}} </th>
+                          <!-- <th style="text-align: right"><a href="tel:{{list.0.contact_no1}}" class="btn btn-icon btn-success"><i class="fas fa-phone"></i></a><br><a href="tel:{{list.0.merchant.contact_no2}}" class="btn btn-icon btn-success"><i class="fas fa-phone"></i></a></th> -->
+                          <a class="badge badge-success" href="tel:{{list.0.contact_no1}}" style="color:white;margin-right: 140px;">1<i class="fas fa-phone"></i></a>
+                          <a class="badge badge-warning" href="tel:{{list.0.merchant.contact_no2}}" style="color:white;text-align:right">2<i class="fas fa-phone"></i></a>
+                        </tr>
+                        
+                        <tr>
+                          
+                            <td style="height:0px"> {{list.grouper}}</td>
+                        </tr>
+                        <tr>
+                            
+                            <td style="height:0px" > {{list.list|length}}</td>
+                        </tr>
+                        <tr>
+                            
+                            <td style="height:0px; padding-top:10px;" > <a class="badge badge-warning" href="/rider-merchant-absent/{{list.grouper.id}}" style="color:white;margin-right: 32px;"> Merchant Absent</a>
+                            <a class="badge badge-danger" href="/rider-cancel-order/{{list.grouper.id}}" style="color:white;"> Cancel</a>
+                            
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </a>
+            
+              {% endfor %}
+              </div>
+            </div>
+          </div>
+        </section>
+{% endblock %}

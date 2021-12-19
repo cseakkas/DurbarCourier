@@ -28,6 +28,13 @@ def collection_point(request):
 
 
 
+@register.filter(name='list')
+def hub(request):
+    point  = models.HubInfo.objects.filter(status = True).order_by("-id")
+    return point
+
+
+
 
 @register.filter(name='package')
 def packagetype(request):
@@ -47,6 +54,12 @@ def collection_time(request):
 def mobile_banking(request):
     name  = models.MobileBnakingCategory.objects.filter(status = True).order_by("-id")
     return name
+
+
+# @register.filter(name='location')
+# def pickup_location(request):
+#     name  = models.PickupLocation.objects.filter(merchant_id__merchant_id = request.session['merchant_id'] ,status = True).order_by("-id")
+#     return name
 
 
 

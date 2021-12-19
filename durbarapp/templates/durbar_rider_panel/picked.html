@@ -1,0 +1,51 @@
+{% extends 'durbar_rider_panel/rider_base.html' %} 
+{% block title %} Dashboard {% endblock %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-body">
+            <div class="row">
+              <div class="col-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <h4>Picked Order</h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
+                            <thead>
+                              <tr>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">Picked Location</th>
+                                <th scope="col">Picked Time</th>
+                                
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for list in order_list %}
+                              <tr>
+                                <th scope="row">{{list.order_info.order_id}}</th>
+                                <td>{{list.pickup_location}}</td>
+                                <td>{{list.picked_time}}</td>
+                                
+                              </tr>
+                            {% endfor %}
+                              
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    
+                </div>
+              </a>
+            
+              
+              </div>
+            </div>
+          </div>
+        </section>
+{% endblock %}

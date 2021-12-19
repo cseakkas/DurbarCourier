@@ -1,0 +1,361 @@
+{% extends 'durbar_admin_panel/admin_base.html' %} 
+{% block title %} Dashboard {% endblock %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
+<style>
+  .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #4967f7;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    cursor: default;
+    float: left;
+    margin-right: 5px;
+    margin-top: 5px;
+    padding: 0 5px;
+}
+</style>
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-body">
+            <form action="#" method="POST"  id="indexForm" data-courses-url="{% url 'ajax_load_upazilla' %}" data-coursesx-url="{% url 'ajax_load_hub' %}"  class="addOrder" enctype="multipart/form-data">{% csrf_token %}
+            <div class="row">
+              
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4> Add Rider</h4>
+                  </div>
+                  <div class="card-body">
+                    
+                      
+                          <label for="cName" class="form-label">Rider name</label>
+                          <input type="text" class="form-control" id="cName" name="rider_name" required>
+                      
+                      
+                          <label for="cMobile" class="form-label">Phone No</label>
+                          <input type="number" class="form-control"  id="cMobile" name="contact_no1" required>
+                      
+                      
+                          <label for="altCustomerNumber" class="form-label">Alt. Phone No</label>
+                          <input type="number" class="form-control"  id="altCustomerNumber" name="contact_no2">
+                      
+                      
+                          <label for="altCustomerNumber" class="form-label">Rider NID</label>
+                          <input type="text" class="form-control" name="nid">
+                      
+                      
+                          <label for="altCustomerNumber" class="form-label">Email</label>
+                          <input type="email" class="form-control" name="email">
+                      
+                      
+                          <label for="altCustomerNumber" class="form-label">Password</label>
+                          <input type="text" class="form-control"  id="altCustomerNumber" name="password" required>
+                      
+                 
+                  
+                      
+                          <label for="insDistrict" class="form-label">District</label>
+                          <select id="programming" class="form-control" name="district_name" required>
+                          <option value="">---Select District---</option>
+                              {% for i in District|districtreg %}
+                               
+                                  <option value="{{i.id}}">{{i.district_name_english}}</option>
+                                
+                              {% endfor %}
+                          </select>
+                      
+                      
+                          <label for="insDistrict" class="form-label"> Upazilla </label>
+                          <select id="courses3" class="form-control" name="upazilla_name" required>
+                              
+                          </select>
+                      
+                      
+                         
+                      
+                  
+                  
+                          <label for="address" class="form-label">Present Address</label>
+                          <textarea class="form-control" id="address"  rows="1" name="address" required></textarea>
+                      
+                          
+                          <label for="address" class="form-label">Permanent Address</label>
+                          <textarea class="form-control" id="address"  rows="1" name="address" required></textarea>
+                          
+                          <div class="form-group">
+                          <label>Select Hub</label>
+                            <select id="courses2" class="form-control" name="hub">
+                             
+                            
+                            </select>
+                          </div>
+
+                          <label for="address" class="form-label">Rider Image</label>
+                          <input type="file" class="form-control"   name="owner_image" >
+                      
+                          <label for="address" class="form-label">Rider NID Image</label>
+                          <input type="file" class="form-control"   name="owner_nid_image" >
+                          
+                                    
+
+                                
+                  
+                 
+                </div>
+                
+              </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4> Account Info.</h4>
+                  </div>
+                  <div class="card-body">
+                    
+                      
+                                
+                                    <label for="refNumber" class="form-label">Bank Name</label>
+                                    <input type="text" class="form-control"  id="refNumber" name="bank_name">
+                                
+                                
+                                    <label for="accuratePrice" class="form-label">Bank AC NO</label>
+                                    <input type="text" class="form-control"  id="collection_amount" name="bank_ac_no">
+                                
+                                
+                                    <label for="accuratePrice" class="form-label">Bank Branch Name</label>
+                                    <input type="text" class="form-control"  id="collection_amount" name="bank_branch_name">
+                                
+                                
+                                    <label for="accuratePrice" class="form-label">Mobile Banking No</label>
+                                    <input type="text" class="form-control"  id="collection_amount" name="mobile_banking_no">
+                                    
+
+                                    <label for="insDistrict" class="form-label">Mobile Bnaking Category</label>
+                                    <select id="programming" class="form-control" name="mobile_banking_category" required>
+                                    <option value="">---Select District---</option>
+                                        {% for i in mobile_banking|category %}
+                                         
+                                            <option value="{{i.id}}" selected>{{i.bank_name}}</option>
+                                          
+                                        {% endfor %}
+                                    </select>
+                                
+                                
+                                    <label for="accuratePrice" class="form-label">Referral Name</label>
+                                    <input type="text" class="form-control"  id="collection_amount" name="referral_name">
+                                    <label for="accuratePrice" class="form-label">Referral Phone No</label>
+                                    <input type="text" class="form-control"  id="collection_amount" name="referral_phone_no">
+                                    <label for="accuratePrice" class="form-label">Referral NID</label>
+                                    <input type="text" class="form-control"  id="collection_amount" name="referral_NID">
+                                    <label for="accuratePrice" class="form-label">Referral Relation</label>
+                                    <input type="text" class="form-control"  id="collection_amount" name="referral_relation">
+                                    
+                          
+                            
+              
+                                
+                                    <div class="card-footer text-right">
+                                      <button class="btn btn-warning mr-1" type="submit">Add Rider</button>
+                                      
+                                    </div>
+
+
+
+
+                  </div>
+                </div>
+                
+                
+                
+                
+                
+                
+              </div>
+            </div>
+          </form>
+          </div>
+        </section>
+
+
+
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+         function check_uncheck_class(isChecked){
+            if(isChecked) {
+                  this.checked = true; 
+                  var brokenProduct = 100;
+                  $("#lequed_or_Fragile_charge").val(brokenProduct);                      
+              }
+              else {
+                      this.checked = false;
+                      var brokenProduct = 0;
+                      $("#lequed_or_Fragile_charge").val(' ');                           
+              }
+         }
+      
+         function delivery_and_amount_collection(isChecked){
+            if(isChecked) {
+                  this.checked = true; 
+                  var amount = 10;
+                  var collection_amount = $("#collection_amount").val();
+                  if(collection_amount >= 1000 ){
+                      var amount = Math.round((collection_amount*1)/100)
+                  }
+                  $("#cod_charge").val(amount)
+      
+              }
+           
+         }
+      
+         function delivery(isChecked){
+            if(isChecked) {
+                  this.checked = true; 
+                  $("#cod_charge").val(' '); 
+                  
+      
+              } 
+         }
+      
+        </script>
+      <script>
+          $(document).ready(function(){
+              $("#weight").change(function(){
+          
+              var shipment_charge = $("#shipment_charge").val();
+              var total_service_charge =  parseInt(shipment_charge);
+              
+              $("#total_service_charge").val(total_service_charge);
+          });
+          });
+          
+          $("#shipment_charge","#cod_charge","#lequed_or_Fragile_charge").keypress(function(){
+              
+              var shipment_charge = $("#shipment_charge").val();
+              var cod_charge = $("#cod_charge").val();
+              var lequed_or_Fragile_charge = $("#lequed_or_Fragile_charge").val();
+              var total_service_charge =  parseInt(shipment_charge)+parseInt(cod_charge)+parseInt(lequed_or_Fragile_charge);
+              
+              $("#total_service_charge").val(total_service_charge);
+          });
+          $("#shipment_charge","#cod_charge","#lequed_or_Fragile_charge").keypress(function(){
+              
+              var shipment_charge = $("#shipment_charge").val();
+              var cod_charge = $("#cod_charge").val();
+              var lequed_or_Fragile_charge = $("#lequed_or_Fragile_charge").val();
+              var total_service_charge =  parseInt(shipment_charge)+parseInt(cod_charge)+parseInt(lequed_or_Fragile_charge);
+              
+              $("#total_service_charge").val(total_service_charge);
+          });
+      </script>
+      
+        <script>
+          $("#programming").change(function () {
+            var url = $("#indexForm").attr("data-courses-url");  // get the url of the `load_courses` view
+            var programmingId = $(this).val();  // get the selected programming ID from the HTML input
+      
+            $.ajax({                       // initialize an AJAX request
+              url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+              data: {
+                'programming': programmingId       // add the programming id to the GET parameters
+              },
+              success: function (data) {   // `data` is the return of the `load_courses` view function
+                $("#courses3").html(data);  // replace the contents of the course input with the data that came from the server
+              }
+            });
+      
+          });
+        </script>
+        <script>
+          $("#courses3").change(function () {
+            var url = $("#indexForm").attr("data-coursesx-url");  // get the url of the `load_courses` view
+            var coursesId = $(this).val();  // get the selected programming ID from the HTML input
+      
+            $.ajax({                       // initialize an AJAX request
+              url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+              data: {
+                'courses3': coursesId       // add the programming id to the GET parameters
+              },
+              success: function (data) {   // `data` is the return of the `load_courses` view function
+                $("#courses2").html(data);  // replace the contents of the course input with the data that came from the server
+              }
+            });
+      
+          });
+        </script>
+      
+      
+        <script>
+          $("#locationCollection").change(function () {
+            var url = $("#indexForm").attr("data-coursesa-url");  // get the url of the `load_courses` view
+            var locationCollectionId = $(this).val();  // get the selected programming ID from the HTML input
+          
+            $.ajax({                       // initialize an AJAX request
+              url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+              data: {
+                'locationCollection': locationCollectionId       // add the programming id to the GET parameters
+              },
+              success: function (data) {   // `data` is the return of the `load_courses` view function
+                $("#weight").html(data);  // replace the contents of the course input with the data that came from the server
+                  
+              }
+      
+            });
+      
+          });
+        </script>
+      
+      
+        <script>
+          $("#weight").change(function () {
+            var url = $("#indexForm").attr("data-coursesb-url");  // get the url of the `load_courses` view
+            var weightId = $(this).val();  // get the selected programming ID from the HTML input
+            var areaId = $('#locationCollection').val();
+      
+            $.ajax({                       // initialize an AJAX request
+              url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+              data: {
+                'areaId': areaId,      // add the programming id to the GET parameters
+                'weight': weightId,      // add the programming id to the GET parameters
+      
+              },
+              success: function (data) {   // `data` is the return of the `load_courses` view function
+                $("#shipment_charge").val(data[0]['shipment_charge']); 
+                alart(data) // replace the contents of the course input with the data that came from the server
+                  
+              }
+      
+            });
+      
+          });
+        </script>
+      
+      
+  <script type="text/javascript">
+              $(document).ready(function() {
+              $("input[type=radio]").prop("checked", false);
+              $("input[type=radio]:first").prop("checked", false);
+
+              $("input[type=radio]").click(function(event) {
+                  $("input[type=radio]").prop("checked", false);
+                  $(this).prop("checked", true);
+
+                  //event.preventDefault();
+              });
+              });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
