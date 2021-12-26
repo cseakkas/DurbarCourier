@@ -16,7 +16,7 @@
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-striped" id="table-2">
+                      <table class="table table-striped" id="saveAllOrder">
                         <thead>
                           <tr>
                             <th class="text-center pt-3">
@@ -36,10 +36,10 @@
                         <tbody>
                         {% for data in picked_data %}
                           <tr>
-                            <td class="text-center pt-2">
+                            <td  class="text-center pt-2 checkid">
                               <div class="custom-checkbox custom-control">
                                 <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
-                                  id="{{data.order_info}}" value="{{data.order_info}}">
+                                  id="{{data.order_info}}">
                                 <label for="{{data.order_info}}"  class="custom-control-label">&nbsp;</label>
                               </div>
                             </td>
@@ -82,29 +82,26 @@
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script>
         $("#update").click(function() {
-         if (confirm("Are u sure? You get this order ?")){
-           var id = [];
-           $(':checkbox:checked').each(function(i){
-             
-             id[i]=$(this).val();
-           })
-           if (id.length===0){
-             alert("please select some order")
-           }
-           else{
-             console.log(id);
-             alert(id);
-             $.ajax({
-               url:"/hub-pick",
-               data: {
-                 'id':id,
-               },
+          if (confirm("Are u sure? You get this order ?")){
+            $('#saveAllOrder .checkid :checkbox:checked').each(function(){
               
-
-             });
-           }
-         }
-        });
+              $.ajax({
+                url:"/hub-pick/",
+                data: {
+                  'order_id':this.id,
+                },
+                success: function (data) {
+                  window.location.href = "/hub-picked";
+                },
+                error: function(data){
+                    alert(data);
+                }
+              })
+        
+            })
+          }
+      })
+        
         </script>
         
         {% endblock %}

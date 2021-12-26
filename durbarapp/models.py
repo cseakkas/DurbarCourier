@@ -1,9 +1,13 @@
+from django.core.files.base import File
 from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils.safestring import mark_safe 
 import os
+from io import BytesIO
+from barcode import Code128
+from barcode.writer import ImageWriter
 
 #################### Merchant Panel model  ##########################
  
@@ -344,15 +348,32 @@ class PickupLocation(models.Model):
     def __str__(self):
         return str(self.address)
 
+ 
+class DeliveryCharge_by_Merchant(models.Model):
+    merchant         = models.ForeignKey(MerchantInfo, on_delete=models.DO_NOTHING,blank=True,null=True)
+    delivery_charge_location  = models.ForeignKey(InsideOutsideLocation, on_delete=models.DO_NOTHING, blank=True,null=True)
+    delivery_charge_weight  = models.ForeignKey(DeliveryChargeWeight, on_delete=models.DO_NOTHING,blank=True,null=True)
+    cost     = models.IntegerField(default=0)
+    status       = models.BooleanField(default=True)
 
+    def __str__(self):
+        return str(self.merchant)
+    class Meta:
+        verbose_name = 'Delivery Charge By Merchant'
+        verbose_name_plural = 'Delivery Charge By Merchant'
 
 
 class MerchantOrder(models.Model):
     merchant_info                   = models.ForeignKey(MerchantInfo, on_delete=models.CASCADE,null=True)
+    pickup_rider                    = models.ForeignKey(RiderInfo, on_delete=models.CASCADE, related_name='pickup_rider', null=True,blank=True)
+    delivered_rider                 = models.ForeignKey(RiderInfo, on_delete=models.CASCADE, related_name='delivered_rider', null=True,blank=True)
+    pickup_hub                      = models.ForeignKey(HubInfo, on_delete=models.CASCADE, related_name='pickup_hub',null=True,blank=True)
+    delivered_hub                   = models.ForeignKey(HubInfo, on_delete=models.CASCADE, related_name='delivered_hub', null=True,blank=True)
     district_name                   = models.ForeignKey(DistrictEntry, on_delete=models.CASCADE,null=True,blank=True)
     upazilla_name                   = models.ForeignKey(UpazillaEntry, on_delete=models.CASCADE,null=True,blank=True)
     post_office_name                = models.ForeignKey(PostOfficeInfo, on_delete=models.DO_NOTHING,null=True,blank=True)
     order_id                        = models.CharField(max_length=50)
+    bar_code                        = models.ImageField(upload_to='images/barcode',null=True,blank=True)
     pickup_location                 = models.ForeignKey(PickupLocation, on_delete=models.CASCADE,null=True,blank=True)
     customer_name                   = models.CharField(max_length=50,null=True,blank=True)
     address                         = models.TextField()
@@ -367,13 +388,13 @@ class MerchantOrder(models.Model):
     delivery_and_amount_collection  = models.BooleanField(default=False)
     lequed_or_Fragile               = models.BooleanField(default=False)
     weight                          = models.ForeignKey(DeliveryCharge, on_delete=models.DO_NOTHING,null=True,blank=True)
+    weight_by_merchant              = models.ForeignKey(DeliveryCharge_by_Merchant, on_delete=models.DO_NOTHING,null=True,blank=True)
     addtional_note                  = models.TextField(blank=True)
     shipment_charge                 = models.CharField(max_length=50,blank=True)
     cod_charge                      = models.CharField(max_length=50,blank=True)
     lequed_or_Fragile_charge        = models.CharField(max_length=50,blank=True)
     total_service_charge            = models.CharField(max_length=50,blank=True)
     collection_amount               = models.CharField(max_length=50,blank=True)
-    order_picked_by                 = models.ForeignKey(RiderInfo, on_delete=models.DO_NOTHING,null=True,blank=True)             
 
 
     ordering                        = models.IntegerField(default=0)
@@ -385,14 +406,19 @@ class MerchantOrder(models.Model):
     status                          = models.BooleanField(default=True)
 
     picked_time                     = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    hub_rider_assign_for_pick_time  = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    hub_receve_from_rider_time      = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     in_transit_time                 = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    hub_receve_from_hub_time        = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    hub_rider_assign_for_delivery_time  = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    rider_pick_for_delivery_time    = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     delivered_time                  = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     hold_time                       = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     return_pending_time             = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     return_to_hub_time              = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     return_to_merchent_time         = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     canceled_time                   = models.DateTimeField(auto_now_add = False,null=True,blank=True)
-    order_absent_time                   = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    order_absent_time               = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     
     order_status_choose = (
         ('1', 'order_placed'),
@@ -436,22 +462,18 @@ class MerchantOrder(models.Model):
     def __str__(self):
         return str(self.order_id)
 
- 
-class DeliveryCharge_by_Merchant(models.Model):
-    merchant         = models.ForeignKey(MerchantInfo, on_delete=models.DO_NOTHING,blank=True,null=True)
-    delivery_charge_location  = models.ForeignKey(InsideOutsideLocation, on_delete=models.DO_NOTHING, blank=True,null=True)
-    delivery_charge_weight  = models.ForeignKey(DeliveryChargeWeight, on_delete=models.DO_NOTHING,blank=True,null=True)
-    cost     = models.IntegerField(default=0)
-    status       = models.BooleanField(default=True)
+    def save(self, *args, **kwargs):
+        data = str(self.order_id)
+        r = Code128(data, writer=ImageWriter())
+        buffer = BytesIO()
+        r.write(buffer)
+        self.bar_code.save('barcode.png', File(buffer), save=False)
+        return super().save(*args, **kwargs)
 
-    def __str__(self):
-        return str(self.merchant)
-    class Meta:
-        verbose_name = 'Delivery Charge By Merchant'
-        verbose_name_plural = 'Delivery Charge By Merchant'
+
 
 class RiderOrder(models.Model):
-    order_info                      = models.ForeignKey(MerchantOrder, on_delete=models.DO_NOTHING,null=True)
+    order_info                      = models.ForeignKey(MerchantOrder, on_delete=models.CASCADE,null=True)
     rider                           = models.ForeignKey(RiderInfo, on_delete=models.DO_NOTHING,null=True,blank=True)
     pickup_location                 = models.ForeignKey(PickupLocation, on_delete=models.DO_NOTHING,null=True,blank=True)
 
@@ -480,5 +502,44 @@ class RiderOrder(models.Model):
     
     def __str__(self):
         return str(self.pickup_location)
+
+
+
+class RiderDeliveryOrder(models.Model):
+    order_info                      = models.ForeignKey(MerchantOrder, on_delete=models.CASCADE,null=True)
+    rider                           = models.ForeignKey(RiderInfo, on_delete=models.DO_NOTHING,null=True,blank=True)
+    collection_amount               = models.CharField(max_length=50,blank=True)
+    
+    
+    ordering                        = models.IntegerField(default=0)
+    modifed_by                      = models.IntegerField(default=0)
+    created_by                      = models.IntegerField(default=0)
+    created                         = models.DateTimeField(auto_now_add = True)
+    modify                          = models.DateTimeField(auto_now_add = True)
+    deleted                         = models.BooleanField(default=False)
+    status                          = models.BooleanField(default=True)
+
+    delivery_time                   = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    hub_delivery_rider_assign_time           = models.DateTimeField(auto_now_add = True,null=True,blank=True)
+    hub_receve_time                 = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    canceled_time                   = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    hold_time                       = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    
+    return_cause                    = models.CharField(max_length=200,blank=True)
+    
+    order_status_choose = (
+        ('1', 'Collect'),
+        ('2', 'Delivered'),
+        ('3', 'collection_submit_to_hub'),
+        ('4', 'return'),
+        ('5', 'return_to_hub'),
+
+    )
+    order_status  = models.CharField(max_length=1, choices=order_status_choose,blank=True)
+
+
+    
+    def __str__(self):
+        return str(self.order_info)
 
 

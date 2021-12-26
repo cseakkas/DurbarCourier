@@ -1,0 +1,10 @@
+<option value="">---select Upazilla--- </option>
+{% for data in upozilla_list %}
+    {% if data.pk == get_up_id %}
+        <option value="{{data.id}}" selected>{{ data.upazilla_name_english }}</option>
+    {% else %} 
+        <option value="{{data.id}}">{{ data.upazilla_name_english }}</option>
+    {% endif %}
+{% endfor %}
+
+

@@ -1,0 +1,8 @@
+<option value="">---select Upazilla---</option>
+{% for course in courses %}
+{% if course.pk = main_data.upazilla_name.id %}
+    <option value="{{ course.pk }}">{{ course.upazilla_name_english }}</option>
+{% else %}
+    <option value="{{ course.pk }}">{{ course.upazilla_name_english }}</option>
+{% endif %}
+{% endfor %}

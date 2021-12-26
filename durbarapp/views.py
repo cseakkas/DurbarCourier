@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
 from django.db.models import Q,F
-from django.http import HttpResponse
+from django.http import HttpResponse, response
 from .import models
 import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -77,6 +77,59 @@ def homepage(request):
 ############################### Website view END #################################
 
 
+def update_upazilla(request): 
+    district_id = request.GET.get('district_id') 
+    get_up_id = int(request.GET.get('get_up_id')) 
+    
+    upozilla_list = models.UpazillaEntry.objects.filter(district_name_id = district_id).order_by('district_name')
+
+    context = {
+        'upozilla_list':upozilla_list,
+        'get_up_id':get_up_id,
+    }
+    return render(request, 'durbar_admin_panel/distirct_wise_upozilla.html', context)
+
+
+
+
+def select_hub(request): 
+    upozilla_id = request.GET.get('upozilla_id') 
+     
+    
+    hub_list = models.HubInfo.objects.filter(upazilla_name_id = upozilla_id).order_by('district_name')
+
+    context = {
+        'hub_list':hub_list,
+        
+    }
+    return render(request, 'durbar_admin_panel/select_upazilla_wise_hub.html', context)
+
+
+def update_hub(request): 
+    upozilla_id = request.GET.get('upozilla_id') 
+    hub_id = int(request.GET.get('hub_id')) 
+    
+    hub_list = models.HubInfo.objects.filter(upazilla_name_id = upozilla_id).order_by('district_name')
+
+    context = {
+        'hub_list':hub_list,
+        'hub_id':hub_id,
+    }
+    return render(request, 'durbar_admin_panel/upazilla_wise_hub.html', context)
+
+
+
+
+
+def invoice_print(request,order_id): 
+    
+    invoice = models.MerchantOrder.objects.filter(order_id = order_id).first()
+    
+    context = {
+        'invoice':invoice,
+        
+    }
+    return render(request, 'durbar_hub_panel/invoice.html', context)
 
 
 
@@ -610,7 +663,10 @@ def add_rider(request):
 
 def rider_update(request, rider_id): 
     main_data    = models.RiderInfo.objects.filter(rider_id = rider_id).first()
-
+    district_id = main_data.district_name.id
+    upazilla_id = main_data.upazilla_name.id
+    hub_id = main_data.hub.id
+    
 
     if request.method == 'POST':
         rider_name = request.POST.get('rider_name')
@@ -875,6 +931,7 @@ def hub_login(request):
         if user:
             request.session['contact_no1'] = user[0].contact_no1
             request.session['hub_id'] = user[0].hub_id
+            request.session['h_id'] = user[0].id
             return redirect("/hub-dashboard/")
         else:
             messages.warning(request, "Wrong Information")
@@ -926,6 +983,7 @@ def hub_pending_update(request,id):
         for i in all_order:
             models.MerchantOrder.objects.filter(order_id = i.order_id).update(
             order_track = "2",
+            hub_rider_assign_for_pick_time = datetime.datetime.now()
             
 
             )
@@ -971,12 +1029,141 @@ def hub_picking_from_rider(request,rider_id):
 
 def pick_ajax(request):
     if request.is_ajax():
-        ids = []
-        ids = request.GET.getlist('id[]')
-        print("ids are ",ids)
+        order_id = request.GET.get("order_id")
+        print(order_id)
+        models.MerchantOrder.objects.filter(order_id = order_id).update(
+            order_track = 4,
+            pickup_hub = request.session['h_id'],
+            hub_receve_from_rider_time = datetime.datetime.now()
+        )
+        models.RiderOrder.objects.filter(order_info__order_id=order_id).update(
+            submit_to_hub = True,
+            picked = False,
+            hub_receve_time = datetime.datetime.now()
+        )
+        data = 'succsess'
+        return JsonResponse(data, safe = False)  
         
  
-            
+
+
+def hub_collection_list(request):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    collection = models.MerchantOrder.objects.filter(pickup_hub_id = request.session['h_id'],order_track=4).order_by("id")
+    
+    context={
+        'collection':collection,
+        
+    }
+
+    return render(request, "durbar_hub_panel/order_collection_list.html",context)  
+                 
+
+
+def hub_collection_update(request, order_id):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    data = models.MerchantOrder.objects.filter(order_id = order_id).first()
+    if request.method=="POST":
+        weight         = int(request.POST[('weight')])
+        delivered_hub  = int(request.POST[('delivered_hub')])
+        
+        models.MerchantOrder.objects.filter(order_id = order_id).update(
+            delivered_hub_id = delivered_hub,
+            order_track = 5,
+            in_transit_time = datetime.datetime.now()
+        )
+        return redirect("/"+"invoice-print/"+str(order_id)+'/')
+    context={
+        'data':data,
+        
+    }
+
+    return render(request, "durbar_hub_panel/collection_update.html",context)  
+                 
+
+def sent_to_hub(request):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    data = models.MerchantOrder.objects.filter(pickup_hub = request.session['h_id'], order_track = 5)
+    
+    context={
+        'data':data,
+        
+    }
+
+    return render(request, "durbar_hub_panel/sent_to_hub.html",context)  
+                 
+
+def in_transit(request):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    data = models.MerchantOrder.objects.filter(delivered_hub = request.session['h_id'], order_track = 5)
+    if request.method=="POST":
+        order_id         = request.POST[('order_id')]
+
+        models.MerchantOrder.objects.filter(order_id = order_id).update(
+            order_track = 6,
+            hub_receve_from_hub_time = datetime.datetime.now()
+        )
+        return redirect("/in-transit")
+    context={
+        'data':data,
+        
+    }
+
+    return render(request, "durbar_hub_panel/in_transit.html",context)  
+                 
+
+
+def collected_for_delevery(request):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    data = models.MerchantOrder.objects.filter(delivered_hub = request.session['h_id'], order_track = 6)
+    rider = models.RiderInfo.objects.filter(hub_id__hub_id = request.session['hub_id']).all()
+    
+    if request.method=="POST":
+        rider         = int(request.POST[('rider')])
+        order_id      = int(request.POST[('order_id')])
+        collection_amount      = request.POST.get('collection_amount')
+
+        models.RiderDeliveryOrder.objects.create(
+            order_info_id = order_id,
+            rider_id = rider,
+            collection_amount = collection_amount,
+            hub_delivery_rider_assign_time = datetime.datetime.now(),
+
+            )
+        models.MerchantOrder.objects.filter(id = order_id).update(
+            delivered_rider_id = rider,
+            hub_rider_assign_for_delivery_time = datetime.datetime.now(),
+            order_track = 7
+            )
+        return redirect("/collected-for-delevery")
+    
+    context={
+        'data':data,
+        'rider':rider,
+        
+    }
+
+    return render(request, "durbar_hub_panel/collected_for_delevery.html",context)  
+                 
+
+def Rider_collect_for_delivery(request):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    data = models.MerchantOrder.objects.filter(delivered_hub = request.session['h_id'], order_track = 7)
+    
+    context={
+        'data':data,
+        
+        
+    }
+
+    return render(request, "durbar_hub_panel/rider_collect_for_delivery.html",context)  
+                 
 
 
 ############################### Rider view Start #################################
@@ -1069,7 +1256,7 @@ def rider_order_collected(request, pickup_location, order_id):
     
     models.MerchantOrder.objects.filter(order_id = order_id).update(
         order_track = 3,
-        order_picked_by = request.session['r_id'],
+        pickup_rider = request.session['r_id'],
         picked_time = datetime.datetime.now(),
     )
     models.RiderOrder.objects.filter(order_info_id__order_id = order_id).update(
@@ -1160,6 +1347,18 @@ def rider_picked_list(request):
         'order_list':order_list,
     }
     return render(request, "durbar_rider_panel/picked.html",context)
+    
+    
+    
+    
+    
+
+def rider_submited_hub_list(request):
+    order_list = models.RiderOrder.objects.filter(submit_to_hub=True)
+    context={
+        'order_list':order_list,
+    }
+    return render(request, "durbar_rider_panel/submited_to_hub.html",context)
     
     
     

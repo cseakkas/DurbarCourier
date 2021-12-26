@@ -1,0 +1,10 @@
+<option value="">---Select Hub--- </option>
+{% for data in hub_list %}
+    {% if data.pk == hub_id %}
+        <option value="{{data.id}}" selected>{{ data.address }}</option>
+    {% else %} 
+        <option value="{{data.id}}">{{ data.address }}</option>
+     {% endif %}
+{% endfor %}
+
+

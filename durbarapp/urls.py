@@ -29,7 +29,13 @@ urlpatterns = [
     path('merchant-logout/', merchant_views.merchant_logout), 
 
 ############################### Admin url ###################################
+    path('update-upazilla/', views.update_upazilla, name='ajax_update_upazilla'),
+    path('select-hub/', views.select_hub, name='ajax_select_hub'),
+    path('update-hub/', views.update_hub, name='ajax_update_hub'),
+    
     path('admin-dashboard/', views.admin_dashboard),
+
+
 
 
     path('all-order/', views.all_order_list),
@@ -74,6 +80,13 @@ urlpatterns = [
     path('hub-picking/<str:rider_id>/', views.hub_picking_from_rider),
     path('hub-pick/', views.pick_ajax),
     path('hub-pending-update/<str:id>/', views.hub_pending_update),
+    path('hub-collection-list/', views.hub_collection_list),
+    path('hub-collection-update/<str:order_id>/', views.hub_collection_update),
+    path('invoice-print/<str:order_id>/', views.invoice_print),
+    path('sent-to-hub/', views.sent_to_hub),
+    path('in-transit/', views.in_transit),
+    path('collected-for-delevery/', views.collected_for_delevery),
+    path('rider-collect-for-delivery/', views.Rider_collect_for_delivery),
 
 
 
@@ -93,6 +106,7 @@ urlpatterns = [
     path('rider-hold-order/<int:pickup_location>/<str:order_id>/', views.rider_order_hold),
     path('rider-product-absent-order/<int:pickup_location>/<str:order_id>/', views.rider_order_absent),
     path('rider-picked-list/', views.rider_picked_list),
+    path('rider-submited-to-hub-list/', views.rider_submited_hub_list),
 
 
 

@@ -95,7 +95,6 @@
 
                                     
                                     <label for="weight" class="form-label">ওজন (কেজি)</label>
-                                    
                                     <select id="weight" class="form-control" name="weight">
                                       
                                     </select>
@@ -120,7 +119,7 @@
                                     
                                     <div class="col-md-12 col-sm-12">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox"  id="brokenProduct" onclick="check_uncheck_class(this.checked)">
+                                            <input class="form-check-input" type="checkbox"  id="brokenProduct" name="lequed_or_Fragile" onclick="check_uncheck_class(this.checked)">
                                             <label class="form-check-label" for="brokenProduct"> ভঙ্গুর/তরল প্রোডাক্ট </label>
                                         </div>
                                     </div>
@@ -283,12 +282,13 @@
       <script>
           $(document).ready(function(){
               $("#weight").change(function(){ 
-              var weight_cost_id = $("#weight").val();   
+              var weight_cost_id = $("#weight").val().split('_');
+
               // alert("weight_cost_id :"+weight_cost_id);
                 $.ajax({                        
                   url: "/new-order/",                    
                   data: {
-                    'weight_cost_id': weight_cost_id    
+                    'weight_cost_id': weight_cost_id[0]    
                   },
                   success: function (results) { 
                     var shipment_charge = results[0]['get_cost'] 

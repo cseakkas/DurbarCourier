@@ -78,24 +78,17 @@ def merchant_logout(request):
     request.session['merchant_id'] = False
     return redirect('/')
 
-
- 
-
 def load_courses(request):
     district_name_id = request.GET.get('programming')
     courses = models.UpazillaEntry.objects.filter(district_name_id = district_name_id).order_by('district_name')
     return render(request, 'merchant_dashboard/courses_dropdown_list_options.html', {'courses': courses})
 
 
- 
-
 def load_post(request):
     upazilla_name_id = request.GET.get('courses')
     post = models.PostOfficeInfo.objects.filter(upazilla_name_id = upazilla_name_id).order_by('id')
     return render(request, 'merchant_dashboard/post_dropdown_list_options.html', {'post': post})
 
-
- 
 
 def load_hub(request):
     upazilla_name_id = request.GET.get('courses3')
@@ -151,15 +144,14 @@ def new_order(request):
     # delevery_charge  = models.DeliveryChargeWeight.objects.filter(status = True).order_by("-id")
     # delevery_charge_by_merchant  = models.DeliveryChargeWeight.objects.filter(merchant_id__merchant_id = request.session['merchant_id'] ,status = True).order_by("-id")
     try:
-        data = models.MerchantOrder.objects.latest("rider_id")
-        str_data = str(data)
-        past_id = str_data[3:]
+        data = models.MerchantOrder.objects.latest("order_id")
+        data1 = str(data)
+        past_id = data1[3:]
         past_id=int(past_id)
         new_id = past_id+1
         new_id = '{0:04d}'.format(new_id)
         no=str('DC-')+str(new_id)
-        converted_num = no
-        
+        converted_num = no  
     except:
         hub_no = '{0:04d}'.format(1)
         no=str('DC-')+str(hub_no)
@@ -198,7 +190,7 @@ def new_order(request):
         only_delivery = True if request.POST.get('only_delivery') else False
         delivery_and_amount_collection = True if request.POST.get('delivery_and_amount_collection') else False
         lequed_or_Fragile = True if request.POST.get('lequed_or_Fragile') else False
-        weight = int(request.POST[('weight')])
+        weight = request.POST['weight']
         addtional_note = request.POST.get('addtional_note')
         collection_amount = request.POST.get('collection_amount')
         total_service_charge = request.POST.get('total_service_charge')
@@ -213,6 +205,20 @@ def new_order(request):
         post_office_name = int(request.POST[('post_office_name')])
         pickup_location = int(request.POST[('pickup_location')])
 
+        get_weight_value = weight.split("_")
+        get_weight = get_weight_value[0]
+        get_value = get_weight_value[1] 
+
+        
+        if get_value == '1':
+            weight_by_merchant = int(get_weight)
+            weight = None
+        else:
+            weight = int(get_weight)
+            weight_by_merchant = None
+
+        print(weight)  
+        print(weight_by_merchant)  
         models.MerchantOrder.objects.create(
             merchant_info_id = int(request.session['id']),
             customer_name = customer_name ,
@@ -227,6 +233,7 @@ def new_order(request):
             delivery_and_amount_collection = delivery_and_amount_collection,
             lequed_or_Fragile = lequed_or_Fragile,
             weight_id = weight, 
+            weight_by_merchant_id = weight_by_merchant, 
             collection_amount = collection_amount, 
             total_service_charge = total_service_charge, 
             lequed_or_Fragile_charge = lequed_or_Fragile_charge, 
