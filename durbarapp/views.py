@@ -1,7 +1,10 @@
+from typing import Collection
 from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
 from django.db.models import Q,F
 from django.http import HttpResponse, response
+
+from durbarapp.merchant_views import order_list
 from .import models
 import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -23,6 +26,7 @@ from django.core.files.base import ContentFile
 import random, string, os
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.auth.decorators import login_required
+from durbarapp.utils import render_to_pdf
 import hashlib, socket
 
 ############################### Website view START #################################
@@ -41,22 +45,22 @@ def homepage(request):
         no=str('M-')+str(hub_no)
         merchant_id = no
         
-    if request.POST:
-        if request.is_ajax():
-            marchant_name = request.POST.get('marchant_name')
-            contact_no1 = request.POST.get('contact_no1')
-            password = request.POST.get('password')
-            district_name = request.POST.get('programming_id')
-            upazilla_name = request.POST.get('courses_id')
-            models.MerchantInfo.objects.create(
-                marchant_name = marchant_name,
-                contact_no1 = contact_no1,
-                password = password,
-                district_name_id = district_name,
-                upazilla_name_id = upazilla_name,
-                merchant_id = merchant_id,
-            )
-            return JsonResponse("Submit Completed", safe = False)  
+    if request.is_ajax():
+        marchant_name = request.GET.get('marchant_name')
+        contact_no1 = request.GET.get('contact_no1')
+        password = request.GET.get('password')
+        district_name = request.GET.get('programming_id')
+        upazilla_name = request.GET.get('courses_id')
+        models.MerchantInfo.objects.create(
+            marchant_name = marchant_name,
+            contact_no1 = contact_no1,
+            password = password,
+            district_name_id = district_name,
+            upazilla_name_id = upazilla_name,
+            merchant_id = merchant_id,
+        )
+        data="Submit Completed"
+        return JsonResponse(data, safe = False)  
  
 
     services = models.Service.objects.filter(status=True).order_by('id')
@@ -122,6 +126,18 @@ def update_hub(request):
 
 
 def invoice_print(request,order_id): 
+    
+    invoice = models.MerchantOrder.objects.filter(order_id = order_id).first()
+    
+    context = {
+        'invoice':invoice,
+        
+    }
+    return render(request, 'durbar_hub_panel/invoice.html', context)
+
+
+
+def send_otp(request,order_id): 
     
     invoice = models.MerchantOrder.objects.filter(order_id = order_id).first()
     
@@ -900,6 +916,47 @@ def merchant_management_edit(request,id):
 
 
 
+def hub_pending_statement(request):
+
+    statement_list = models.PaymentStatement.objects.filter(head_office_pending = True)
+
+    context={
+        "statement_list" : statement_list,        
+    }
+    return render(request, 'durbar_admin_panel/hub_pending_payment_statement.html',context)
+
+
+
+def admin_accept_hub_pending_statement(request,statement_no):
+    
+    order_list = models.Collection_ammount.objects.filter(statement_no = statement_no)
+    
+    for i in order_list:
+        models.Collection_ammount.objects.filter(statement_no = i.statement_no).update(
+            collection_status = 4,
+            head_ofice_collect_time = datetime.datetime.now()
+        )
+
+    models.PaymentStatement.objects.filter(statement_no = statement_no).update(
+        head_office_receved = True,
+        head_office_pending = False,
+        modify = datetime.datetime.now(),
+    )
+    return redirect('/hub-pending-statement')
+
+
+
+def hub_accepted_statement(request):
+
+    statement_list = models.PaymentStatement.objects.filter(head_office_receved = True)
+
+    context={
+        "statement_list" : statement_list,        
+    }
+    return render(request, 'durbar_admin_panel/hub_accepted_payment_statement.html',context)
+
+
+
 
 
 
@@ -1066,15 +1123,23 @@ def hub_collection_update(request, order_id):
         return redirect("/hub")
     data = models.MerchantOrder.objects.filter(order_id = order_id).first()
     if request.method=="POST":
-        weight         = int(request.POST[('weight')])
+        weight         = request.POST.get('weight')
+        get_weight_value = weight.split("_")
+        get_weight = get_weight_value[0]
+        shipment_charge         = request.POST.get('shipment_charge')
+        total_service_charge         = request.POST.get('total_service_charge')
         delivered_hub  = int(request.POST[('delivered_hub')])
         
         models.MerchantOrder.objects.filter(order_id = order_id).update(
             delivered_hub_id = delivered_hub,
             order_track = 5,
-            in_transit_time = datetime.datetime.now()
+            in_transit_time = datetime.datetime.now(),
+            weight_id = get_weight,
+            shipment_charge = shipment_charge,
+            total_service_charge = total_service_charge,
         )
         return redirect("/"+"invoice-print/"+str(order_id)+'/')
+        
     context={
         'data':data,
         
@@ -1122,7 +1187,7 @@ def collected_for_delevery(request):
         return redirect("/hub")
     data = models.MerchantOrder.objects.filter(delivered_hub = request.session['h_id'], order_track = 6)
     rider = models.RiderInfo.objects.filter(hub_id__hub_id = request.session['hub_id']).all()
-    
+    number = random.randint(1000,9999)
     if request.method=="POST":
         rider         = int(request.POST[('rider')])
         order_id      = int(request.POST[('order_id')])
@@ -1133,7 +1198,7 @@ def collected_for_delevery(request):
             rider_id = rider,
             collection_amount = collection_amount,
             hub_delivery_rider_assign_time = datetime.datetime.now(),
-
+            otp = number
             )
         models.MerchantOrder.objects.filter(id = order_id).update(
             delivered_rider_id = rider,
@@ -1165,8 +1230,159 @@ def Rider_collect_for_delivery(request):
     return render(request, "durbar_hub_panel/rider_collect_for_delivery.html",context)  
                  
 
+def pending_rider_payment_list(request):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    list = models.Collection_ammount.objects.filter(collect_rider__hub_id = request.session['h_id'], collection_status = 1)
+    total = models.Collection_ammount.objects.filter(collect_rider__hub_id = request.session['h_id'], collection_status = 1).aggregate(Sum('collection_amount'))['collection_amount__sum']
+    
+    context={
+        'list':list,
+        'total':total,
+
+    }
+
+    return render(request, "durbar_hub_panel/pending_rider_payment.html",context)  
+
+
+def collect_payment_from_rider(request,rider_id):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    order = models.Collection_ammount.objects.filter(collect_rider_id = rider_id)
+    for i in order:
+        models.Collection_ammount.objects.filter(order_info_id = i.order_info.id).update(
+            collect_hub = request.session['h_id'],
+            collection_status = 2,
+            hub_collection_time = datetime.datetime.now(),
+
+            )
+    context={
+        'order':order,
+    }
+
+    return render(request, "durbar_hub_panel/pending_rider_payment.html",context)  
+                
+
+def hub_collection_ammount(request):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    try:
+        data = models.PaymentStatement.objects.latest("statement_no")
+        str_data = str(data)
+        past_id = str_data[3:]
+        past_id=int(past_id)
+        new_id = past_id+1
+        new_id = '{0:04d}'.format(new_id)
+        no=str('ST-')+str(new_id)
+        st_no = no
+        
+    except:
+        hub_no = '{0:04d}'.format(1)
+        no=str('ST-')+str(hub_no)
+        st_no = no
+    order = models.Collection_ammount.objects.filter(collect_hub = request.session['h_id'], collection_status = 2)
+    total = models.Collection_ammount.objects.filter(collect_hub = request.session['h_id'], collection_status = 2).aggregate(Sum('collection_amount'))['collection_amount__sum']
+
+    if request.method == "POST":
+        total_collection_ammount = 0
+        for i in order:
+            order_id = i.order_info.id
+            collection_ammount = i.collection_amount
+            total_collection_ammount += int(collection_ammount)
+
+            models.Collection_ammount.objects.filter(order_info_id = int(order_id)).update(
+                is_statement = True,
+                statement_no = st_no,
+                collection_status = 3,
+                hub_statement_time = datetime.datetime.now()
+            )
+
+        models.PaymentStatement.objects.create(
+            hub_info_id = request.session['h_id'],
+            total_collection_amount = total_collection_ammount,
+            statement_no = st_no,
+        )
+        return redirect('/hub-payment-statement')
+
+
+    context={
+        'order':order,
+        'total':total,
+    }
+
+    return render(request, "durbar_hub_panel/hub_collection_ammount.html",context)  
+                
+
+def hub_payment_statement(request):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    
+    statement_list = models.PaymentStatement.objects.filter(hub_info = request.session['h_id'])
+
+
+    context={
+        'statement_list':statement_list,
+        
+    }
+
+    return render(request, "durbar_hub_panel/hub_payment_statement.html",context)  
+
+
+def hub_payment_statement_download(request,statement_no):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    
+    statement_list = models.PaymentStatement.objects.filter(statement_no = statement_no, hub_info = request.session['h_id']).first()
+    order_list      = models.Collection_ammount.objects.filter(statement_no = statement_no, collect_hub = request.session['h_id']).order_by("-statement_no")
+    order_quantity      = models.Collection_ammount.objects.filter(statement_no = statement_no, collect_hub = request.session['h_id']).count()
+
+    context={
+        'statement_list':statement_list,
+        'order_list':order_list,
+        'order_quantity':order_quantity,
+        
+    }
+
+    pdf = render_to_pdf('durbar_hub_panel/payment_statement.html',context)
+    return HttpResponse(pdf, content_type='application/pdf')  
+                
+
+
+
+
+def hub_paid_to_head_office(request):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    
+    list = models.Collection_ammount.objects.filter(collect_hub = request.session['h_id'], collection_status = 3) | models.Collection_ammount.objects.filter(collect_hub = request.session['h_id'], collection_status = 4) 
+
+
+    context={
+        'list':list,
+        
+    }
+
+    return render(request, "durbar_hub_panel/hub_paid_to_head_office.html",context)  
+
+
+
+
+
+
+
+
+
 
 ############################### Rider view Start #################################
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1362,8 +1578,178 @@ def rider_submited_hub_list(request):
     
     
     
+
+
+
+def rider_delivery_dashboard(request):
+    if request.session.get('rider_id') == False:
+        return redirect("/rider")
     
+    return render(request, "durbar_rider_panel/delivery_index.html")  
+  
+
+
+
+
+
+def pending_for_delivery(request):
+    if request.session.get('rider_id') == False:
+        return redirect("/rider")
+    pending_list = models.RiderDeliveryOrder.objects.filter(rider_id__rider_id = request.session['rider_id'], order_status = 1).order_by("id")
+    
+    context={
+        'pending_list':pending_list,
+        
+    }
+    return render(request, "durbar_rider_panel/pending_for_delivery.html",context)  
+  
+
+
+
+def delivery(request,order_id):
+    if request.session.get('rider_id') == False:
+        return redirect("/rider")
+    order_id = models.RiderDeliveryOrder.objects.filter(order_info__order_id = order_id).first()
+    otp_nmber     = order_id.otp
+    collection = models.MerchantOrder.objects.filter(order_id = order_id).first()
+    collection_ammount = collection.collection_amount
+
+    print("OTP",otp_nmber)
+    if request.method=="POST":
+        otp     = request.POST['otp']
+        if otp == otp_nmber:
+            models.RiderDeliveryOrder.objects.filter(order_info__order_id = order_id).update(
+            order_status = 2,
+            collection_amount = collection_ammount,
+            delivery_time = datetime.datetime.now(),
+
+            )
+            models.MerchantOrder.objects.filter(order_id = order_id).update(
+                delivered_time = datetime.datetime.now(),
+                order_track = 9
+                )
+            models.Collection_ammount.objects.create(
+                order_info_id = collection.id,
+                collect_rider_id = request.session['r_id'],
+                shipment_charge = collection.shipment_charge,
+                cod_charge = collection.cod_charge,
+                lequed_or_Fragile_charge = collection.lequed_or_Fragile_charge,
+                total_service_charge = collection.total_service_charge,
+                collection_amount = collection.collection_amount,
+                )
+            messages.success(request, "Order Done Successfully")
+            return redirect("/rider-pending-delivery")
+        else:
+            messages.warning(request,"Wrong OTP")
+
+    return render(request, "durbar_rider_panel/otp.html")  
+  
+
+
+
+
+def delivered_list(request):
+    if request.session.get('rider_id') == False:
+        return redirect("/rider")
+    list = models.RiderDeliveryOrder.objects.filter(rider_id__rider_id = request.session['rider_id'],order_status = 2).order_by("delivery_time")
+    
+    context={
+        'list':list   
+    }
+    return render(request, "durbar_rider_panel/delivered_list.html",context)  
+  
+
+
+
+
+def have_to_pay(request):
+    if request.session.get('rider_id') == False:
+        return redirect("/rider")
+    list = models.RiderDeliveryOrder.objects.filter(rider_id__rider_id = request.session['rider_id'],order_status = 2).order_by("delivery_time")
+    tatal_ammount   = models.RiderDeliveryOrder.objects.filter(rider_id__rider_id = request.session['rider_id'],order_status = 2).aggregate(Sum('collection_amount'))['collection_amount__sum']
+    context={
+        'list':list,   
+        'tatal_ammount':tatal_ammount   
+    }
+    return render(request, "durbar_rider_panel/have_to_pay.html",context)  
+  
+
+
+
+
+def customer_not_connected_phone(request,order_id):
+    if request.session.get('rider_id') == False:
+        return redirect("/rider")
+    order_id = models.MerchantOrder.objects.filter(order_id = order_id).first()
+    models.MerchantOrder.objects.filter(order_id = order_id).update(
+        order_track = 11,
+        return_status = 1,
+        return_pending_time = datetime.datetime.now(),
+    )
+    models.RiderDeliveryOrder.objects.filter(order_info__order_id = order_id).update(
+        order_status = 4,
+        return_status = 1,
+        return_pending_time = datetime.datetime.now(),
+    )
+    return redirect('/rider-pending-delivery')
+
+
+
+def wrong_product(request,order_id):
+    if request.session.get('rider_id') == False:
+        return redirect("/rider")
+    order_id = models.MerchantOrder.objects.filter(order_id = order_id).first()
+    models.MerchantOrder.objects.filter(order_id = order_id).update(
+        order_track = 11,
+        return_status = 2,
+        return_pending_time = datetime.datetime.now(),
+    )
+    models.RiderDeliveryOrder.objects.filter(order_info__order_id = order_id).update(
+        order_status = 4,
+        return_status = 2,
+        return_pending_time = datetime.datetime.now(),
+    )
+    return redirect('/rider-pending-delivery')
     
 
+
+
+
+def customer_abbsent_in_address(request,order_id):
+    if request.session.get('rider_id') == False:
+        return redirect("/rider")
+    order_id = models.MerchantOrder.objects.filter(order_id = order_id).first()
+    models.MerchantOrder.objects.filter(order_id = order_id).update(
+        order_track = 11,
+        return_status = 3,
+        return_pending_time = datetime.datetime.now(),
+    )
+    models.RiderDeliveryOrder.objects.filter(order_info__order_id = order_id).update(
+        order_status = 4,
+        return_status = 3,
+        return_pending_time = datetime.datetime.now(),
+    )
+    return redirect('/rider-pending-delivery')
+    
+
+
+
+
+def customer_not_interested_to_receve(request,order_id):
+    if request.session.get('rider_id') == False:
+        return redirect("/rider")
+    order_id = models.MerchantOrder.objects.filter(order_id = order_id).first()
+    models.MerchantOrder.objects.filter(order_id = order_id).update(
+        order_track = 11,
+        return_status = 4,
+        return_pending_time = datetime.datetime.now(),
+    )
+    models.RiderDeliveryOrder.objects.filter(order_info__order_id = order_id).update(
+        order_status = 4,
+        return_status = 4,
+        return_pending_time = datetime.datetime.now(),
+    )
+    return redirect('/rider-pending-delivery')
+    
 
 

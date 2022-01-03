@@ -1,178 +1,212 @@
-{% extends 'durbar_hub_panel/hub_base.html' %} 
+{% extends 'durbar_hub_panel/hub_base.html' %}
 {% block title %} Dashboard {% endblock %}
 {% load staticfiles %}
 {% load data_load %}
 {% block content %}
 
-      <!-- Main Content -->
-      <div class="main-content">
-        <section class="section">
-          <div class="section-body">
+<!-- Main Content -->
+<div class="main-content">
+  <section class="section">
+    <div class="section-body">
 
-            <div class="row">
-              <div class="col-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h4>Order Info </h4>
-                    
-                  </div>
-                  <div class="card-body p-0">
-                    <div class="table-responsive">
-                      <table class="table table-striped">
-                        <tr> 
-                          <th>Order ID </th>
-                          <th>Packege Type</th>
-                          <th>Lequed or Fragile</th>
-                          <th>weight</th>
-                          <th>Shipment Charge</th>
-                          <th>Cod</th>
-                          <th>lequed_or_Fragile</th>
-                          <th>service_charge</th>
-                          <th>collection_amount</th>
-                        </tr>
-                        
-                          <tr>
-                            <td>{{data.order_id}}</td>
-                            <td>{{data.packegeType}}</td>
-                            <td>{{data.lequed_or_Fragile}}</td>
-                            <td>{{data.weight.delivery_charge_weight}}</td>
-                            <td>{{data.shipment_charge}}</td>
-                            <td>{{data.cod_charge}}</td>
-                            <td>{{data.lequed_or_Fragile_charge}}</td>
-                            <td>{{data.total_service_charge}}</td>
-                            <td>{{data.collection_amount}}</td>
-                          </tr>
-                       
-                          
-                      </table>
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header">
-                    <h4>Customer Info </h4>
-                    
-                  </div>
-                  <div class="card-body p-0">
-                    <div class="table-responsive">
-                      <table class="table table-striped">
-                        <tr>
-                          
-                          <th>Customer Name </th>
-                          <th>Contact No1</th>
-                          <th>Post Office</th>
-                          <th>Upazilla</th>
-                          <th>District</th>
-                          <th>Full Address</th>
-                          <th>Reference</th>
-                        </tr>
-                        
-                          <tr>  
-                            <td>{{data.customer_name}}</td>
-                            <td>{{data.contact_no1}}</td>
-                            <td>{{data.post_office_name}}</td>
-                            <td>{{data.upazilla_name}}</td>
-                            <td>{{data.district_name}}</td>
-                            <td>{{data.address}}</td>
-                            <td>{{data.reference_no}}</td>
-                          </tr>
-                          
-                      </table>
-                    </div>
-                  </div>
-                </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Order Info </h4>
+
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <tr>
+                    <th>Order ID </th>
+                    <th>Packege Type</th>
+                    <th>Lequed or Fragile</th>
+                    <th>weight</th>
+                    <th>Shipment Charge</th>
+                    <th>Cod</th>
+                    <th>lequed_or_Fragile</th>
+                    <th>service_charge</th>
+                    <th>collection_amount</th>
+                  </tr>
+
+                  <tr>
+                    <td>{{data.order_id}}</td>
+                    <td>{{data.packegeType}}</td>
+                    <td>{{data.lequed_or_Fragile}}</td>
+                    <td>{{data.weight.delivery_charge_weight}}</td>
+                    <td>{{data.shipment_charge}} <input type="hidden" value="{{data.shipment_charge}}" id="shipment_charge"> </td>
+                    <td>{{data.cod_charge}} <input type="hidden" value="{{data.cod_charge}}" id="cod_charge"> </td>
+                    <td>{{data.lequed_or_Fragile_charge}} <input type="hidden" value="{{data.lequed_or_Fragile_charge}}" id="lequed_or_Fragile_charge"> </td>
+                    <td>{{data.total_service_charge}}</td>
+                    <td>{{data.collection_amount}}</td>
+
+                  </tr>
 
 
-                <div class="card">
-                  <div class="card-header">
-                    <h4>Confirm Hub/Invoice </h4>
-                    
-                  </div>
-                  <div class="card-body p-0">
-                    <div class="table-responsive">
-                      <form action=""Method="POST">{% csrf_token %}
-                        <div class="row">
-                          <div class="col-lg-3">
-                            <label for="insDistrict" style="font-weight: bold;" class="form-label"> Hub</label>
-                            <select id="hub" class="form-control" name="delivered_hub" required>
-                            
-                                
-                            </select>
-                          </div>
-                        <div class="col-lg-3">
-                        <label for="insDistrict" class="form-label" style="font-weight: bold;" >Change Weight</label>
-                          <select id="weight" class="form-control" name="weight">
-                          
-                              
-                          </select>
-                        </div>
-                        
-                        <div class="col-lg-3">
-                          <label for="insDistrict" class="form-label">Shipment Charge</label>
-                          <td><input  class="form-control" id="shipment_charge22" name="shipment_charge" type="number" value="{{data.shipment_charge}}"  readonly></td>
-                        </div>
-                        <div class="col-lg-3">
-                          <label for="insDistrict" class="form-label">Total Service Charge</label>
-                          <td><input  class="form-control" id="total_service_charge" name="total_service_charge" type="number" value="{{data.total_service_charge}}"  readonly></td>
-                        </div>
-                          
-                        </div>
-                        <div class="text-md-right">
-                          <div class="float-lg-left mb-lg-0 mb-3">
-                          </div>
-                          <button type="submit" class="btn btn-warning btn-icon icon-left"><i class="fas fa-shuttle-van"></i> Confirm</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
+                </table>
               </div>
             </div>
-            
           </div>
-        </section>
+          <div class="card">
+            <div class="card-header">
+              <h4>Customer Info </h4>
+
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <tr>
+
+                    <th>Customer Name </th>
+                    <th>Contact No1</th>
+                    <th>Post Office</th>
+                    <th>Upazilla</th>
+                    <th>District</th>
+                    <th>Full Address</th>
+                    <th>Reference</th>
+                  </tr>
+
+                  <tr>
+                    <td>{{data.customer_name}}</td>
+                    <td>{{data.contact_no1}}</td>
+                    <td>{{data.post_office_name}}</td>
+                    <td>{{data.upazilla_name}}</td>
+                    <td>{{data.district_name}}</td>
+                    <td>{{data.address}}</td>
+                    <td>{{data.reference_no}}</td>
+                  </tr>
+
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="card">
+            <div class="card-header">
+              <h4>Confirm Hub/Invoice </h4>
+
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive col-sm-12">
+                <form action="" Method="POST">{% csrf_token %}
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <label for="insDistrict" style="font-weight: bold;" class="form-label"> Hub</label>
+                      <select id="hub" class="form-control" name="delivered_hub" >
+
+
+                      </select>
+                    </div>
+                    <div class="col-lg-3">
+                      <label for="insDistrict" class="form-label" style="font-weight: bold;">Change Weight</label>
+                      <select id="weight" class="form-control" name="weight">
+
+
+                      </select>
+                    </div>
+
+                    <div class="col-lg-3">
+                      <label for="insDistrict" class="form-label">Shipment Charge</label>
+                      <input class="form-control" id="shipment_charge22" name="shipment_charge" type="text"
+                          value="{{data.shipment_charge}}" readonly>
+                    </div>
+                    <div class="col-lg-3">
+                      <label for="insDistrict" class="form-label">Total Service Charge</label>
+                      <input class="form-control" id="total_service_charge" name="total_service_charge"
+                          type="text" value="{{data.total_service_charge}}" readonly>
+                    </div>
+
+                  </div>
+                  <div class="text-md-right">
+                    <div class="float-lg-left mb-lg-0 mb-3">
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-icon icon-left"><i class="fas fa-shuttle-van"></i>
+                      Confirm</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      
-      <input type="text" value="{{data.upazilla_name.id}}" id="get_up_id" hidden>
-      <input type="text" value="{{data.district_name.id}}" id="district_id" hidden>
-      
-      
-      
-      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
- 
-      <script>
-        $(document).ready(function () {
-          var upozilla_id = $("#get_up_id").val();    
-            
-          $.ajax({                        
-            url: "/select-hub/",              
-            data: {
-              'upozilla_id': upozilla_id,                        
-                                      
-            },
-            success: function (data) {    
-              $("#hub").html(data); 
-            }
-          });
-    
-        })
-      </script>
+
+    </div>
+  </section>
+</div>
+
+<input type="text" value="{{data.upazilla_name.id}}" id="get_up_id" hidden>
+<input type="text" value="{{data.district_name.id}}" id="district_id" hidden>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#weight").change(function () {
+      var weight_cost_id = $("#weight :selected").text().split('-');
+      var weight_charge = weight_cost_id[1];
+      var lequed_or_Fragile_charge = $("#lequed_or_Fragile_charge").val();
+      var cod_charge = $("#cod_charge").val();
+      var shipment_charge = $("#shipment_charge").val();
+
+      $("#shipment_charge22").val(weight_charge);
+      var total_service = parseInt(weight_charge) + parseInt(lequed_or_Fragile_charge) + parseInt(cod_charge);
+      $("#total_service_charge").val(total_service);
+
+      // $.ajax({
+      //   url: "/new-order/",
+      //   data: {
+      //     'weight_cost_id': weight_cost_id[0]
+      //   },
+      //   success: function (results) {
+      //     var shipment_charge = results[0]['get_cost']
+      //     $("#shipment_charge22").val(shipment_charge);
+      //     var cod_charge = $("#cod_charge").val();
+      //     var brokenProduct = $("#lequed_or_Fragile_charge").val();
+      //     var total_service = parseInt(shipment_charge) + parseInt(brokenProduct) + parseInt(cod_charge);
+      //     $("#total_service_charge").val(total_service);
+      //   }
+      // });
+    });
+  });
+
+</script>
+<script>
+  $(document).ready(function () {
+    var upozilla_id = $("#get_up_id").val();
+
+    $.ajax({
+      url: "/select-hub/",
+      data: {
+        'upozilla_id': upozilla_id,
+
+      },
+      success: function (data) {
+        $("#hub").html(data);
+      }
+    });
+
+  })
+</script>
 
 <script>
   $(document).ready(function () {
-     
-    var programmingId = $("#district_id").val();  
 
-    $.ajax({                       
-      url: '/load-weight/',                    
+    var programmingId = $("#district_id").val();
+
+    $.ajax({
+      url: '/load-weight/',
       data: {
-        'programming': programmingId      
+        'programming': programmingId
       },
-      success: function (data) {   
-        $("#weight").html(data); 
+      success: function (data) {
+        $("#weight").html(data);
       }
     });
 
   });
 </script>
-        {% endblock %}
+{% endblock %}

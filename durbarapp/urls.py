@@ -70,6 +70,11 @@ urlpatterns = [
     path('merchant-management/<str:id>/', views.merchant_management_edit),
 
 
+    path('hub-pending-statement/', views.hub_pending_statement),
+    path('hub-accepted-statement/', views.hub_accepted_statement),
+    path('admin-accept-hub-pending-statement/<str:statement_no>/', views.admin_accept_hub_pending_statement),
+
+
 ############################### Hub url ###################################
 
     path('hub/', views.hub_login),
@@ -87,6 +92,15 @@ urlpatterns = [
     path('in-transit/', views.in_transit),
     path('collected-for-delevery/', views.collected_for_delevery),
     path('rider-collect-for-delivery/', views.Rider_collect_for_delivery),
+
+    path('pending-rider-payment/', views.pending_rider_payment_list),
+    path('collect-payment-from-rider/<int:rider_id>/', views.collect_payment_from_rider),
+    path('hub-collection-ammount/', views.hub_collection_ammount, name="hub_collection_ammount"),
+    path('hub-payment-statement/', views.hub_payment_statement),
+    path('hub-payment-statement-download/<str:statement_no>/', views.hub_payment_statement_download),
+    path('hub-paid-to-head-office/', views.hub_paid_to_head_office),
+
+
 
 
 
@@ -108,6 +122,18 @@ urlpatterns = [
     path('rider-picked-list/', views.rider_picked_list),
     path('rider-submited-to-hub-list/', views.rider_submited_hub_list),
 
+    path('rider-delivery-dashboard/', views.rider_delivery_dashboard),
+    path('rider-pending-delivery/', views.pending_for_delivery),
+    path('delivery/<str:order_id>/', views.delivery),
+    path('delivered-list/', views.delivered_list),
+
+    path('pay-to-hub/', views.have_to_pay),
+
+
+    path('customer-not-connected-phone/<str:order_id>/', views.customer_not_connected_phone),
+    path('wrong-product/<str:order_id>/', views.wrong_product),
+    path('customer-abbsent-in-address/<str:order_id>/', views.customer_abbsent_in_address),
+    path('customer-not-interested-to-receve/<str:order_id>/', views.customer_not_interested_to_receve),
 
 
 

@@ -217,8 +217,7 @@ def new_order(request):
             weight = int(get_weight)
             weight_by_merchant = None
 
-        print(weight)  
-        print(weight_by_merchant)  
+        
         models.MerchantOrder.objects.create(
             merchant_info_id = int(request.session['id']),
             customer_name = customer_name ,
@@ -283,12 +282,16 @@ def service_charge_list(request):
 
 def marchant_order_tracking(request):
     if request.session.get('merchant_id') == False:
-        return redirect("/")
-    order = models.MerchantOrder.objects.filter(merchant_info_id = request.session['id']).order_by('id')
-    context={
-        "order":order,
-    }
-    return render(request, 'merchant_dashboard_v2/marchant_order_tracking.html', context)
+        return redirect("/")   
+    if request.method == 'POST':
+        order_no = request.POST.get('order_no')
+        order = models.MerchantOrder.objects.filter(order_id = order_no).first()
+        print(order.order_track)
+        context={
+            "order":order,
+        }
+        return render(request, 'merchant_dashboard_v2/order_tracking.html',context)
+    return render(request, 'merchant_dashboard_v2/order_tracking.html')
 
 
 def customer_info_edit(request): 

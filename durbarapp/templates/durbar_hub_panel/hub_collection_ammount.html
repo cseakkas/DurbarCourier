@@ -1,0 +1,98 @@
+{% extends 'durbar_hub_panel/hub_base.html' %} 
+{% block title %} Dashboard {% endblock %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
+
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Hub Collection Ammount/Hub Statement</h4>
+                    
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <form method="POST">{% csrf_token %}
+                        <table class="table table-striped" >
+                          <thead>
+                            <tr>
+                                <th scope="col"> Order ID </th>
+                                <th scope="col"> Hub Collection Time </th>
+                                <th scope="col"> Collection Ammount </th>
+                                
+                                
+                            </tr>
+                          </thead>
+                          <tbody>
+                              {% for list in order %}
+                                  <tr>
+                                      <td style="width: 10%;"> {{list.order_info.order_id}} <input type="text" name="order_id" value="{{list.order_info.id}}" hidden></td>
+                                      <td style="width: 70%;"> {{list.hub_collection_time}}</td>
+                                      <td style="width: 20%;"> {{list.collection_amount}}/- <input type="text" name="collection_ammount" value="{{list.collection_amount}}" hidden></td>
+                                  </tr>                               
+                              {% endfor %} 
+                              <tr style="border-bottom:1px solid rgb(187, 187, 187);">
+                                <td colspan="2" style="font-weight: bold; text-align: right;"> Total</td>
+                                <td style="font-weight: bold;"> {{total}}/=</td>  
+                            </tr>       
+                          </tbody>      
+                        </table>
+                        <button type="submit" style="line-height: 17px; float: right;" href="#" class="btn btn-icon icon-left btn-success"><i class="far fa-edit"></i>Create Statement</button>
+                     </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+          </div>
+          
+        </section>
+        
+
+    
+<!--       
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  $("#programming").change(function () {
+    var url = $("#indexForm").attr("data-courses-url");  // get the url of the `load_courses` view
+    var programmingId = $(this).val();  // get the selected programming ID from the HTML input
+
+    $.ajax({                       // initialize an AJAX request
+      url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+      data: {
+        'programming': programmingId       // add the programming id to the GET parameters
+      },
+      success: function (data) {   // `data` is the return of the `load_courses` view function
+        $("#courses").html(data);  // replace the contents of the course input with the data that came from the server
+      }
+    });
+
+  });
+</script>
+<script>
+  $("#courses").change(function () {
+    var url = $("#indexForm").attr("data-coursesx-url");  // get the url of the `load_courses` view
+    var coursesId = $(this).val();  // get the selected programming ID from the HTML input
+
+    $.ajax({                       // initialize an AJAX request
+      url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+      data: {
+        'courses': coursesId       // add the programming id to the GET parameters
+      },
+      success: function (data) {   // `data` is the return of the `load_courses` view function
+        $("#courses2").html(data);  // replace the contents of the course input with the data that came from the server
+      }
+    });
+
+  });
+</script> -->
+
+      {% endblock %}

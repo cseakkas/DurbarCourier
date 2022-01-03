@@ -415,7 +415,10 @@ class MerchantOrder(models.Model):
     delivered_time                  = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     hold_time                       = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     return_pending_time             = models.DateTimeField(auto_now_add = False,null=True,blank=True)
-    return_to_hub_time              = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    return_to_delivery_hub_time              = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    return_to_pickup_hub_time              = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    assign_for_return_time              = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    picked_for_return_time              = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     return_to_merchent_time         = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     canceled_time                   = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     order_absent_time               = models.DateTimeField(auto_now_add = False,null=True,blank=True)
@@ -442,23 +445,31 @@ class MerchantOrder(models.Model):
         ('9', 'delivered'),
         ('10', 'hold'),
         ('11', 'return_pending'),
-        ('12', 'return_to_hub_for_ware_house '),
-        ('13', 'hub_returned_to_ware_house'),
-        ('14', 'return_to_hub'),
-        ('15', 'assign_for_return'),
-        ('16', 'picked_for_return'),
-        ('17', 'return_to_merchent'),
-        ('18', 'canceled'),
-        ('19', 'picking_hold'),
-        ('20', 'order_absent'),
-        ('21', 'rider_cancel'),
-        ('22', 'merchant_absent'),
+        ('12', 'return_to_delevery_hub '),
+        ('13', 'return_to_picking_hub'),
+        ('14', 'assign_for_return'),
+        ('15', 'picked_for_return'),
+        ('16', 'return_to_merchent'),
+        ('17', 'canceled'),
+        ('18', 'picking_hold'),
+        ('19', 'order_absent'),
+        ('20', 'rider_cancel'),
+        ('21', 'merchant_absent'),
         
 
     )
-    order_track  = models.CharField(max_length=3, choices=order_track_choose,blank=True,default = '1')
+    order_track  = models.CharField(max_length=3, choices=order_track_choose,blank=True,default = '1')   
     
-    
+    return_status_choose = (
+        ('1', 'Customer_not_connected_phone'),
+        ('2', 'Wrong_product'),
+        ('3', 'Customer_abbsent_in_address'),
+        ('4', 'Customer_not_interested_to_receve'),
+
+    )
+    return_status  = models.CharField(max_length=1, choices=return_status_choose,blank=True)
+
+
     def __str__(self):
         return str(self.order_id)
 
@@ -509,6 +520,7 @@ class RiderDeliveryOrder(models.Model):
     order_info                      = models.ForeignKey(MerchantOrder, on_delete=models.CASCADE,null=True)
     rider                           = models.ForeignKey(RiderInfo, on_delete=models.DO_NOTHING,null=True,blank=True)
     collection_amount               = models.CharField(max_length=50,blank=True)
+    otp                             = models.CharField(max_length=10,blank=True)
     
     
     ordering                        = models.IntegerField(default=0)
@@ -520,10 +532,13 @@ class RiderDeliveryOrder(models.Model):
     status                          = models.BooleanField(default=True)
 
     delivery_time                   = models.DateTimeField(auto_now_add = False,null=True,blank=True)
-    hub_delivery_rider_assign_time           = models.DateTimeField(auto_now_add = True,null=True,blank=True)
+    hub_delivery_rider_assign_time  = models.DateTimeField(auto_now_add = True,null=True,blank=True)
     hub_receve_time                 = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     canceled_time                   = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     hold_time                       = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    
+    return_pending_time             = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    return_to_hub_time              = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     
     return_cause                    = models.CharField(max_length=200,blank=True)
     
@@ -535,11 +550,88 @@ class RiderDeliveryOrder(models.Model):
         ('5', 'return_to_hub'),
 
     )
-    order_status  = models.CharField(max_length=1, choices=order_status_choose,blank=True)
+    order_status  = models.CharField(max_length=1, choices=order_status_choose,blank=True,default = '1')
+
+    
+    return_status_choose = (
+        ('1', 'Customer_not_connected_phone'),
+        ('2', 'Wrong_product'),
+        ('3', 'Customer_abbsent_in_address'),
+        ('4', 'Customer_not_interested_to_receve'),
+
+    )
+    return_status  = models.CharField(max_length=1, choices=return_status_choose,blank=True)
 
 
     
     def __str__(self):
         return str(self.order_info)
+
+
+
+class Collection_ammount(models.Model):
+    order_info                      = models.ForeignKey(MerchantOrder, on_delete=models.CASCADE,null=True)
+    collect_rider                   = models.ForeignKey(RiderInfo, on_delete=models.DO_NOTHING,null=True,blank=True)
+    collect_hub                     = models.ForeignKey(HubInfo, on_delete=models.DO_NOTHING,null=True,blank=True)
+    shipment_charge                 = models.CharField(max_length=50,blank=True)
+    cod_charge                      = models.CharField(max_length=50,blank=True)
+    lequed_or_Fragile_charge        = models.CharField(max_length=50,blank=True)
+    total_service_charge            = models.CharField(max_length=50,blank=True)
+    collection_amount               = models.CharField(max_length=50,blank=True)
+    is_statement                    = models.BooleanField(default=False)    
+    statement_no                    = models.CharField(max_length=50,blank=True,null=True)
+
+    ordering                        = models.IntegerField(default=0)
+    modifed_by                      = models.IntegerField(default=0)
+    created_by                      = models.IntegerField(default=0)
+    created                         = models.DateTimeField(auto_now_add = True)
+    modify                          = models.DateTimeField(auto_now_add = False)
+    deleted                         = models.BooleanField(default=False)
+    status                          = models.BooleanField(default=True)
+
+    rider_collection_time           = models.DateTimeField(auto_now_add = True,null=True,blank=True)
+    hub_collection_time             = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    hub_statement_time              = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    head_ofice_collect_time         = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    merchant_statement_time         = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    merchant_collection_time        = models.DateTimeField(auto_now_add = False,null=True,blank=True)
+    
+    
+    collection_status = (
+        ('1', 'Rider'),
+        ('2', 'Hub'),
+        ('3', 'Receve_Pending_Head_Office'),
+        ('4', 'Head_Office'),
+        ('5', 'Merchant'),
+
+    )
+    collection_status  = models.CharField(max_length=1, choices=collection_status,blank=True,default = '1')
+
+
+    
+    def __str__(self):
+        return str(self.order_info)
+
+
+
+class PaymentStatement(models.Model):
+    
+    hub_info                        = models.ForeignKey(HubInfo, on_delete=models.DO_NOTHING,null=True,blank=True)
+    total_collection_amount         = models.CharField(max_length=50,blank=True)
+    statement_no                    = models.CharField(max_length=50,blank=True,null=True)
+    head_office_pending             = models.BooleanField(default=True)
+    head_office_receved             = models.BooleanField(default=False)
+    
+    ordering                        = models.IntegerField(default=0)
+    modifed_by                      = models.IntegerField(default=0)
+    created_by                      = models.IntegerField(default=0)
+    created                         = models.DateTimeField(auto_now_add = True)
+    modify                          = models.DateTimeField(auto_now_add = False,blank=True,null=True)
+    deleted                         = models.BooleanField(default=False)
+    status                          = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return str(self.statement_no)
+
 
 
