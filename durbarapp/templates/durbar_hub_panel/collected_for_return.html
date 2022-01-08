@@ -1,4 +1,4 @@
-{% extends 'durbar_rider_panel/rider_base.html' %} 
+{% extends 'durbar_hub_panel/hub_base.html' %} 
 {% block title %} Dashboard {% endblock %}
 {% load staticfiles %}
 {% load data_load %}
@@ -13,42 +13,54 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Submited Order </h4>
+                    <h4>Collected For Return Order </h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-striped" id="table-1">
+                      <form method="POST">{% csrf_token %}
+                      <table class="table table-striped">
                         <thead>
                           <tr>
-                                        <th scope="col"> Order ID </th>
-                                        <th scope="col"> Pickup Location </th>
-                                        <th scope="col"> Picked Time </th>
-                                        <th scope="col"> Hub Receve Time </th>
-                                        
-                          </tr>
+                            <th scope="col"> Collection Time </th>
+                            <th scope="col"> Order ID </th>
+                            <th scope="col"> Rider </th>
+                            <th scope="col"> Delevery Address </th>
+                            <th scope="col"> Return Cause</th>
+                            
+                        </tr>
                         </thead>
                         <tbody>
                               
-                                {% for list in order_list %}
-                                    <tr>
-                                        
-                                        <td> {{list.order_info}}</td>
-                                        <td> {{list.pickup_location}}</td>
-                                        <td> {{list.picked_time}}</td>
-                                        <td> {{list.hub_receve_time}}</td>
-                                        
+                                {% for data in list %}
+                                  <tr>
                                       
-                                            
-                                        
-                                    </tr>
+                                    <td> {{data.return_to_delivery_hub_time}}<br> </td>
+                                    <td> {{data.order_id}}<br> </td>
+                                    <td> {{data.delivered_rider}}</td>
+                                    <td> {{data.post_office_name}}, {{list.upazilla_name}}, {{list.district_name}}<br>{{list.address}} </td>
+                                    {% if data.return_status == "1" %}
+                                      <td> Customer not connected phone </td>
+                                    {% elif data.return_status == "2" %}
+                                      <td> Wrong product</td>
                                     
-                                {% endfor %}
+                                    {% elif data.return_status == "3" %}
+                                      <td> Customer abbsent in address</td>
+                                    
+                                    {% elif data.return_status == "4" %}
+                                      <td> Customer not interested to receve</td>
+                                    {% endif %} 
+                                    
+                                </tr>
+                                    {% endfor %}
                           
                           
                           
                         </tbody>
                         
                       </table>
+                      <button type="submit" style="line-height: 17px; float: right;" href="#" class="btn btn-icon icon-left btn-success"><i class="far fa-edit"></i>Create Statement</button>
+                    </form>
+                    
                     </div>
                   </div>
                 </div>

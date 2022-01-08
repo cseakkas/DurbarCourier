@@ -1,4 +1,4 @@
-{% extends 'durbar_rider_panel/rider_base.html' %} 
+{% extends 'durbar_admin_panel/admin_base.html' %} 
 {% block title %} Dashboard {% endblock %}
 {% load staticfiles %}
 {% load data_load %}
@@ -13,37 +13,31 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Submited Order </h4>
+                    <h4>Merchant List for Statement </h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table table-striped" id="table-1">
                         <thead>
                           <tr>
-                                        <th scope="col"> Order ID </th>
-                                        <th scope="col"> Pickup Location </th>
-                                        <th scope="col"> Picked Time </th>
-                                        <th scope="col"> Hub Receve Time </th>
-                                        
+                              <th scope="col"> Merchant </th>
+                              <th scope="col"> Order Qty </th>
+                              <th scope="col"> Collection Amount</th>
+                              <th scope="col"> Action </th>
                           </tr>
                         </thead>
                         <tbody>
-                              
-                                {% for list in order_list %}
-                                    <tr>
-                                        
-                                        <td> {{list.order_info}}</td>
-                                        <td> {{list.pickup_location}}</td>
-                                        <td> {{list.picked_time}}</td>
-                                        <td> {{list.hub_receve_time}}</td>
-                                        
-                                      
-                                            
-                                        
-                                    </tr>
-                                    
-                                {% endfor %}
-                          
+                            {% for list in merchant_list %}
+                                <tr> 
+                                    <td> {{list.marchant_name}} - ({{list.marchant_id}})</td>
+                                    <td> {{list.marchand_order}}</td>
+                                    <td> {{list.collection_amount}}</td>  
+                                    <td>
+                                      <div class="badge badge-warning badge-shadow"><a href="/order-upgrade/{{list.marchant_id}}" style="color: black;">Upgrade</a></div></button>
+                                    </td> 
+                                </tr> 
+                            {% endfor %}
+                      
                           
                           
                         </tbody>

@@ -367,6 +367,7 @@ class MerchantOrder(models.Model):
     merchant_info                   = models.ForeignKey(MerchantInfo, on_delete=models.CASCADE,null=True)
     pickup_rider                    = models.ForeignKey(RiderInfo, on_delete=models.CASCADE, related_name='pickup_rider', null=True,blank=True)
     delivered_rider                 = models.ForeignKey(RiderInfo, on_delete=models.CASCADE, related_name='delivered_rider', null=True,blank=True)
+    returned_rider                  = models.ForeignKey(RiderInfo, on_delete=models.CASCADE, related_name='returned_rider', null=True,blank=True)
     pickup_hub                      = models.ForeignKey(HubInfo, on_delete=models.CASCADE, related_name='pickup_hub',null=True,blank=True)
     delivered_hub                   = models.ForeignKey(HubInfo, on_delete=models.CASCADE, related_name='delivered_hub', null=True,blank=True)
     district_name                   = models.ForeignKey(DistrictEntry, on_delete=models.CASCADE,null=True,blank=True)
@@ -395,7 +396,7 @@ class MerchantOrder(models.Model):
     lequed_or_Fragile_charge        = models.CharField(max_length=50,blank=True)
     total_service_charge            = models.CharField(max_length=50,blank=True)
     collection_amount               = models.CharField(max_length=50,blank=True)
-
+    return_statement_no             = models.CharField(max_length=50,blank=True,null=True)
 
     ordering                        = models.IntegerField(default=0)
     modifed_by                      = models.IntegerField(default=0)
@@ -446,15 +447,16 @@ class MerchantOrder(models.Model):
         ('10', 'hold'),
         ('11', 'return_pending'),
         ('12', 'return_to_delevery_hub '),
-        ('13', 'return_to_picking_hub'),
-        ('14', 'assign_for_return'),
-        ('15', 'picked_for_return'),
-        ('16', 'return_to_merchent'),
-        ('17', 'canceled'),
-        ('18', 'picking_hold'),
-        ('19', 'order_absent'),
-        ('20', 'rider_cancel'),
-        ('21', 'merchant_absent'),
+        ('13', 'return_pending_picking_hub '),
+        ('14', 'return_to_picking_hub'),
+        ('15', 'assign_for_return'),
+        ('16', 'picked_for_return'),
+        ('17', 'return_to_merchent'),
+        ('18', 'canceled'),
+        ('19', 'picking_hold'),
+        ('20', 'order_absent'),
+        ('21', 'rider_cancel'),
+        ('22', 'merchant_absent'),
         
 
     )
@@ -527,7 +529,7 @@ class RiderDeliveryOrder(models.Model):
     modifed_by                      = models.IntegerField(default=0)
     created_by                      = models.IntegerField(default=0)
     created                         = models.DateTimeField(auto_now_add = True)
-    modify                          = models.DateTimeField(auto_now_add = True)
+    modify                          = models.DateTimeField(auto_now_add = True,null=True,blank=True)
     deleted                         = models.BooleanField(default=False)
     status                          = models.BooleanField(default=True)
 
@@ -561,7 +563,7 @@ class RiderDeliveryOrder(models.Model):
 
     )
     return_status  = models.CharField(max_length=1, choices=return_status_choose,blank=True)
-
+    return_product_delevery            = models.BooleanField(default=False)
 
     
     def __str__(self):
@@ -579,13 +581,14 @@ class Collection_ammount(models.Model):
     total_service_charge            = models.CharField(max_length=50,blank=True)
     collection_amount               = models.CharField(max_length=50,blank=True)
     is_statement                    = models.BooleanField(default=False)    
+    is_return                       = models.BooleanField(default=False)    
     statement_no                    = models.CharField(max_length=50,blank=True,null=True)
 
     ordering                        = models.IntegerField(default=0)
     modifed_by                      = models.IntegerField(default=0)
     created_by                      = models.IntegerField(default=0)
-    created                         = models.DateTimeField(auto_now_add = True)
-    modify                          = models.DateTimeField(auto_now_add = False)
+    created                         = models.DateTimeField(auto_now_add = True,null=True,blank=True)
+    modify                          = models.DateTimeField(auto_now_add = False,null=True,blank=True)
     deleted                         = models.BooleanField(default=False)
     status                          = models.BooleanField(default=True)
 
@@ -618,6 +621,25 @@ class PaymentStatement(models.Model):
     
     hub_info                        = models.ForeignKey(HubInfo, on_delete=models.DO_NOTHING,null=True,blank=True)
     total_collection_amount         = models.CharField(max_length=50,blank=True)
+    statement_no                    = models.CharField(max_length=50,blank=True,null=True)
+    head_office_pending             = models.BooleanField(default=True)
+    head_office_receved             = models.BooleanField(default=False)
+    
+    ordering                        = models.IntegerField(default=0)
+    modifed_by                      = models.IntegerField(default=0)
+    created_by                      = models.IntegerField(default=0)
+    created                         = models.DateTimeField(auto_now_add = True)
+    modify                          = models.DateTimeField(auto_now_add = False,blank=True,null=True)
+    deleted                         = models.BooleanField(default=False)
+    status                          = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return str(self.statement_no)
+
+
+class ReturnStatement(models.Model):
+    hub_info                        = models.ForeignKey(HubInfo, on_delete=models.DO_NOTHING,null=True,blank=True)
+    total_order_quantity            = models.CharField(max_length=50,blank=True)
     statement_no                    = models.CharField(max_length=50,blank=True,null=True)
     head_office_pending             = models.BooleanField(default=True)
     head_office_receved             = models.BooleanField(default=False)

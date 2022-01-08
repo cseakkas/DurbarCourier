@@ -70,6 +70,7 @@ urlpatterns = [
     path('merchant-management/<str:id>/', views.merchant_management_edit),
 
 
+    path('merchant-statement-create-list/', views.merchant_statement_create_list),
     path('hub-pending-statement/', views.hub_pending_statement),
     path('hub-accepted-statement/', views.hub_accepted_statement),
     path('admin-accept-hub-pending-statement/<str:statement_no>/', views.admin_accept_hub_pending_statement),
@@ -97,8 +98,13 @@ urlpatterns = [
     path('collect-payment-from-rider/<int:rider_id>/', views.collect_payment_from_rider),
     path('hub-collection-ammount/', views.hub_collection_ammount, name="hub_collection_ammount"),
     path('hub-payment-statement/', views.hub_payment_statement),
+    path('hub-return-statement/', views.hub_return_statement),
     path('hub-payment-statement-download/<str:statement_no>/', views.hub_payment_statement_download),
+    path('hub-return-statement-download/<str:statement_no>/', views.hub_return_statement_download),
     path('hub-paid-to-head-office/', views.hub_paid_to_head_office),
+
+    path('pending-return/', views.pending_return),
+    path('hub-collected-for-return/', views.hub_collected_for_return),
 
 
 
@@ -134,6 +140,8 @@ urlpatterns = [
     path('wrong-product/<str:order_id>/', views.wrong_product),
     path('customer-abbsent-in-address/<str:order_id>/', views.customer_abbsent_in_address),
     path('customer-not-interested-to-receve/<str:order_id>/', views.customer_not_interested_to_receve),
+    
+    path('return-to-hub/', views.return_to_hub),
 
 
 

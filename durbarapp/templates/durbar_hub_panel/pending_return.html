@@ -13,7 +13,7 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>In Transit</h4>
+                    <h4>Pending Return/Collect From Rider</h4><br>
                     <div class="bar_read" style="margin-left: 200px;">
                     <form class="form-inline mr-auto" method="POST">{% csrf_token %}
                       <div class="search-element">
@@ -29,28 +29,32 @@
                         <thead>
                           <tr>
                               <th scope="col"> Order ID </th>
-                              <th scope="col"> Transit Hub </th>
+                              <th scope="col"> Rider </th>
                               <th scope="col"> Delevery Address </th>
-                              <th scope="col"> Weight</th>
-                              <th scope="col" class="text-end">Collection Amount </th>
-                              <th scope="col" class="text-end">Status </th>
+                              <th scope="col"> Return Cause</th>
+                              
                           </tr>
                         </thead>
                         <tbody>
                               
-                            {% for list in data %}
+                            {% for data in list %}
                                 <tr>
                                     
-                                    <td> {{list.order_id}}<br> </td>
-                                    <td> {{list.pickup_hub}}</td>
-                                    <td> {{list.post_office_name}}, {{list.upazilla_name}}, {{list.district_name}}<br>{{list.address}} </td>
-                                    <td> {{list.weight.delivery_charge_weight}}</td> 
-                                    <td> {{list.collection_amount}}</td>
-                                    {% if list.order_track == "5" %}
-                                    <td><div class="badge badge-success badge-shadow">Delevery</div></td> 
-                                    {% elif list.order_track == "13" %} 
-                                    <td><div class="badge badge-warning badge-shadow">Return</div></td> 
-                                    {% endif %}                         
+                                    <td> {{data.order_id}}<br> </td>
+                                    <td> {{data.delivered_rider}}</td>
+                                    <td> {{data.post_office_name}}, {{list.upazilla_name}}, {{list.district_name}}<br>{{list.address}} </td>
+                                    {% if data.return_status == "1" %}
+                                      <td> Customer not connected phone </td>
+                                    {% elif data.return_status == "2" %}
+                                      <td> Wrong product</td>
+                                    
+                                    {% elif data.return_status == "3" %}
+                                      <td> Customer abbsent in address</td>
+                                    
+                                    {% elif data.return_status == "4" %}
+                                      <td> Customer not interested to receve</td>
+                                    {% endif %} 
+                                    
                                 </tr>
                                 
                             {% endfor %}       

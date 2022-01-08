@@ -36,12 +36,21 @@
                                     <td> {{list.order_id}}<br> </td>
                                     <td> {{list.address}}<br> {{list.post_office_name}}, {{list.upazilla_name}}, {{list.district_name}}</td>
                                     <td> {{list.weight.delivery_charge_weight}}</td>
-                                    <td> {{list.collection_amount}}</td>
+                                    {% if list.order_track == "6" %}
+                                      <td> {{list.collection_amount}}</td>
+                                    {% elif list.order_track == "14" %}
+                                      <td> Return </td>
+                                    {% endif %}
                                     <td> 
                                       <form method="POST">{% csrf_token %}
                                         <input type="text" value="{{list.id}}" name="order_id" hidden>
-                                        <input type="text" value="{{list.collection_amount}}" name="collection_amount" hidden>
-                                        <div class="form-group">
+                                        {% if list.order_track == "6" %}
+                                          <input type="text" value="{{list.collection_amount}}" name="collection_amount" hidden>
+                                        {% elif list.order_track == "14" %}
+                                          <input type="text" value="0" name="collection_amount" hidden>
+                                          <input type="text" value="true" name="return_order" hidden>
+                                        {% endif %}
+                                          <div class="form-group">
                                           <div class="input-group">
                                             <select class="custom-select" name="rider" id="inputGroupSelect04">
                                               {% for rider_list in rider %}

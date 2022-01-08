@@ -13,32 +13,47 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Submited Order </h4>
+                    <h4>Return Order </h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-striped" id="table-1">
+                      <table class="table table-striped" id="table-2">
                         <thead>
                           <tr>
+                                        <th scope="col"> Return Time </th>
                                         <th scope="col"> Order ID </th>
-                                        <th scope="col"> Pickup Location </th>
-                                        <th scope="col"> Picked Time </th>
-                                        <th scope="col"> Hub Receve Time </th>
+                                        <th scope="col"> Return Cause </th>
+                                        <th scope="col"> Status </th>
                                         
                           </tr>
                         </thead>
                         <tbody>
                               
-                                {% for list in order_list %}
+                                {% for data in list %}
                                     <tr>
                                         
-                                        <td> {{list.order_info}}</td>
-                                        <td> {{list.pickup_location}}</td>
-                                        <td> {{list.picked_time}}</td>
-                                        <td> {{list.hub_receve_time}}</td>
+                                        <td> {{data.return_pending_time}}</td>
+                                        <td> {{data.order_info.order_id}}</td>
+                                        {% if data.return_status == "1" %}
+                                          <td> Customer not connected phone </td>
+                                        {% elif data.return_status == "2" %}
+                                          <td> Wrong product</td>
                                         
-                                      
-                                            
+                                        {% elif data.return_status == "3" %}
+                                          <td> Customer abbsent in address</td>
+                                        
+                                        {% elif data.return_status == "4" %}
+                                          <td> Customer not interested to receve</td>
+                                        {% endif %}
+
+
+
+                                        {% if data.order_status == "4" %}
+                                        <td> <div class="badge badge-warning badge-shadow">Pending</div></td>
+                                        {% else %}
+                                        <td>  <div class="badge badge-success badge-shadow">Hub Receved</div></td>
+                                       {% endif %}
+                                         
                                         
                                     </tr>
                                     

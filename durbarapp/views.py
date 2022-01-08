@@ -916,6 +916,22 @@ def merchant_management_edit(request,id):
 
 
 
+def merchant_statement_create_list(request):
+
+    merchant_list = models.Collection_ammount.objects.raw("""
+        SELECT ca.id, mi.marchant_name, mi.merchant_id as marchant_id, COUNT(mi.id) as marchand_order, sum(ca.collection_amount) as collection_amount 
+        FROM durbarapp_collection_ammount ca LEFT JOIN durbarapp_merchantorder mo ON ca.order_info_id = mo.id
+        LEFT JOIN durbarapp_merchantinfo mi ON mo.merchant_info_id = mi.id group by mi.id
+    """)
+
+    context={
+        "merchant_list" : merchant_list,        
+    }
+    return render(request, 'durbar_admin_panel/create-merchant_statetmet_list.html',context)
+
+
+
+
 def hub_pending_statement(request):
 
     statement_list = models.PaymentStatement.objects.filter(head_office_pending = True)
@@ -1164,13 +1180,18 @@ def sent_to_hub(request):
 def in_transit(request):
     if request.session.get('hub_id') == False:
         return redirect("/hub")
-    data = models.MerchantOrder.objects.filter(delivered_hub = request.session['h_id'], order_track = 5)
+    data = models.MerchantOrder.objects.filter(delivered_hub = request.session['h_id'], order_track = 5) | models.MerchantOrder.objects.filter(pickup_hub = request.session['h_id'], order_track = 13)
     if request.method=="POST":
         order_id         = request.POST[('order_id')]
-
-        models.MerchantOrder.objects.filter(order_id = order_id).update(
+        
+        models.MerchantOrder.objects.filter(order_id = order_id, order_track = 5).update(
             order_track = 6,
             hub_receve_from_hub_time = datetime.datetime.now()
+        )
+    
+        models.MerchantOrder.objects.filter(order_id = order_id, order_track = 13).update(
+            order_track = 14,
+            return_to_pickup_hub_time = datetime.datetime.now()
         )
         return redirect("/in-transit")
     context={
@@ -1185,26 +1206,44 @@ def in_transit(request):
 def collected_for_delevery(request):
     if request.session.get('hub_id') == False:
         return redirect("/hub")
-    data = models.MerchantOrder.objects.filter(delivered_hub = request.session['h_id'], order_track = 6)
+    data = models.MerchantOrder.objects.filter(delivered_hub = request.session['h_id'], order_track = 6) | models.MerchantOrder.objects.filter(pickup_hub = request.session['h_id'], order_track = 14)
     rider = models.RiderInfo.objects.filter(hub_id__hub_id = request.session['hub_id']).all()
     number = random.randint(1000,9999)
     if request.method=="POST":
         rider         = int(request.POST[('rider')])
         order_id      = int(request.POST[('order_id')])
         collection_amount      = request.POST.get('collection_amount')
+        return_order      = request.POST.get('return_order')
 
-        models.RiderDeliveryOrder.objects.create(
-            order_info_id = order_id,
-            rider_id = rider,
-            collection_amount = collection_amount,
-            hub_delivery_rider_assign_time = datetime.datetime.now(),
-            otp = number
-            )
-        models.MerchantOrder.objects.filter(id = order_id).update(
-            delivered_rider_id = rider,
-            hub_rider_assign_for_delivery_time = datetime.datetime.now(),
-            order_track = 7
-            )
+        if return_order == "true":
+            models.RiderDeliveryOrder.objects.create(
+                order_info_id = order_id,
+                rider_id = rider,
+                collection_amount = collection_amount,
+                hub_delivery_rider_assign_time = datetime.datetime.now(),
+                otp = number,
+                return_product_delevery = True
+                )
+            models.MerchantOrder.objects.filter(id = order_id).update(
+                returned_rider = rider,
+                picked_for_return_time = datetime.datetime.now(),
+                order_track = 16
+                )
+        else:
+            models.RiderDeliveryOrder.objects.create(
+                order_info_id = order_id,
+                rider_id = rider,
+                collection_amount = collection_amount,
+                hub_delivery_rider_assign_time = datetime.datetime.now(),
+                otp = number,
+                
+                )
+            models.MerchantOrder.objects.filter(id = order_id).update(
+                delivered_rider_id = rider,
+                hub_rider_assign_for_delivery_time = datetime.datetime.now(),
+                order_track = 7
+                )
+        
         return redirect("/collected-for-delevery")
     
     context={
@@ -1366,9 +1405,111 @@ def hub_paid_to_head_office(request):
 
 
 
+def pending_return(request):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    list = models.MerchantOrder.objects.filter(delivered_rider__hub = request.session['h_id'], order_track = 11)
+    if request.method=="POST":
+        order_id         = request.POST[('order_id')]
+
+        models.MerchantOrder.objects.filter(order_id = order_id).update(
+            order_track = 12,
+            return_to_delivery_hub_time = datetime.datetime.now()
+        )
+        models.RiderDeliveryOrder.objects.filter(order_info__order_id = order_id).update(
+            order_status = 5,
+            return_to_hub_time = datetime.datetime.now()
+        )
+        return redirect("/pending-return")
+    context={
+        'list':list,
+        
+    }
+
+    return render(request, "durbar_hub_panel/pending_return.html",context)  
+           
+
+
+def hub_collected_for_return(request):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    
+    list = models.MerchantOrder.objects.filter(delivered_hub = request.session['h_id'], order_track = 12)
+    try:
+        data = models.ReturnStatement.objects.latest("statement_no")
+        str_data = str(data)
+        past_id = str_data[4:]
+        past_id=int(past_id)
+        new_id = past_id+1
+        new_id = '{0:04d}'.format(new_id)
+        no=str('RST-')+str(new_id)
+        st_no = no
+        
+    except:
+        hub_no = '{0:04d}'.format(1)
+        no=str('RST-')+str(hub_no)
+        st_no = no
+    total = models.MerchantOrder.objects.filter(delivered_hub = request.session['h_id'], order_track = 12).count()
+
+    if request.method == "POST":
+        for i in list:
+            order_id = i.id
+            print(":",order_id)
+            
+            models.MerchantOrder.objects.filter(id = order_id).update(
+                order_track = 13,
+                return_statement_no = st_no
+            )
+        models.ReturnStatement.objects.create(
+                statement_no = st_no,
+                hub_info_id = request.session['h_id'],
+                total_order_quantity = total
+            )
+        return redirect('/hub-return-statement')
+
+    context={
+        'list':list,
+        'total':total,
+        
+    }
+
+    return render(request, "durbar_hub_panel/collected_for_return.html",context)  
+
+
+def hub_return_statement(request):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    
+    statement_list = models.ReturnStatement.objects.filter(hub_info = request.session['h_id'])
+
+
+    context={
+        'statement_list':statement_list,
+        
+    }
+
+    return render(request, "durbar_hub_panel/hub_return_statement.html",context)  
 
 
 
+def hub_return_statement_download(request,statement_no):
+    if request.session.get('hub_id') == False:
+        return redirect("/hub")
+    
+    statement_list = models.ReturnStatement.objects.filter(statement_no = statement_no, hub_info = request.session['h_id']).first()
+    order_list          = models.MerchantOrder.objects.filter(return_statement_no = statement_no, delivered_hub = request.session['h_id']).order_by("-return_statement_no")
+    order_quantity      = models.MerchantOrder.objects.filter(return_statement_no = statement_no, delivered_hub = request.session['h_id']).count()
+
+    context={
+        'statement_list':statement_list,
+        'order_list':order_list,
+        'order_quantity':order_quantity,
+        
+    }
+
+    pdf = render_to_pdf('durbar_hub_panel/return_statement.html',context)
+    return HttpResponse(pdf, content_type='application/pdf')  
+                
 
 
 
@@ -1617,32 +1758,53 @@ def delivery(request,order_id):
     print("OTP",otp_nmber)
     if request.method=="POST":
         otp     = request.POST['otp']
-        if otp == otp_nmber:
-            models.RiderDeliveryOrder.objects.filter(order_info__order_id = order_id).update(
-            order_status = 2,
-            collection_amount = collection_ammount,
-            delivery_time = datetime.datetime.now(),
+        return_order     = request.POST['return_order']
+        
 
-            )
-            models.MerchantOrder.objects.filter(order_id = order_id).update(
-                delivered_time = datetime.datetime.now(),
-                order_track = 9
+        if otp == otp_nmber:
+            if return_order == "false":
+                models.RiderDeliveryOrder.objects.filter(order_info__order_id = order_id).update(
+                order_status = 2,
+                collection_amount = collection_ammount,
+                delivery_time = datetime.datetime.now(),
                 )
-            models.Collection_ammount.objects.create(
-                order_info_id = collection.id,
-                collect_rider_id = request.session['r_id'],
-                shipment_charge = collection.shipment_charge,
-                cod_charge = collection.cod_charge,
-                lequed_or_Fragile_charge = collection.lequed_or_Fragile_charge,
-                total_service_charge = collection.total_service_charge,
-                collection_amount = collection.collection_amount,
-                )
-            messages.success(request, "Order Done Successfully")
-            return redirect("/rider-pending-delivery")
+                models.MerchantOrder.objects.filter(order_id = order_id).update(
+                    delivered_time = datetime.datetime.now(),
+                    order_track = 9
+                    )
+                models.Collection_ammount.objects.create(
+                    order_info_id = collection.id,
+                    collect_rider_id = request.session['r_id'],
+                    shipment_charge = collection.shipment_charge,
+                    cod_charge = collection.cod_charge,
+                    lequed_or_Fragile_charge = collection.lequed_or_Fragile_charge,
+                    total_service_charge = collection.total_service_charge,
+                    collection_amount = collection.collection_amount,
+                    )
+                messages.success(request, "Order Done Successfully")
+                return redirect("/rider-pending-delivery")
+            elif return_order == "true":
+                models.RiderDeliveryOrder.objects.filter(order_info__order_id = order_id).update(
+                order_status = 2,
+                collection_amount = 0,
+                delivery_time = datetime.datetime.now(),
+                    )
+                models.MerchantOrder.objects.filter(order_id = order_id).update(
+                    return_to_merchent_time = datetime.datetime.now(),
+                    order_track = 17
+                    )
+                models.Collection_ammount.objects.create(
+                    order_info_id = collection.id,
+                    collect_rider_id = request.session['r_id'],
+                    collection_amount = 0,
+                    is_return = True
+                    )
+                messages.success(request, "Order Done Successfully")
+                return redirect("/rider-pending-delivery")
         else:
             messages.warning(request,"Wrong OTP")
 
-    return render(request, "durbar_rider_panel/otp.html")  
+    return render(request, "durbar_rider_panel/otp.html",{'order_id':order_id})  
   
 
 
@@ -1672,8 +1834,6 @@ def have_to_pay(request):
         'tatal_ammount':tatal_ammount   
     }
     return render(request, "durbar_rider_panel/have_to_pay.html",context)  
-  
-
 
 
 
@@ -1751,5 +1911,18 @@ def customer_not_interested_to_receve(request,order_id):
     )
     return redirect('/rider-pending-delivery')
     
+
+  
+def return_to_hub(request):
+    if request.session.get('rider_id') == False:
+        return redirect("/rider")
+    list = models.RiderDeliveryOrder.objects.filter(rider_id__rider_id = request.session['rider_id'],order_status = 4) | models.RiderDeliveryOrder.objects.filter(rider_id__rider_id = request.session['rider_id'],order_status = 5)
+    
+    context={
+        'list':list,   
+           
+    }
+    return render(request, "durbar_rider_panel/return_to_hub.html",context)  
+  
 
 

@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Payment Statement</title>
+  <title>Return Statement</title>
   {% load static %}
   <!-- General CSS Files -->
   <style>
@@ -46,7 +46,7 @@
                         <img style="width: 130px; height: 50px;" src="http://127.0.0.1:8000/static/durbarapp/images/logo.png" alt="">
                       </td>
                       <td style="text-align: center;">
-                        <h2>Bill and Collection Statement</h2>
+                        <h2>Return Order Statement</h2>
                       </td>
                       <td style="text-align: right;">
                         <address>
@@ -76,13 +76,13 @@
                   <tr>
                     <th>Order Quantity</th>
                     <th>Statement Date</th>
-                    <th>Collection Ammount</th>
+                    
                   </tr>
                 </thead>
                 <tr>
                   <td>{{order_quantity}}</td>
                   <td>{{statement_list.created}}</td>
-                  <td>{{statement_list.total_collection_amount}}/=</td>
+                  
                 </tr>
               </table>
 
@@ -99,7 +99,7 @@
                      
                     </td>
                     <td style="text-align: center; border-bottom: 2px solid black;">
-                      <h2>Itemized Bill</h2>
+                      <h2>Itemized Return</h2>
                     </td>
                     <td style="text-align: right;">
                       
@@ -111,16 +111,27 @@
                   <tr>
                     <th>SL</th>
                     <th>Order ID</th>
-                    <th>Hub Collection Time</th>
-                    <th>Collection Ammount</th>
+                    <th>Return Time</th>
+                    <th>Return Cause</th>
                   </tr>
                 </thead>
                 {% for data in order_list %}
                   <tr>
                     <td >{{forloop.counter}}</td>
-                    <td >{{data.order_info.order_id}}</td>
-                    <td>{{data.hub_collection_time}}</td>
-                    <td>{{data.collection_amount}}/=</td>
+                    <td >{{data.order_id}}</td>
+                    <td>{{data.return_pending_time}}</td>
+                    {% if data.return_status == "1" %}
+                      <td> Customer not connected phone </td>
+                    {% elif data.return_status == "2" %}
+                      <td> Wrong product</td>
+                    
+                    {% elif data.return_status == "3" %}
+                      <td> Customer abbsent in address</td>
+                    
+                    {% elif data.return_status == "4" %}
+                      <td> Customer not interested to receve</td>
+                    {% endif %} 
+                                    
                   </tr>
                 {% endfor %}
               </table>
@@ -129,9 +140,7 @@
                 
                   <td style="text-align: right;">
                     Order Quantity: {{order_quantity}} <br>
-                    Total Collection amount: {{statement_list.total_collection_amount}}/= <br>
-                    <strong> Total Payment :  {{statement_list.total_collection_amount}}/= </strong>
-                  </td>
+                    </td>
                   
                 </tr>
               </table>
