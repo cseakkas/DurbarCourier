@@ -1,0 +1,240 @@
+{% extends 'durbar_admin_panel/admin_base.html' %} 
+{% block title %} Dashboard {% endblock %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
+
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Shiping Order </h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped" id="table-1">
+                        <thead>
+                          <tr>
+                                        <th scope="col"> Merchant </th>
+                                        <th scope="col"> Date and Time </th>
+                                        <th scope="col"> Order ID </th>
+                                        <th scope="col"> Delivery Info </th>
+                                        
+                                        
+                                        
+                                        <th scope="col"> Status </th>
+                                        <th scope="col" class="text-end">Action </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                                {% for list in order %}
+                                    <tr>
+                                        
+                                        <td> {{list.merchant_info.marchant_name}}<br>ID-{{list.merchant_info.id}} </td>
+                                        <td> {{list.created|date:"d-M-Y"}}<br>{{list.created|date:"g:i A"}} </td>
+                                        <td> {{list.order_id}}</td>
+                                        <td> {{list.customer_name}}<br>{{list.contact_no1}},{{list.contact_no2}}<br>{{list.address}}<br>{{list.post_office_name}},{{list.upazilla_name}},{{list.district_name}} </td>
+                                        
+                                        
+                                        <td> 
+                                          <div class="badge badge-success badge-shadow">{{list.order_track}}</div>
+                                          
+                                       </td>
+                                        
+                                            
+                                          <td><div class="badge badge-warning badge-shadow"><a href="/order-upgrade/{{list.order_id}}" style="color: black;">Upgrade</a></div></button>
+                                          </td>
+                                            
+                                        
+                                    </tr>
+                                    
+                                {% endfor %}
+                          
+                          
+                          
+                        </tbody>
+                        
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+          </div>
+          
+        </section>
+        
+
+        <div class="modal fade" id="CustomerDetailsModal" tabindex="-1" role="dialog" aria-labelledby="formModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="formModal">Edit User Information</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="#" method="POST"  id="indexForm" data-courses-url="{% url 'ajax_load_upazilla' %}" data-coursesx-url="{% url 'ajax_load_post' %}" data-coursesa-url="{% url 'ajax_load_weight' %}" data-coursesb-url="{% url 'ajax_load_cost' %}" class="addOrder">{% csrf_token %}
+                <div class="form-group">
+                  <label>কাস্টমারের নাম</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-user"></i>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder="কাস্টমারের নাম" name="customer_name" id="customer_name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>মোবাইল নম্বর</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-phone"></i>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder="মোবাইল নম্বর" name="contact_number1" id="contact_number1">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>জেলা</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-location-arrow"></i>
+                      </div>
+                    </div>
+                    <select id="programming" class="form-control" name="district_name" required>
+                      <option value="">---Select District---</option>
+                          {% for i in District|districtreg %}
+                              <option value="{{i.id}}">{{i.district_name_english}}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>থানা</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-location-arrow"></i>
+                      </div>
+                    </div>
+                    <select id="courses" class="form-control" name="upazilla_name" required>
+                              
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>পোস্ট</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-location-arrow"></i>
+                      </div>
+                    </div>
+                    <select id="courses2" class="form-control" name="post_office_name" required>
+                              
+                              
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Collection Amount</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-location-arrow"></i>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Collection Amount" name="collection_amount" id="collection_amount">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>বিস্তারিত ঠিকানা</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-file"></i>
+                      </div>
+                    </div>
+                    <textarea rows="2"  class="form-control"  placeholder="বিস্তারিত ঠিকানা" name="address" id="address"></textarea>
+                  </div>
+                </div>
+                
+                
+                <button type="submit" class="btn btn-primary m-t-15 waves-effect">SAVE</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+      <script>
+        function CustomerDetailsModal(cusid){
+          $.ajax({         
+            type: 'GET',       
+            url: '/customer-info-edit/',       
+            data: {
+              'CusId': cusid,   
+            },
+            success: function(results){     
+               $("#customer_name").val(results[0]['customer_name']);
+               $("#contact_number1").val(results[0]['contact_no1']);
+               $("#collection_amount").val(results[0]['collection_amount']); 
+               $("#district_name_id").val(results[0]['district_name_id']); 
+               $("#address").html(results[0]['address']);
+               
+            }
+
+        })
+        }
+      </script>
+<!--       
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  $("#programming").change(function () {
+    var url = $("#indexForm").attr("data-courses-url");  // get the url of the `load_courses` view
+    var programmingId = $(this).val();  // get the selected programming ID from the HTML input
+
+    $.ajax({                       // initialize an AJAX request
+      url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+      data: {
+        'programming': programmingId       // add the programming id to the GET parameters
+      },
+      success: function (data) {   // `data` is the return of the `load_courses` view function
+        $("#courses").html(data);  // replace the contents of the course input with the data that came from the server
+      }
+    });
+
+  });
+</script>
+<script>
+  $("#courses").change(function () {
+    var url = $("#indexForm").attr("data-coursesx-url");  // get the url of the `load_courses` view
+    var coursesId = $(this).val();  // get the selected programming ID from the HTML input
+
+    $.ajax({                       // initialize an AJAX request
+      url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+      data: {
+        'courses': coursesId       // add the programming id to the GET parameters
+      },
+      success: function (data) {   // `data` is the return of the `load_courses` view function
+        $("#courses2").html(data);  // replace the contents of the course input with the data that came from the server
+      }
+    });
+
+  });
+</script> -->
+
+      {% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'durbar_rider_panel/rider_base.html' %} 
+{% block title %} Dashboard {% endblock %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-body">
+            <div class="row">
+              
+              {% for list in pending_data %}
+                <a >
+                  <div class="col-12 col-md-12 col-lg-12">
+                  <div class="card">
+                    
+                    <div class="card-body" >
+                      <table class="table">
+                        
+                          <tr>
+                            <th style="text-align: left;height:30px"> Order ID-{{list.order_info.order_id}}</th>
+                            <th style="text-align: riht;height:30px"><a class="badge badge-danger" href="/rider-order/{{list.pickup_location.id}}/{{list.order_info.order_id}}/" style="color:white"><i class="fas fa-balance-scale"></i></a></th>
+                           
+                            
+                          </tr>
+                          
+                          <tr>
+                            
+                              <td style="height:0px">Weight- {{list.order_info.weight.delivery_charge_weight}}</td>
+                          </tr>
+                          
+                          <tr>
+                            <td><a class="badge badge-success" href="/rider-collect-order/{{list.pickup_location.id}}/{{list.order_info.order_id}}/" style="color:white;margin-right: 140px;"><i class="fas fa-check"></i> Collect Done</a></td>
+                            <td>
+                              <div class="btn-group mb-2" style="margin-bottom:0px !important">
+                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                  aria-haspopup="true" aria-expanded="false">
+                                  Other Options
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item has-icon" href="/rider-hold-order/{{list.pickup_location.id}}/{{list.order_info.order_id}}/"><i class="far fa-hand-paper"></i>  Order hold</a>
+                                  <a class="dropdown-item has-icon" href="/rider-product-absent-order/{{list.pickup_location.id}}/{{list.order_info.order_id}}/"><i class="fas fa-box-open"></i> Product abesnt</a>
+                                </div>
+                              </div>
+                            </td>
+                              
+                          </tr>
+                          
+                          
+                          
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            
+              {% endfor %}
+              </div>
+            </div>
+          </div>
+        </section>
+{% endblock %}

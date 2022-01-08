@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- invoice.html  21 Nov 2019 04:05:05 GMT -->
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Return Statement</title>
+  {% load static %}
+  <!-- General CSS Files -->
+  <style>
+
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      text-align: left;
+      padding: 2px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    </style>
+
+</head>
+
+<body style="margin: 20px;">
+  <div class="loader"></div>
+ 
+      
+      <!-- Main Content -->
+      
+        <section class="section">
+          <div class="section-body">
+            <div class="invoice">
+             
+              <page_header>
+              <table style="border-bottom: 1px solid black;">
+                  <tr>
+                      <td>
+                        <img style="width: 130px; height: 50px;" src="http://127.0.0.1:8000/static/durbarapp/images/logo.png" alt="">
+                      </td>
+                      <td style="text-align: center;">
+                        <h2>Return Order Statement</h2>
+                      </td>
+                      <td style="text-align: right;">
+                        <address>
+                            <strong>{{statement_list.hub_info.hub_owner_name}} </strong><br>
+                            {{statement_list.hub_info.contact_no1}}<br>
+                            {{statement_list.hub_info.email}}<br>
+                            {{statement_list.hub_info.address}}<br>
+                          </address>
+                      </td>
+                  </tr>
+              </table>
+              </page_header>
+              <table style="border-bottom: 1px solid black;">
+                  <tr>
+                      <td>
+                        Hub ID: {{statement_list.hub_info.hub_id}}<br>
+                        Hub Address : {{statement_list.hub_info.address}}
+                      </td>
+                      <td style="text-align: right;">
+                        Statement Date: {{statement_list.created}}<br>
+                        <strong>Statement ID: {{statement_list.statement_no}}</strong>
+                      </td>
+                  </tr>
+              </table>
+              <table style="border: 1px solid black;" >
+                <thead>
+                  <tr>
+                    <th>Order Quantity</th>
+                    <th>Statement Date</th>
+                    
+                  </tr>
+                </thead>
+                <tr>
+                  <td>{{order_quantity}}</td>
+                  <td>{{statement_list.created}}</td>
+                  
+                </tr>
+              </table>
+
+              <table style="border-bottom: 1px solid black;">
+                
+                <tr >
+                
+                  <td style="text-align: right;">Total Payment Amount: <strong> {{statement_list.total_collection_amount}}/= </strong></td>
+                </tr>
+              </table>
+              <table >
+                <tr>
+                    <td>
+                     
+                    </td>
+                    <td style="text-align: center; border-bottom: 2px solid black;">
+                      <h2>Itemized Return</h2>
+                    </td>
+                    <td style="text-align: right;">
+                      
+                    </td>
+                </tr>
+            </table>
+              <table style="border: 1px solid black;" >
+                <thead>
+                  <tr>
+                    <th>SL</th>
+                    <th>Order ID</th>
+                    <th>Return Time</th>
+                    <th>Return Cause</th>
+                  </tr>
+                </thead>
+                {% for data in order_list %}
+                  <tr>
+                    <td >{{forloop.counter}}</td>
+                    <td >{{data.order_id}}</td>
+                    <td>{{data.return_pending_time}}</td>
+                    {% if data.return_status == "1" %}
+                      <td> Customer not connected phone </td>
+                    {% elif data.return_status == "2" %}
+                      <td> Wrong product</td>
+                    
+                    {% elif data.return_status == "3" %}
+                      <td> Customer abbsent in address</td>
+                    
+                    {% elif data.return_status == "4" %}
+                      <td> Customer not interested to receve</td>
+                    {% endif %} 
+                                    
+                  </tr>
+                {% endfor %}
+              </table>
+              <table >
+                <tr >
+                
+                  <td style="text-align: right;">
+                    Order Quantity: {{order_quantity}} <br>
+                    </td>
+                  
+                </tr>
+              </table>
+            </div>
+          </div>
+        </section>
+      
+
+  <!-- General JS Scripts -->
+  <script src="assets/js/app.min.js"></script>
+  <!-- JS Libraies -->
+  <!-- Page Specific JS File -->
+  <!-- Template JS File -->
+  <script src="assets/js/scripts.js"></script>
+  <!-- Custom JS File -->
+  <script src="assets/js/custom.js"></script>
+</body>
+
+
+<!-- invoice.html  21 Nov 2019 04:05:05 GMT -->
+</html>

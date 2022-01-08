@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- index.html  21 Nov 2019 03:44:50 GMT -->
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Durbar - Hub Panel </title>
+  {% load static %}
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="{% static 'durbar_hub_panel/assets/bundles/chocolat/dist/css/chocolat.css' %}">
+  <link rel="stylesheet" href="{% static 'durbar_hub_panel/assets/bundles/ionicons/css/ionicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'durbar_hub_panel/assets/css/app.min.css' %}">
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="{% static 'durbar_hub_panel/assets/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'durbar_hub_panel/assets/css/components.css' %}">
+  <link rel="stylesheet" href="{% static 'durbar_hub_panel/assets/bundles/jquery-selectric/selectric.css' %}">
+  <link rel="stylesheet" href="{% static 'durbar_hub_panel/assets/bundles/select2/dist/css/select2.min.css' %}">
+  <!-- Custom style CSS -->
+  <link rel="stylesheet" href="{% static 'durbar_hub_panel/assets/css/custom.css' %}">
+  <link rel="stylesheet" href="{% static 'durbar_hub_panel/assets/bundles/datatables/datatables.min.css' %}">
+  <link rel="stylesheet" href="{% static 'durbar_hub_panel/assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css' %}">
+  <!-- Template CSS -->
+  
+</head>
+
+<body>
+  <div class="loader"></div>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
+      <div class="navbar-bg"></div>
+      <nav class="navbar navbar-expand-lg main-navbar sticky">
+        <div class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
+									collapse-btn"> <i data-feather="align-justify"></i></a></li>
+            <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
+                <i data-feather="maximize"></i>
+              </a></li>
+            <li>
+              
+            </li>
+          </ul>
+        </div>
+        <ul class="navbar-nav navbar-right">
+          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+              class="nav-link nav-link-lg message-toggle"><i data-feather="mail"></i>
+              <span class="badge headerBadge1">
+                6 </span> </a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+              <div class="dropdown-header">
+                Messages
+                <div class="float-right">
+                  <a href="#">Mark All As Read</a>
+                </div>
+              </div>
+              <div class="dropdown-list-content dropdown-list-message">
+                <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar
+											text-white"> <img alt="image" src="{% static 'durbar_hub_panel/assets/img/users/user-1.png' %}" class="rounded-circle">
+                  </span> <span class="dropdown-item-desc"> <span class="message-user">John
+                      Deo</span>
+                    <span class="time messege-text">Please check your mail !!</span>
+                    <span class="time">2 Min Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                    <img alt="image" src="{% static 'durbar_hub_panel/assets/img/users/user-2.png' %}" class="rounded-circle">
+                  </span> <span class="dropdown-item-desc"> <span class="message-user">Sarah
+                      Smith</span> <span class="time messege-text">Request for leave
+                      application</span>
+                    <span class="time">5 Min Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                    <img alt="image" src="{% static 'durbar_hub_panel/assets/img/users/user-5.png' %}" class="rounded-circle">
+                  </span> <span class="dropdown-item-desc"> <span class="message-user">Jacob
+                      Ryan</span> <span class="time messege-text">Your payment invoice is
+                      generated.</span> <span class="time">12 Min Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                    <img alt="image" src="{% static 'durbar_hub_panel/assets/img/users/user-4.png' %}" class="rounded-circle">
+                  </span> <span class="dropdown-item-desc"> <span class="message-user">Lina
+                      Smith</span> <span class="time messege-text">hii John, I have upload
+                      doc
+                      related to task.</span> <span class="time">30
+                      Min Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                    <img alt="image" src="{% static 'durbar_hub_panel/assets/img/users/user-3.png' %}" class="rounded-circle">
+                  </span> <span class="dropdown-item-desc"> <span class="message-user">Jalpa
+                      Joshi</span> <span class="time messege-text">Please do as specify.
+                      Let me
+                      know if you have any query.</span> <span class="time">1
+                      Days Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                    <img alt="image" src="{% static 'durbar_hub_panel/assets/img/users/user-2.png' %}" class="rounded-circle">
+                  </span> <span class="dropdown-item-desc"> <span class="message-user">Sarah
+                      Smith</span> <span class="time messege-text">Client Requirements</span>
+                    <span class="time">2 Days Ago</span>
+                  </span>
+                </a>
+              </div>
+              <div class="dropdown-footer text-center">
+                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+              </div>
+            </div>
+          </li>
+          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+              class="nav-link notification-toggle nav-link-lg"><i data-feather="bell" class="bell"></i>
+            </a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+              <div class="dropdown-header">
+                Notifications
+                <div class="float-right">
+                  <a href="#">Mark All As Read</a>
+                </div>
+              </div>
+              <div class="dropdown-list-content dropdown-list-icons">
+                <a href="#" class="dropdown-item dropdown-item-unread"> <span
+                    class="dropdown-item-icon bg-primary text-white"> <i class="fas
+												fa-code"></i>
+                  </span> <span class="dropdown-item-desc"> Template update is
+                    available now! <span class="time">2 Min
+                      Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-info text-white"> <i class="far
+												fa-user"></i>
+                  </span> <span class="dropdown-item-desc"> <b>You</b> and <b>Dedik
+                      Sugiharto</b> are now friends <span class="time">10 Hours
+                      Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-success text-white"> <i
+                      class="fas
+												fa-check"></i>
+                  </span> <span class="dropdown-item-desc"> <b>Kusnaedi</b> has
+                    moved task <b>Fix bug header</b> to <b>Done</b> <span class="time">12
+                      Hours
+                      Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-danger text-white"> <i
+                      class="fas fa-exclamation-triangle"></i>
+                  </span> <span class="dropdown-item-desc"> Low disk space. Let's
+                    clean it! <span class="time">17 Hours Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-info text-white"> <i class="fas
+												fa-bell"></i>
+                  </span> <span class="dropdown-item-desc"> Welcome to Otika
+                    template! <span class="time">Yesterday</span>
+                  </span>
+                </a>
+              </div>
+              <div class="dropdown-footer text-center">
+                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+              </div>
+            </div>
+          </li>
+          <li class="dropdown"><a href="#" data-toggle="dropdown"
+              class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="{% static 'durbar_hub_panel/assets/img/user.png' %}"
+                class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
+            <div class="dropdown-menu dropdown-menu-right pullDown">
+              <div class="dropdown-title">Hello Sarah Smith</div>
+              <a href="profile.html" class="dropdown-item has-icon"> <i class="far
+										fa-user"></i> Profile
+              </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
+                Activities
+              </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
+                Settings
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="/hub-logout" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <div class="main-sidebar sidebar-style-2">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand">
+            <a href="index.html"> <img alt="image" style="width: 200px; height: 96px; " src="{% static 'durbar_hub_panel/assets/img/durbar_logo.png' %}" class="header-logo" /> <span
+                
+            </a>
+          </div>
+          <ul class="sidebar-menu">
+            
+            <li >
+              <a href="/hub-dashboard" class="nav-link"><i data-feather="monitor"></i><span>Home</span></a>
+            </li>
+            <li class="menu-header">Order</li>
+            
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                  data-feather="gift"></i><span>All Order</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="/pending-order"> Pending </a></li>
+                <li><a class="nav-link" href="/assign_for_pick-order"> Assign For Pick </a></li>
+                <li><a class="nav-link" href="/picked-order"> Picked </a></li>
+                <li><a class="nav-link" href="/hub_collected_for_ware_house-order"> Hub Collected For Ware House </a></li>
+                <li><a class="nav-link" href="/in_transit-order"> In Transit   </a></li>
+                <li><a class="nav-link" href="/hub_collected_for_delevery-order"> Hub Collected for Delevery   </a></li>
+                <li><a class="nav-link" href="/assign_for_delevery-order"> Assign for Delevery </a></li>
+                <li><a class="nav-link" href="/shiping-order"> Shiping</a></li>
+                <li><a class="nav-link" href="/delivered-order"> Delivered</a></li>
+                <li><a class="nav-link" href="/hold-order"> Hold</a></li>
+                <li><a class="nav-link" href="/return_pending-order"> Return Pending</a></li>
+                <li><a class="nav-link" href="/return_to_hub_for_ware_house-order"> Return to Hub for Ware House</a></li>
+                <li><a class="nav-link" href="/hub_returned_to_ware_house-order"> Hub Returned to Ware House</a></li>
+                <li><a class="nav-link" href="/return_to_hub-order"> Return to Hub</a></li>
+                <li><a class="nav-link" href="/assign_for_return-order"> Assign for Return</a></li>
+                <li><a class="nav-link" href="/picked_for_return-order"> Picked for Return</a></li>
+                <li><a class="nav-link" href="/return_to_merchent-order"> Return to Merchent</a></li>
+                <li><a class="nav-link" href="/canceled-order"> Canceled</a></li>
+ 
+              </ul>
+            </li>
+            <li class="menu-header">Reports</li>
+            
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                  data-feather="file-text"></i><span>Reports Type</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="widget-chart.html"> Hub Reports </a></li>
+                <li><a class="nav-link" href="widget-data.html"> Parcel Reporst </a></li>
+                <li><a class="nav-link" href="widget-data.html"> Merchant Reports   </a></li>
+                <li><a class="nav-link" href="widget-data.html"> Merchent Daily invoice</a></li>
+                
+ 
+              </ul>
+            </li>
+            <li class="menu-header">Branches</li>
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                  data-feather="map-pin"></i><span>Branches</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="widget-chart.html"> Create Branche </a></li>
+                <li><a class="nav-link" href="widget-data.html"> Branches </a></li>
+
+              </ul>
+            </li>
+            
+            <li class="menu-header">Merchant</li>
+            
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                  data-feather="user-check"></i><span>Merchant</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="widget-chart.html"> Merchant Request </a></li>
+                <li><a class="nav-link" href="widget-data.html"> Merchant Management </a></li>
+
+              </ul>
+            </li>
+            <li class="menu-header">Zone</li>
+            
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                  data-feather="map"></i><span>Hub</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="/add-hub"> Add Hub </a></li>
+                <li><a class="nav-link" href="/hub-list"> Hub Management </a></li>
+
+              </ul>
+            </li>
+            <li class="menu-header">Delivery Charge</li>
+            
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                  data-feather="dollar-sign"></i><span>Delivery Charge</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="widget-chart.html"> Add Charge </a></li>
+                <li><a class="nav-link" href="widget-data.html"> Charge Management </a></li>
+
+              </ul>
+            </li>
+            <li class="menu-header">COD Charge</li>
+            
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                  data-feather="dollar-sign"></i><span>COD Charge</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="widget-chart.html"> Add Charge </a></li>
+                <li><a class="nav-link" href="widget-data.html"> Charge Management </a></li>
+
+              </ul>
+            </li>
+
+            <li class="menu-header">HR</li>
+            <li><a class="nav-link" href="/hub-payment-statement"><i data-feather="file-text"></i><span>Payment Statement </span></a></li>
+            <li><a class="nav-link" href="/hub-return-statement"><i data-feather="file-text"></i><span>Return Statement </span></a></li>
+            <li><a class="nav-link" href="vector-map.html"><i data-feather="user"></i><span> Employee </span></a></li>
+            <li><a class="nav-link" href="vector-map.html"><i data-feather="user"></i><span> Agent </span></a></li>
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                  data-feather="truck"></i><span>Rider</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="/add-rider"> Add Rider </a></li>
+                <li><a class="nav-link" href="/rider-list"> Rider Management </a></li>
+
+              </ul>
+            </li>
+
+            <li class="menu-header">Pickup</li>
+            
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                  data-feather="download"></i><span>Pickup</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="widget-chart.html"> Pick and Drop</a></li>
+                <li><a class="nav-link" href="widget-data.html"> New pickup </a></li>
+                <li><a class="nav-link" href="widget-data.html"> Pending pickup </a></li>
+                <li><a class="nav-link" href="widget-data.html"> Acsepted pickup </a></li>
+                <li><a class="nav-link" href="widget-data.html"> Canceled pickup </a></li>
+
+              </ul>
+            </li>
+
+            <li class="menu-header">Website Management</li>
+            
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                  data-feather="monitor"></i><span>Website</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="widget-chart.html"> Logo</a></li>
+                <li><a class="nav-link" href="widget-data.html"> Services </a></li>
+                <li><a class="nav-link" href="widget-data.html"> Why We Are Best </a></li>
+                <li><a class="nav-link" href="widget-data.html"> Clints Love </a></li>
+
+
+              </ul>
+            </li>
+
+            
+            
+      
+           
+            
+           
+          </ul>
+        </aside>
+      </div>
+
+
+
+
+
+
+
+
+
+      {% block content %}
+
+
+      {% endblock %}
+   
+
+
+
+
+
+
+
+                
+          
+    </section>
+    <div class="settingSidebar">
+      <a href="javascript:void(0)" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
+      </a>
+      <div class="settingSidebar-body ps-container ps-theme-default">
+        <div class=" fade show active">
+          <div class="setting-panel-header">Setting Panel
+          </div>
+          <div class="p-15 border-bottom">
+            <h6 class="font-medium m-b-10">Select Layout</h6>
+            <div class="selectgroup layout-color w-50">
+              <label class="selectgroup-item">
+                <input type="radio" name="value" value="1" class="selectgroup-input-radio select-layout" checked>
+                <span class="selectgroup-button">Light</span>
+              </label>
+              <label class="selectgroup-item">
+                <input type="radio" name="value" value="2" class="selectgroup-input-radio select-layout">
+                <span class="selectgroup-button">Dark</span>
+              </label>
+            </div>
+          </div>
+          <div class="p-15 border-bottom">
+            <h6 class="font-medium m-b-10">Sidebar Color</h6>
+            <div class="selectgroup selectgroup-pills sidebar-color">
+              <label class="selectgroup-item">
+                <input type="radio" name="icon-input" value="1" class="selectgroup-input select-sidebar">
+                <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
+                  data-original-title="Light Sidebar"><i class="fas fa-sun"></i></span>
+              </label>
+              <label class="selectgroup-item">
+                <input type="radio" name="icon-input" value="2" class="selectgroup-input select-sidebar" checked>
+                <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
+                  data-original-title="Dark Sidebar"><i class="fas fa-moon"></i></span>
+              </label>
+            </div>
+          </div>
+          <div class="p-15 border-bottom">
+            <h6 class="font-medium m-b-10">Color Theme</h6>
+            <div class="theme-setting-options">
+              <ul class="choose-theme list-unstyled mb-0">
+                <li title="white" class="active">
+                  <div class="white"></div>
+                </li>
+                <li title="cyan">
+                  <div class="cyan"></div>
+                </li>
+                <li title="black">
+                  <div class="black"></div>
+                </li>
+                <li title="purple">
+                  <div class="purple"></div>
+                </li>
+                <li title="orange">
+                  <div class="orange"></div>
+                </li>
+                <li title="green">
+                  <div class="green"></div>
+                </li>
+                <li title="red">
+                  <div class="red"></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="p-15 border-bottom">
+            <div class="theme-setting-options">
+              <label class="m-b-0">
+                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                  id="mini_sidebar_setting">
+                <span class="custom-switch-indicator"></span>
+                <span class="control-label p-l-10">Mini Sidebar</span>
+              </label>
+            </div>
+          </div>
+          <div class="p-15 border-bottom">
+            <div class="theme-setting-options">
+              <label class="m-b-0">
+                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                  id="sticky_header_setting">
+                <span class="custom-switch-indicator"></span>
+                <span class="control-label p-l-10">Sticky Header</span>
+              </label>
+            </div>
+          </div>
+          <div class="mt-4 mb-4 p-3 align-center rt-sidebar-last-ele">
+            <a href="#" class="btn btn-icon icon-left btn-primary btn-restore-theme">
+              <i class="fas fa-undo"></i> Restore Default
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="main-footer">
+    <div class="footer-left">
+      <a href="">Imtiyaz</a></a>
+    </div>
+    <div class="footer-right">
+    </div>
+  </footer>
+</div>
+</div>
+<!-- General JS Scripts -->
+<script src="{% static 'durbar_hub_panel/assets/js/app.min.js' %}"></script>
+<!-- JS Libraies -->
+<script src="{% static 'durbar_hub_panel/assets/bundles/apexcharts/apexcharts.min.js' %}"></script>
+<!-- Page Specific JS File -->
+<script src="{% static 'durbar_hub_panel/assets/js/page/index.js' %}"></script>
+<!-- Template JS File -->
+<script src="{% static 'durbar_hub_panel/assets/js/scripts.js' %}"></script>
+<!-- Custom JS File -->
+<script src="{% static 'durbar_hub_panel/assets/js/custom.js' %}"></script>
+<script src="{% static 'durbar_hub_panel/assets/bundles/jquery-validation/dist/jquery.validate.min.js' %}"></script>
+<!-- JS Libraies -->
+<script src="{% static 'durbar_hub_panel/assets/bundles/jquery-steps/jquery.steps.min.js' %}"></script>
+<!-- Page Specific JS File -->
+<script src="{% static 'durbar_hub_panel/assets/js/page/form-wizard.js' %}"></script>
+
+<script src="{% static 'durbar_hub_panel/assets/bundles/datatables/datatables.min.js' %}"></script>
+<script src="{% static 'durbar_hub_panel/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'durbar_hub_panel/assets/bundles/jquery-ui/jquery-ui.min.js' %}"></script>
+<!-- Page Specific JS File -->
+<script src="{% static 'durbar_hub_panel/assets/js/page/gallery1.js' %}"></script>
+<script src="{% static 'durbar_hub_panel/assets/js/page/datatables.js' %}"></script>
+<script src="{% static 'durbar_hub_panel/assets/bundles/chocolat/dist/js/jquery.chocolat.min.js' %}"></script>
+<script src="{% static 'durbar_hub_panel/assets/bundles/select2/dist/js/select2.full.min.js' %}"></script>
+<script src="{% static 'durbar_hub_panel/assets/bundles/jquery-selectric/jquery.selectric.min.js' %}"></script>
+</body>
+
+
+<!-- index.html  21 Nov 2019 03:47:04 GMT -->
+</html>

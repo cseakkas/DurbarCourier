@@ -1,0 +1,107 @@
+{% extends 'durbar_hub_panel/hub_base.html' %} 
+{% block title %} Dashboard {% endblock %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-body">
+            
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Order Collection</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped" id="saveAllOrder">
+                        <thead>
+                          <tr>
+                            <th class="text-center pt-3">
+                              <div class="custom-checkbox custom-checkbox-table custom-control">
+                                <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
+                                  class="custom-control-input" id="checkbox-all"  >
+                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                              </div>
+                            </th>
+                            <th>Order ID</th>
+                            <th>Merchent Name</th>
+                            <th>Collection Location</th>
+                            <th>Collection Time</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for data in picked_data %}
+                          <tr>
+                            <td  class="text-center pt-2 checkid">
+                              <div class="custom-checkbox custom-control">
+                                <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
+                                  id="{{data.order_info}}">
+                                <label for="{{data.order_info}}"  class="custom-control-label">&nbsp;</label>
+                              </div>
+                            </td>
+                            <td>{{data.order_info}}</td>
+                            <td class="align-middle">
+                              {{data.order_info.merchant_info.marchant_name}}
+                            </td>
+                            <td>
+                              {{data.pickup_location}}
+                            </td>
+                            <td>{{data.picked_time}}</td>
+                            
+                            <td><a href="#" class="btn btn-primary">Detail</a></td>
+                          </tr>
+                          {% endfor %}
+                         
+                            
+                            
+                         
+
+                          
+                        </tbody>
+                        
+                      </table>
+                      
+                    </div>
+                    
+                  </div>
+                  <button class="btn btn-primary mr-1" type="submit" id="update" >Submit</button>
+                </div>
+                
+              </div>
+            </div>
+            
+          </div>
+        </section>
+
+
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+        $("#update").click(function() {
+          if (confirm("Are u sure? You get this order ?")){
+            $('#saveAllOrder .checkid :checkbox:checked').each(function(){
+              
+              $.ajax({
+                url:"/hub-pick/",
+                data: {
+                  'order_id':this.id,
+                },
+                success: function (data) {
+                  window.location.href = "/hub-picked";
+                },
+                error: function(data){
+                    alert(data);
+                }
+              })
+        
+            })
+          }
+      })
+        
+        </script>
+        
+        {% endblock %}

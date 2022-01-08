@@ -1,4 +1,6 @@
 <option value="">---select Post---</option>
 {% for posts in post %}
     <option value="{{ posts.pk }}">{{ posts.post_office_english }}</option>
+    
 {% endfor %}
+<option value="">Other</option>

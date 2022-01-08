@@ -1,142 +1,429 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %} Durbar Courier: Largest Online Courier Marketplace in Bangladesh{% endblock %} </title>
-    {% load staticfiles %}
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'durbarapp/css/owl.carousel.min.css' %}">
-    <link rel="stylesheet" href="{% static 'durbarapp/css/owl.theme.default.css' %}">
-    <link rel="stylesheet" href="{% static 'durbarapp/css/responsive.css' %}">
-    <link rel="stylesheet" href="{% static 'durbarapp/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'merchant_dashboard/css/login.css' %}">
-    <link rel="stylesheet" href="{% static 'merchant_dashboard/css/responsive.css' %}"> 
-  </head>
-  <body>
-    <!-- Header Section -->
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="/">
-                    <img src="/static/durbarapp/images/logo.png" alt="" class="logo">
-                </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="register" href="/merchant-register/">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="login" href="/merchant-login/">Login</a>
-                    </li>
-                </ul>
-            </div>
-            </div>
-        </nav>
-    </header>
-    <!-- End Header Section -->
 
-    {% block content %}
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block title %} Durbar Courier: Largest Online Courier Marketplace in Bangladesh{% endblock %} </title>
+  {% load staticfiles %}
+  {% load data_load %}
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'durbarapp/css/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'durbarapp/css/owl.theme.default.css' %}">
+  <link rel="stylesheet" href="{% static 'durbarapp/css/responsive.css' %}">
+  <link rel="stylesheet" href="{% static 'durbarapp/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'merchant_dashboard/css/login.css' %}">
+  <link rel="stylesheet" href="{% static 'merchant_dashboard/css/responsive.css' %}">
+</head>
 
+<body>
+  <!-- Header Section -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <img src="/static/durbarapp/images/logo.png" alt="" class="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-    {% endblock %}
- 
-
-    <!-- Footer Section -->
-    <footer>
-        <div class="footerContent">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footerWidget">
-                            <img src="/static/durbarapp/images/logo.png" alt="">
-                            <ul class="footerMenu">
-                                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, impedit?</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footerWidget">
-                            <h4 class="title">Important links</h4>
-                            <ul class="footerMenu">
-                                <li><a href="#">Become Marchent</a></li>
-                                <li><a href="#">Become Rider</a></li>
-                                <li><a href="#">Become Delivery Man</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">FAQs</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 mt-30">
-                        <div class="footerWidget">
-                            <h4 class="title">How to reach us</h4>
-                            <ul class="footerMenu">
-                                <li>199, Bir Uttam Mir Shawkat Sarak, Tejgaon Industrial Area, Dhaka 1208</li>
-                                <li>+88 012374872</li>
-                                <li>example@gmail.com</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 mt-30">
-                        <div class="footerWidget">
-                            <h4 class="title">Get connected</h4>
-                            <ul class="footerMenu">
-                                <li>
-                                    <a href="#">
-                                        <i class="fab fa-facebook"></i> Facebook
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fab fa-twitter"></i> Twitter
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fab fa-instagram"></i> Instagram
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fab fa-youtube"></i> Youtube
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+            {% if request.session.merchant_id %}
+            <li class="nav-item">
+              <a class="login" href="/merchant-dashboard/">MY panel</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="register" data-toggle="modal" data-target="#squarespaceModal2">Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="login" data-toggle="modal" data-target="#squarespaceModal">Login</a>
+            </li>
+            {% endif %}
+          </ul>
         </div>
-        <div class="footerCredit">
-            <div class="container">
-                <p>Copyright 2021, All Right Redserved By <a href="www.rhsadik.com">Sadik</a></p>
-            </div>
-        </div>
-    </footer>
-    <!-- End Footer Section -->
+      </div>
 
- 
-    <!-- All JS -->
-    <script src="{% static 'durbarapp/js/jquery.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'durbarapp/js/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'durbarapp/js/script.js' %}"></script>
-  </body>
+
+      <div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                  class="sr-only">Close</span></button>
+              <h3 class="modal-title" id="lineModalLabel">Login</h3>
+            </div>
+            <div class="modal-body">
+
+              <!-- content goes here -->
+              <h4 id="LoginFailedMsg">Login Failed!</h4>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Phone No</label>
+                <input type="text" class="form-control" id="phone2" placeholder="Enter phone">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="password2" placeholder="Password">
+              </div>
+              <button id="login" class="btn btn-primary">Login</button>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="squarespaceModal2" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                  class="sr-only">Close</span></button>
+              <h3 class="modal-title" id="lineModalLabel">Register</h3>
+            </div>
+            <div class="modal-body">
+
+              <!-- content goes here -->
+              <!-- <form id="indexForm" data-courses-url="{% url 'ajax_load_upazilla' %}"> -->
+              <div class="form-group">
+                <label for="exampleInputEmail1">Full Name*</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter Name">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Phone No*</label>
+                <input type="text" class="form-control" id="phone" placeholder="Enter Mobile No" required>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">District Name</label>
+                <select name="district_name" id="programming" class="form-control">
+                  {% for dist in District|districtreg %}
+                  <option value="{{dist.pk}}">{{dist.district_name_bangla}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Upazilla Name</label>
+                <select id="courses" name="upazilla_name" class="form-control">
+
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password*</label>
+                <input type="password" class="form-control" id="password" placeholder="Password">
+              </div>
+
+
+              <button id="register" class="btn btn-primary">Register</button>
+              <!-- </form> -->
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <!-- End Header Section -->
+
+  {% block content %}
+
+
+  {% endblock %}
+
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="footerContent">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6">
+            <div class="footerWidget">
+              <img src="/static/durbarapp/images/logo.png" alt="">
+              <ul class="footerMenu">
+                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, impedit?</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="footerWidget">
+              <h4 class="title">Important links</h4>
+              <ul class="footerMenu">
+                <li><a href="#">Become Marchent</a></li>
+                <li><a href="#">Become Rider</a></li>
+                <li><a href="#">Become Delivery Man</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">FAQs</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mt-30">
+            <div class="footerWidget">
+              <h4 class="title">How to reach us</h4>
+              <ul class="footerMenu">
+                <li>199, Bir Uttam Mir Shawkat Sarak, Tejgaon Industrial Area, Dhaka 1208</li>
+                <li>+88 012374872</li>
+                <li>example@gmail.com</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mt-30">
+            <div class="footerWidget">
+              <h4 class="title">Get connected</h4>
+              <ul class="footerMenu">
+                <li>
+                  <a href="#">
+                    <i class="fab fa-facebook"></i> Facebook
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i class="fab fa-twitter"></i> Twitter
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i class="fab fa-instagram"></i> Instagram
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i class="fab fa-youtube"></i> Youtube
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footerCredit">
+      <div class="container">
+        <p>Copyright 2021, All Right Redserved By <a href="www.rhsadik.com">Sadik</a></p>
+      </div>
+    </div>
+  </footer>
+  <!-- End Footer Section -->
+
+
+  <!-- All JS -->
+  <script src="{% static 'durbarapp/js/jquery.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'durbarapp/js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'durbarapp/js/script.js' %}"></script>
+
+  <script src="{% static 'durbarapp/js/jquery.js' %}"></script>
+  <script src="{% static 'merchant_dashboard_v2/assets/bundles/sweetalert/sweetalert.min.js' %}"></script>
+  <!-- Page Specific JS File -->
+  <script src="{% static 'merchant_dashboard_v2/assets/js/page/sweetalert.js' %}"></script>
+
+  <script>
+    $("#programming").change(function () {
+
+      var programmingId = $(this).val();  // get the selected programming ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: '/load-courses/',                    // set the url of the request (= localhost:8000/load-courses/)
+        data: {
+          'programming': programmingId       // add the programming id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_courses` view function
+          $("#courses").html(data);  // replace the contents of the course input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
+
+
+  <script>
+    $("#register").click(function () {
+
+      // var confirm_msg = confirm("Are you sure to submit?");
+      swal({
+        title: 'Are you sure?',
+        text: 'Once deleted, you will not be able to recover this imaginary file!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            var name = $('#name').val();
+            var phone = $('#phone').val();
+            var password = $('#password').val();
+            if (name == "" || phone == "" || password == "") {
+              alert("Please Enter Requred Field")
+              return false;
+            }
+
+            else {
+
+            
+            $.ajax({
+              url: '/',
+              type: 'GET',
+              data: {
+
+                'marchant_name': $('#name').val(),
+                'contact_no1': $('#phone').val(),
+                'password': $('#password').val(),
+                'programming_id': $('#programming').val(),    // programming means dristrictID
+                'courses_id': $('#courses').val(),            // courses means upazillaID
+
+              },
+              success: function (data) {
+                // alert("Registered");
+                if (data == "Submit Completed") {
+                  swal('Register successfully. We will contact you soon', {
+                    buttons: false,
+                    timer: 3000,
+                  });
+                  window.setTimeout(function () {
+                    location.href = '/'
+                  }, 3000);
+                  window.setTimeout(function () {
+                    location.href = '/'
+                  }, 3000);
+                }
+
+              },
+              error: function (data) {
+                alert("Submit failed");
+              }
+            });
+          }
+            swal('Poof! Your imaginary file has been deleted!', {
+              icon: 'success',
+            });
+          }
+        });
+
+      // if (confirm_msg == true) {
+
+      //   $.ajax({
+      //     url: '/',
+      //     type: 'GET',
+      //     data: {
+
+      //       'marchant_name': $('#name').val(),
+      //       'contact_no1': $('#phone').val(),
+      //       'password': $('#password').val(),
+      //       'programming_id': $('#programming').val(),    // programming means dristrictID
+      //       'courses_id': $('#courses').val(),            // courses means upazillaID
+
+      //     },
+      //     success: function (data) {
+      //       // alert("Registered");
+      //       if (data == "Submit Completed") {
+      //         swal('Register successfully. We will contact you soon', {
+      //           buttons: false,
+      //           timer: 3000,
+      //         });
+      //         window.setTimeout(function () {
+      //           location.href = '/'
+      //         }, 3000);
+      //       }
+
+      //     },
+      //     error: function (data) {
+      //       alert("Submit failed");
+      //     }
+      //   });
+
+
+      // }
+    });
+  </script>
+
+
+  <script>
+    $("#LoginFailedMsg").hide();
+    $("#login").click(function () {
+
+      $.ajax({
+        url: '/merchant-login/',
+        type: 'GET',
+        async: false,
+
+        data: {
+          'contact_no1': $('#phone2').val(),
+          'password': $('#password2').val(),
+
+        },
+        success: function (data) {
+          if (data == "success") {
+            swal('Good Job', 'Login Successfully', 'success');
+            window.setTimeout(function () {
+                window.location.href = "/merchant-dashboard";
+               }, 2000);
+            
+          } else {
+            // window.location.href = "/";
+            // var errorMsg = "Login Failed"  
+            $("#LoginFailedMsg").show();
+            // $("#LoginFailedMsg").html(errorMsg);
+          }
+        },
+        error: function (data) {
+          swal('Wrong Info', 'Plese enter right info', 'warning');
+        }
+      });
+
+
+
+
+
+    });
+  </script>
+  <script>
+    $("#submit").click(function () {
+      var confirm_msg = confirm("Are you sure to submit?");
+      if (confirm_msg == true) {
+
+        //$("#tbl_check_out tbody tr").each(function()
+
+        $.ajax({
+          url: '/',
+          type: 'GET',
+          async: false,
+          data: {
+
+            'member_name': $('#name').val(),
+            'mobile': $('#phone').val(),
+            'email': $('#password').val(),
+
+          },
+          success: function (data) {
+            alert("Submited");
+          },
+          error: function (data) {
+            alert("Submit failed");
+          }
+        });
+
+
+      }
+    });
+  </script>
+</body>
+
 </html>

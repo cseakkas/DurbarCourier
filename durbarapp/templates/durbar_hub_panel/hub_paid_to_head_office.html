@@ -1,0 +1,63 @@
+{% extends 'durbar_hub_panel/hub_base.html' %} 
+{% block title %} Dashboard {% endblock %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
+
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Payment Statement</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped" id="table-2">
+                        <thead>
+                          <tr>
+                              <th scope="col"> Statement No </th>
+                              <th scope="col"> Order ID </th>
+                              <th scope="col"> Hub Paid Date</th>
+                              <th scope="col"> Head Office Receved Date</th>
+                              <th scope="col"> Collection Amount </th>
+                              <th scope="col"> Confermation </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for data in list %}
+                                <tr> 
+                                    <td> {{data.statement_no}}</td>
+                                    <td> {{data.order_info.order_id}}</td>
+                                    <td> {{data.hub_statement_time|date:"D d M Y"}}</td>
+                                    <td> {{data.head_ofice_collect_time|date:"D d M Y"}}</td>
+                                    <td> {{data.collection_amount}}</td>
+                                    {% if data.collection_status == "3" %}
+                                    <td><a class="badge badge-warning" style="color:white;"><i class="fas fa-clock"></i> Pending</a></td>
+                                    {% elif data.collection_status == "4" %}
+                                    <td><a class="badge badge-success" style="color:white;"><i class="fas fa-check"></i> Receved</a></td>
+                                    {% endif %}
+                                  </tr>
+                            {% endfor %}       
+                        </tbody>
+                        
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+          </div>
+          
+        </section>
+
+     
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+{% endblock %}

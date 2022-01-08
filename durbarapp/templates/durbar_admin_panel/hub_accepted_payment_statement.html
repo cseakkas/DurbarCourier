@@ -1,0 +1,63 @@
+{% extends 'durbar_admin_panel/admin_base.html' %} 
+{% block title %} Dashboard {% endblock %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
+
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4> Accepted Payment Statement</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped" id="table-2">
+                        <thead>
+                          <tr>
+                              <th scope="col"> Statement No </th>
+                              <th scope="col"> Hub Info </th>
+                              <th scope="col"> Accepted Time </th>
+                              <th scope="col"> Bank Ac No </th>
+                              <th scope="col"> Total Collection Amount</th>
+                              <th scope="col"> Action </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for list in statement_list %}
+                                <tr> 
+                                    <td> {{list.statement_no}}</td>
+                                    <td> {{list.hub_info}}</td>
+                                    <td> {{list.modify}}</td>
+                                    <td> {{list.hub_info.bank_ac_no}}</td>
+                                    <td> {{list.total_collection_amount}}</td>
+                                    <td>
+                                      
+                                      <a class="badge badge-warning" href="/hub-payment-statement-download/{{list.statement_no}}/" style="color:white;"><i class="fas fa-download"></i> Download</a>
+                                    
+                                    </td>
+                                </tr>
+                            {% endfor %}       
+                        </tbody>
+                        
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+          </div>
+          
+        </section>
+
+     
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+{% endblock %}

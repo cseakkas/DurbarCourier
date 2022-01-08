@@ -1,0 +1,81 @@
+{% extends 'durbar_rider_panel/rider_base.html' %} 
+{% block title %} Dashboard {% endblock %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-body">
+            <div class="row">
+              
+             
+              {% for list in pending_list %}
+              <a href="">
+                <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                  
+                  <div class="card-body" >
+                    <table class="table">
+                      
+                        <tr>
+                          <th style="height:30px"> {{list.order_info.customer_name}} </th>
+                          
+                          
+                          <a class="badge badge-success" href="tel:{{list.order_info.contact_no1}}" style="color:white;margin-right: 225px;">1<i class="fas fa-phone"></i></a>
+                          <a class="badge badge-warning" href="tel:{{list.order_info.merchant.contact_no2}}" style="color:white;text-align:right">2<i class="fas fa-phone"></i></a>
+                        </tr>
+                        
+                        <tr>
+                          
+                          <th style="height:30px"> {{list.order_info.order_id}} </th>
+                        </tr>
+                        <tr>
+                          
+                          <th style="height:30px; color: red;">Collection: {{list.collection_amount}}tk </th>
+                        </tr>
+                        <tr>
+                          
+                            <td style="height:0px"> {{list.order_info.address}}</td>
+                        </tr>
+                        <tr>
+                            
+                            <td style="height:0px" > {{list.order_info.post_office_name}}, {{list.order_info.upazilla_name}}, {{list.order_info.district_name}}</td>
+                        </tr>
+                        <tr>
+                          {% if list.return_product_delevery == False %}
+                          <td><a class="badge badge-success" href="/delivery/{{list.order_info.order_id}}/" style="color:white;"><i class="fas fa-check"></i> Delivery</a></td>
+                          {% else %}
+                          <td><a class="badge badge-warning" href="/delivery/{{list.order_info.order_id}}/" style="color:white;"><i class="fas fa-check"></i> Return</a></td>
+                          {% endif %}
+                          <td>
+                            <div class="btn-group mb-2" style="margin-bottom:0px !important">
+                              <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                Return Options
+                              </button>
+                              <div class="dropdown-menu" style="width: 258px">
+                                <a class="dropdown-item has-icon" href="/customer-not-connected-phone/{{list.order_info.order_id}}/"><i class="fas fa-phone-slash"></i>  Customer not connected phone</a>
+                                <a class="dropdown-item has-icon" href="/wrong-product/{{list.order_info.order_id}}/"><i class="fas fa-times"></i> Wrong product</a>
+                                <a class="dropdown-item has-icon" href="/customer-abbsent-in-address/{{list.order_info.order_id}}/"><i class="fas fa-home"></i> Customer absent in address</a>
+                                <a class="dropdown-item has-icon" href="/customer-not-interested-to-receve/{{list.order_info.order_id}}/"><i class="fas fa-hand-paper"></i> Customer not interested to receve</a>
+                              </div>
+                            </div>
+                          </td>
+                            
+                        </tr>
+                        
+                        
+                        
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </a>
+            
+              {% endfor %}
+              </div>
+            </div>
+          </div>
+        </section>
+{% endblock %}

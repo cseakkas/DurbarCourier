@@ -1,0 +1,110 @@
+{% extends 'durbar_hub_panel/hub_base.html' %} 
+{% block title %} Dashboard {% endblock %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
+
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>In Transit</h4>
+                    <div class="bar_read" style="margin-left: 200px;">
+                    <form class="form-inline mr-auto" method="POST">{% csrf_token %}
+                      <div class="search-element">
+                        <input autofocus="autofocus" onfocus="this.select()" style="width: 400px; height: 75px;" class="form-control"  type="search" placeholder="Scan/Enter Oeder ID" aria-label="Search" name="order_id">
+                        
+                      </div>
+                    </form>
+                  </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped" id="table-1">
+                        <thead>
+                          <tr>
+                              <th scope="col"> Order ID </th>
+                              <th scope="col"> Transit Hub </th>
+                              <th scope="col"> Delevery Address </th>
+                              <th scope="col"> Weight</th>
+                              <th scope="col" class="text-end">Collection Amount </th>
+                              <th scope="col" class="text-end">Status </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                              
+                            {% for list in data %}
+                                <tr>
+                                    
+                                    <td> {{list.order_id}}<br> </td>
+                                    <td> {{list.pickup_hub}}</td>
+                                    <td> {{list.post_office_name}}, {{list.upazilla_name}}, {{list.district_name}}<br>{{list.address}} </td>
+                                    <td> {{list.weight.delivery_charge_weight}}</td> 
+                                    <td> {{list.collection_amount}}</td>
+                                    {% if list.order_track == "5" %}
+                                    <td><div class="badge badge-success badge-shadow">Delevery</div></td> 
+                                    {% elif list.order_track == "13" %} 
+                                    <td><div class="badge badge-warning badge-shadow">Return</div></td> 
+                                    {% endif %}                         
+                                </tr>
+                                
+                            {% endfor %}       
+                        </tbody>
+                        
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+          </div>
+          
+        </section>
+        
+
+    
+<!--       
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  $("#programming").change(function () {
+    var url = $("#indexForm").attr("data-courses-url");  // get the url of the `load_courses` view
+    var programmingId = $(this).val();  // get the selected programming ID from the HTML input
+
+    $.ajax({                       // initialize an AJAX request
+      url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+      data: {
+        'programming': programmingId       // add the programming id to the GET parameters
+      },
+      success: function (data) {   // `data` is the return of the `load_courses` view function
+        $("#courses").html(data);  // replace the contents of the course input with the data that came from the server
+      }
+    });
+
+  });
+</script>
+<script>
+  $("#courses").change(function () {
+    var url = $("#indexForm").attr("data-coursesx-url");  // get the url of the `load_courses` view
+    var coursesId = $(this).val();  // get the selected programming ID from the HTML input
+
+    $.ajax({                       // initialize an AJAX request
+      url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+      data: {
+        'courses': coursesId       // add the programming id to the GET parameters
+      },
+      success: function (data) {   // `data` is the return of the `load_courses` view function
+        $("#courses2").html(data);  // replace the contents of the course input with the data that came from the server
+      }
+    });
+
+  });
+</script> -->
+
+      {% endblock %}

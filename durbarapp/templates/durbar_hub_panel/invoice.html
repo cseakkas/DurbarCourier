@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- invoice.html  21 Nov 2019 04:05:05 GMT -->
+<head>
+
+  <meta charset="UTF-8">
+  {% load static %}
+  <style>
+  
+  @media print {
+  #printPageButton {
+    display: none;
+  }
+
+ 
+}
+.button{
+    background-color: #4CAF50; /* Green */border: none;color: white;padding: 16px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;transition-duration: 0.4s;cursor: pointer;margin-left: 113px;
+}
+.button2{
+    background-color: #ff1a1a; /* Green */border: none;color: white;padding: 16px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;transition-duration: 0.4s;cursor: pointer;;
+}
+
+  </style>
+</head>
+
+<body>
+  
+   
+      
+      
+      <!-- Main Content -->
+        
+        <section class="section" style="width: 80mm;font-size: 20px; border: 1px solid black;">
+          
+                      <center><img src="{% static 'durbar_hub_panel/assets/img/logo2.png' %}" alt="visa" style="height: 70px; width: 180px; "></center>
+                      
+                    
+                    
+                        <div class="merchant" style="border-bottom: 1px solid black;border-top: 1px solid black;">
+                          <strong>Merchant:</strong><br>
+                          {{invoice.merchant_info.marchant_name}}<br>
+                          {{invoice.merchant_info.contact_no1}}<br>
+                          {{invoice.merchant_info.address}}<br>
+                          
+                        </div>
+                        <div class="customer" style="border-bottom: 1px solid black;">
+                          <strong>Customer:</strong><br>
+                          {{invoice.customer_name}} <br>
+                          {{invoice.contact_no1}}<br>
+                          {{invoice.address}}<br> 
+                          <strong>{{invoice.post_office_name}},{{invoice.upazilla_name}},{{invoice.district_name}}</strong>
+                        </div>
+                      
+                        <div class="order_info" style="border-bottom: 1px solid black;">
+                        <div class="left" style="text-align: left; position: absolute; height: 69px; width: 150px; border-right: 1px solid black; ">
+                          <strong>Reference No</strong><br>
+                          {{invoice.reference_no}}<br>
+                        </div>    
+
+                        <div class="right" style="text-align: right; ">
+                          <strong>Cash</strong><br>
+                          {{invoice.collection_amount}}/=<br><br>
+                        </div>
+                        </div>
+                    
+                
+                        
+                          <img src="/static/durbarapp/media/{{invoice.bar_code}}" style="width: 75mm; height: 40mm;" alt="visa">
+                          
+                         
+                        
+                      
+                          <div class="invoice-detail-name"><strong>Zone: </strong> Joypurhat</div>
+                          
+                        
+                        
+                      
+                    
+                     
+                
+             
+              
+         
+        </section>
+        <button id="printPageButton" class="button2" ><a href="/hub-collection-list/"> Back</a></button>
+        <button id="printPageButton" class="button" onclick="window.print()"></i> Print</button>
+        
+                      
+        
+      
+      
+  
+  <!-- General JS Scripts -->
+  <script src="assets/js/app.min.js"></script>
+  <!-- JS Libraies -->
+  <!-- Page Specific JS File -->
+  <!-- Template JS File -->
+  <script src="assets/js/scripts.js"></script>
+  <!-- Custom JS File -->
+  <script src="assets/js/custom.js"></script>
+</body>
+
+
+<!-- invoice.html  21 Nov 2019 04:05:05 GMT -->
+</html>

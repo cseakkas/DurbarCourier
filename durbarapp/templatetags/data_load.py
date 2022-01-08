@@ -28,6 +28,41 @@ def collection_point(request):
 
 
 
+@register.filter(name='list')
+def hub(request):
+    point  = models.HubInfo.objects.filter(status = True).order_by("-id")
+    return point
+
+
+
+
+@register.filter(name='package')
+def packagetype(request):
+    pack  = models.PackegeType.objects.filter(status = True).order_by("id")
+    return pack
+
+
+
+@register.filter(name='collection')
+def collection_time(request):
+    time  = models.Collection_time_category.objects.filter(status = True).order_by("id")
+    return time
+
+
+
+@register.filter(name='category')
+def mobile_banking(request):
+    name  = models.MobileBnakingCategory.objects.filter(status = True).order_by("-id")
+    return name
+
+
+# @register.filter(name='location')
+# def pickup_location(request):
+#     name  = models.PickupLocation.objects.filter(merchant_id__merchant_id = request.session['merchant_id'] ,status = True).order_by("-id")
+#     return name
+
+
+
 @register.filter(name='str2url')
 def string_to_url_convert(data):
     #use in view: category = cat.replace('-', ' ')
